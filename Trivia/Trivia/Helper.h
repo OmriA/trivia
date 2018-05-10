@@ -1,5 +1,4 @@
 #pragma once
-//omriwashere
 #include <vector>
 #include <string>
 #include <WinSock2.h>
