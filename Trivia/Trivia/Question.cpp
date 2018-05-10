@@ -24,6 +24,10 @@ Question::Question(int id, string question, string correctAnswer, string answer2
 		int currAnsIndex = rand() % FOUR;
 		if (!alreadyInit[currAnsIndex])
 		{
+			if (i == 0)
+			{
+				_correctAnswerIndex = currAnsIndex;
+			}
 			alreadyInit[currAnsIndex] = true;
 			_answers[currAnsIndex] = answersArr[i];
 			i++;
