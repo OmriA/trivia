@@ -14,7 +14,7 @@ Question::Question(int id, string question, string correctAnswer, string answer2
 {
 	this->_id = id;
 	this->_question = question;
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	this->_correctAnswerIndex = rand() % FOUR;
 	if (_correctAnswerIndex == 0)
 	{
