@@ -8,43 +8,27 @@
 
 /*
 This function is the c'tor
-Input: the question id, the question, the correct answer, the rest of the answers 
+Input: the question id, the question, the correct answer, the rest of the answers
 */
 Question::Question(int id, string question, string correctAnswer, string answer2, string answer3, string answer4)
 {
 	this->_id = id;
 	this->_question = question;
 	srand((unsigned int)time(NULL));
-	this->_correctAnswerIndex = rand() % FOUR;
-	if (_correctAnswerIndex == 0)
-	{
-		_answers[0] = correctAnswer;
-		_answers[ONE] = answer2;
-		_answers[TWO] = answer3;
-		_answers[THREE] = answer4;
-	}
-	if (_correctAnswerIndex == ONE)
-	{
-		_answers[0] = answer3;
-		_answers[ONE] = correctAnswer;
-		_answers[TWO] = answer4;
-		_answers[THREE] = answer2;
-	}
-	if (_correctAnswerIndex == TWO)
-	{
-		_answers[0] = answer4;
-		_answers[ONE] = answer2;
-		_answers[TWO] = correctAnswer;
-		_answers[THREE] = answer3;
-	}
-	if (_correctAnswerIndex == THREE)
-	{
-		_answers[0] = answer3;
-		_answers[ONE] = answer2;
-		_answers[TWO] = answer4;
-		_answers[THREE] = correctAnswer;
-	}
 
+	int i = 0;
+	string answersArr[] = { correctAnswer, answer2, answer3, answer4 };
+	bool alreadyInit[] = { false, false, false, false };
+	while (i < 4)
+	{
+		int currAnsIndex = rand() % FOUR;
+		if (!alreadyInit[currAnsIndex])
+		{
+			alreadyInit[currAnsIndex] = true;
+			_answers[currAnsIndex] = answersArr[i];
+			i++;
+		}
+	}
 }
 
 /*This function returns the question
