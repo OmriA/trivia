@@ -24,7 +24,7 @@ bool Validator::isPasswordValid(const string pass)
 		return false;
 	}
 
-	for (int i = 0; i < pass.length(); i++)
+	for (unsigned int i = 0; i < pass.length(); i++)
 	{
 		if (pass[i] >= 'a' && pass[i] <= 'z')
 		{
