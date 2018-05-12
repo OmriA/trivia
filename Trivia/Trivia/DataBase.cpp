@@ -16,10 +16,26 @@ DataBase::~DataBase()
 
 bool DataBase::isUserExists(string username)
 {
-	sqlite3_select();
+	string queryString = "SELECT * FROM t_users WHERE username = " + username;
+	const char* query = queryString.c_str();
+	char* errmsg = 0;
+	
+	int data = 0;
+	int succeed = sqlite3_exec(_db, query, callbackCount, (void*)data, &errmsg);
+	if (succeed != SQLITE_OK)
+	{
+		cout << "Error! " << errmsg;
+	}
+
+	if (data != 0)
+	{
+		return true;
+	}
+	return false;
 }
 
 int DataBase::callbackCount(void* data, int argc, char** argv, char** azColName)
 {
-	return argc - 1;
+	data = (void*)argc;
+	return 0;
 }

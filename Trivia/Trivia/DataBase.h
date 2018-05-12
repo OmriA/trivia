@@ -3,7 +3,9 @@
 #include "sqlite3.h"
 #include "Question.h"
 #include <vector>
+#include <iostream>
 
+using std::cout;
 using std::vector;
 
 class DataBase
