@@ -34,6 +34,16 @@ bool DataBase::isUserExists(string username)
 	return false;
 }
 
+bool DataBase::addNewUser(string username, string password, string email)
+{
+	if (isUserExists(username))
+	{
+		return false;
+	}
+	string query = "INSERT INTO t_users (username, password, email) VALUES(" + username + "," + password + "," + email + ");";
+
+}
+
 int DataBase::callbackCount(void* data, int argc, char** argv, char** azColName)
 {
 	*(int*)data = argc;
