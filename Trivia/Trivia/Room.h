@@ -15,4 +15,18 @@ private:
 	int _questionsNo;
 	string _name;
 	int _id;
+
+	string getUsersAsString(vector<User*> usersList, User* excludeUser);
+	void sendMessage(string message);
+	void sendMessage(User* excludeUser, string message);
+public:
+	Room(int id, User* admin, string name, int maxUsers, int questionsNo, int questionTime);
+	bool joinRoom(User* user);
+	void leaveRoom(User* user);
+	int closeRoom(User* user);
+	vector<User*> getUsers();
+	string getUsersListMessage();
+	int getQuestionsNo();
+	int getID();
+	string getName();
 };

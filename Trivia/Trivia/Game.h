@@ -2,6 +2,7 @@
 
 #include "Question.h"
 #include "User.h"
+#include "DataBase.h"
 #include <map>
 
 using std::map;
@@ -13,10 +14,20 @@ private:
 	vector<User*> _players;
 	int _question_no;
 	int _currQuestionIndex;
-	//TODO: DataBase db&;
+	DataBase &_db;
 	map<string, int> _results;
 	int _currentTurnAnswers;
 
+	bool insertGameToDB();
+	void initQuestionsFromDB();
+	void sendQuestionToAllUsers();
 public:
-	Game(const vector<User*>& players, int questionsNo/*, DataBase& db*/);
+	Game(const vector<User*>& players, int questionsNo, DataBase &db);
+	~Game();
+	void sendFirstQuestion();
+	void handleFinishGame();
+	bool handleNextTurn();
+	bool handleAnswerFromUser(User* user, int answerNo, int time);
+	bool leaveGame(User* currUser);
+	int getID();
 };
