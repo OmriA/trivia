@@ -6,10 +6,13 @@
 #include <iostream>
 
 using std::cout;
+using std::cin;
+using std::endl;
 using std::vector;
 
 class DataBase
 {
+	static string userPass[2];
 public:
 	DataBase();
 	~DataBase();
@@ -28,6 +31,7 @@ private:
 	static int callbackQuestions(void* data, int argc, char** argv, char** azColName);
 	static int callbackBestScores(void* data, int argc, char** argv, char** azColName);
 	static int callbackPersonalStatus(void* data, int argc, char** argv, char** azColName);
+	static int callbackUserPass(void* data, int argc, char** argv, char** azColName);
 
 	sqlite3 * _db;
 };
