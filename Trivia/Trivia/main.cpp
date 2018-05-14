@@ -8,17 +8,57 @@ int questiontest()
 	return 0;
 }
 
-int main(int argc, char* argv[])
+void checkIsUserExists(DataBase* db)
 {
-	DataBase* db = new DataBase();
-	if (db->isUserExists("ron"))
+	string username;
+	cout << "Write username to check if exists: ";
+	cin >> username;
+	if (db->isUserExists(username))
 	{
-		cout << "true";
+		cout << "exists" << endl;
 	}
 	else
 	{
-		cout << "false";
+		cout << "not exists" << endl;
 	}
+}
+
+void checkAddUser(DataBase* db)
+{
+	string username, password, email;
+	cout << "Write username to add to db: ";
+	cin >> username;
+	cout << "Write password to add to db: ";
+	cin >> password;
+	cout << "Write email to add to db: ";
+	cin >> email;
+	if (!db->addNewUser(username, password, email))
+	{
+		cout << "Insertion failed!" << endl;
+	}
+}
+
+void checkIsUserAndPassMatch(DataBase* db)
+{
+	string username, password;
+	cout << "enter username: ";
+	cin >> username;
+	cout << "enter password: ";
+	cin >> password;
+	if (db->isUserAndPassMatch(username, password))
+	{
+		cout << "match" << endl;
+	}
+	else
+	{
+		cout << "doesn't match" << endl;
+	}
+}
+
+int main(int argc, char* argv[])
+{
+	DataBase* db = new DataBase();
+	checkIsUserAndPassMatch(db);
 	system("PAUSE");
 	return 0;
 }
