@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Question.h"
-#include "User.h"
 #include "DataBase.h"
 #include <map>
 
@@ -17,6 +16,7 @@ private:
 	DataBase &_db;
 	map<string, int> _results;
 	int _currentTurnAnswers;
+	int _gameId;
 
 	bool insertGameToDB();
 	void initQuestionsFromDB();

@@ -10,6 +10,8 @@ using std::cin;
 using std::endl;
 using std::vector;
 
+class User;
+
 class DataBase
 {
 	static string userPass[2];
