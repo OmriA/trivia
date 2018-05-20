@@ -4,9 +4,13 @@
 #include "RecievedMessage.h"
 #include <mutex>
 #include <queue>
+#include <thread>
+
+#define SERVER_PORT 1337
 
 using std::mutex;
 using std::queue;
+using std::thread;
 
 class TriviaServer
 {
