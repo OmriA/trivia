@@ -95,13 +95,14 @@ Output: true if succeeded in creating room, false otherwise
 */
 bool User::createRoom(int roomId, string roomName, int maxUsers, int questionsNo, int questionTime)
 {
-	//Work in progress
 	if (this->_currRoom != nullptr)
 	{
+		Helper::sendData(_sock, "1141");
 		return false;
 	}
 	Room* r = new Room(roomId, this, roomName, maxUsers, questionsNo, questionTime);
-	
+	this->_currRoom = r;
+	Helper::sendData(_sock, "1140");
 	return true;
 }
 
@@ -116,6 +117,7 @@ bool User::joinRoom(Room* newRoom)
 	{
 		return false;
 	}
+	_currRoom = newRoom;
 	newRoom->joinRoom(this);
 	return true;
 }
@@ -127,12 +129,11 @@ Output: None
 */
 void User::leaveRoom()
 {
-	//wORK IN PROGRESS
 	if (this->_currRoom != nullptr)
 	{
 		this->_currRoom->leaveRoom(this);
-		this->_currRoom = nullptr;
 	}
+	this->_currRoom = nullptr;
 }
 
 /*
@@ -142,20 +143,15 @@ Output: -1 if user isn't in room, room id else
 */
 int User::closeRoom()
 {
-	vector<User*>::iterator it;
-	bool found = false;
-	for (it = this->_currRoom->getUsers().begin(); it != this->_currRoom->getUsers().end(); it++)
-	{
-		if ((*it)->getUsername() == this->getUsername())
-		{
-			found = true;
-		}
-	}
-	if (found == false)
+	if (this->_currRoom == nullptr)
 	{
 		return -1;
 	}
-	return this->closeRoom();
+	this->_currRoom->Room::closeRoom(this);
+	int room_id = this->_currRoom->getID();
+	delete _currRoom;
+	_currRoom = nullptr;
+	return room_id;
 }
 
 /*
@@ -165,5 +161,11 @@ Output: true if game still works, false otherwise
 */
 bool User::leaveGame()
 {
-	//Work in progress
+	Game* game = this->_currGame;
+	if (_currGame == nullptr)
+	{
+		return false;
+	}
+	_currGame = nullptr;
+	return game->leaveGame(this);
 }

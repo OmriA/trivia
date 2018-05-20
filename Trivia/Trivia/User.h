@@ -1,8 +1,12 @@
 #pragma once
 
-#include "Helper.h"
 #include "Game.h"
 #include "Room.h"
+#include <WinSock2.h>
+#include <Windows.h>
+
+class Room;
+class Game;
 
 class User
 {

@@ -102,6 +102,21 @@ bool DataBase::isUserAndPassMatch(string username, string password)
 	delete[] userInfo;
 	return flag;
 }
+/*
+This function gets random questions, the amount of them is in questionNo, and creates a questions vector out of them
+Input: The question number
+Output: The questions vector from the questions in the db
+*/
+vector<Question*> initQuestions(int questionNo)
+{
+	
+}
+
+vector<string> getBestScores();
+vector<string> getPersonalStatus(string username);
+int insertNewGame();
+bool updateGameStatus(int gameId);
+bool addAnswerToPlayer(int gameId, string username, int questionId, string answer, bool isCorrect, int answerTime);
 
 int DataBase::callbackCount(void* data, int argc, char** argv, char** azColName)
 {
