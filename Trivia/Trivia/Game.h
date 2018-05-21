@@ -2,9 +2,13 @@
 
 #include "Question.h"
 #include "DataBase.h"
+#include "User.h"
 #include <map>
 
 using std::map;
+
+class User;
+class DataBase;
 
 class Game
 {

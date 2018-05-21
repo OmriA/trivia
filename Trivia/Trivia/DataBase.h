@@ -4,11 +4,15 @@
 #include "Question.h"
 #include <vector>
 #include <iostream>
+#include <sstream>
+#include "Helper.h"
 
 using std::cout;
 using std::cin;
 using std::endl;
 using std::vector;
+using std::to_string;
+using std::stringstream;
 
 class User;
 
@@ -34,6 +38,10 @@ private:
 	static int callbackBestScores(void* data, int argc, char** argv, char** azColName);
 	static int callbackPersonalStatus(void* data, int argc, char** argv, char** azColName);
 	static int callbackUserPass(void* data, int argc, char** argv, char** azColName);
-
 	sqlite3 * _db;
+	static string _questions;
+	static vector<int> _idVector;
+	static vector<string> _usersVector;
+	static int _lastInCol;
+	static int callbackId(void* notUsed, int argc, char** argv, char** azCol);
 };
