@@ -2,8 +2,14 @@
 
 #include "User.h"
 #include <vector>
-
+#include "Helper.h"
+#include <algorithm>
+#include "Protocol.h"
+#include <sstream>
 using std::vector;
+using std::to_string;
+using std::stringstream;
+class User;
 
 class Room
 {
