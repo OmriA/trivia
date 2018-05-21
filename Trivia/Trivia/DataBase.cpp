@@ -284,8 +284,8 @@ Output: True if updated success, else false
 bool DataBase::updateGameStatus(int gameId)
 {
 	char* zErrMsg = 0;
-	string sheilta = "update t_games set status=1 and start_time=\"now\" where game_id=" + to_string(gameId) + ";";
-	int rc = sqlite3_exec(_db, sheilta.c_str(), callbackCount, 0, &zErrMsg);
+	string query = "update t_games set status=1 and start_time=\"now\" where game_id=" + to_string(gameId) + ";";
+	int rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
 		return false;
@@ -301,8 +301,8 @@ Output: True if added, else false
 bool DataBase::addAnswerToPlayer(int gameId, string username, int questionId, string answer, bool isCorrect, int answerTime)
 {
 	char* zErrMsg = 0;
-	string sheilta = "insert into t_players_answers(game_id, username, question_id, player_answer, is_correct, answer_time) values(" + to_string(gameId) + ", \"" + username + "\", " + to_string(questionId) + ", \"" + answer + "\", " + (isCorrect ? "1" : "0") + ", " + to_string(answerTime) + ");";
-	int rc = sqlite3_exec(_db, sheilta.c_str(), callbackCount, 0, &zErrMsg);
+	string query = "insert into t_players_answers(game_id, username, question_id, player_answer, is_correct, answer_time) values(" + to_string(gameId) + ", \"" + username + "\", " + to_string(questionId) + ", \"" + answer + "\", " + (isCorrect ? "1" : "0") + ", " + to_string(answerTime) + ");";
+	int rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
 		return false;
