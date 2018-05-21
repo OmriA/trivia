@@ -43,7 +43,21 @@ Output: None
 */
 void Game::handleFinishGame()
 {
-	//Work in progress
+	stringstream s;
+	vector<User*>::iterator it = _players.begin();
+	for (it = _players.begin(); it != _players.end(); it++)
+	{
+		s << Helper::getPaddedNumber((**it).getUsername().length(), 2) << (**it).getUsername() << Helper::getPaddedNumber(_results[(**it).getUsername()], 2);
+	}
+	for (it = _players.begin(); it != _players.end(); it++)
+	{
+		try
+		{
+			(**it).send(to_string(GAME_END) + Helper::getPaddedNumber(_players.size(), 1) + s.str());
+		}
+		catch (...) {}
+		(**it).setGame(nullptr);
+	}
 }
 
 /*
@@ -58,8 +72,17 @@ bool Game::handleNextTurn()
 		handleFinishGame();
 		return false;
 	}
-	if (_currentTurnAnswers == _players)
-	//Work in progress
+	if (_currentTurnAnswers == _players.size())
+	{
+		if (_question_no == _questions.size())
+		{
+			handleFinishGame();
+			return false;
+		}
+		_question_no++;
+		sendQuestionToAllUsers();
+	}
+	return true;
 }
 
 /*
@@ -69,7 +92,15 @@ Output: true if game hasn't ended, false if it did
 */
 bool Game::handleAnswerFromUser(User* user, int answerNo, int time)
 {
-	//Work in progress
+	this->_currentTurnAnswers++;
+	if (answerNo == _questions[_question_no]->getCorrectAnswerIndex())
+	{
+		_results[user->getUsername()]++;
+		user->send(to_string(ANSWER_CORRECTNESS) + "1");
+		return handleNextTurn();
+	}
+	user->send(to_string(ANSWER_CORRECTNESS) + "0");
+	return handleNextTurn();
 }
 
 /*
