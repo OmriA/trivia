@@ -2,11 +2,13 @@
 
 #include "Helper.h"
 #include "RecievedMessage.h"
+#include "Protocol.h"
 #include <mutex>
 #include <queue>
 #include <thread>
 
-#define SERVER_PORT 1337
+#define SERVER_PORT 1906
+#define BUFFER_SIZE 4096
 
 using std::mutex;
 using std::queue;
