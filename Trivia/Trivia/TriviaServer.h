@@ -11,6 +11,7 @@
 #define BUFFER_SIZE 4096
 
 using std::mutex;
+using std::condition_variable;
 using std::queue;
 using std::thread;
 
@@ -23,7 +24,8 @@ private:
 	map<int, Room*> _roomsList;
 
 	mutex _mtxRecievedMessages;
-	queue<RecievedMessage> _queRecievedMessages;
+	condition_variable _condRecievedMessages;
+	queue<RecievedMessage*> _queRecievedMessages;
 
 	void bindAndListen();
 	void accept();
