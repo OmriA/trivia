@@ -20,5 +20,6 @@ public:
 	void setUser(User* user);
 	int getMessageCode();
 	vector<string>& getValues();
+	void setValues(vector<string> values);
 
 };
