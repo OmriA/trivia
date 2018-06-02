@@ -280,6 +280,8 @@ User * TriviaServer::getUserBySocket(SOCKET client_socket)
 	map<SOCKET, User*>::iterator user = _connectedUsers.find(client_socket);
 	if (user == map<SOCKET, User*>::end())
 	{
-
+			
 	}
 }
+
+//omri was here
