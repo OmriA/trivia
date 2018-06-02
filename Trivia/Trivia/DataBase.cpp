@@ -167,6 +167,7 @@ This function gets returns the best scores
 Input: None
 Output: A vector of the best scores
 */
+//each string in vector is formatted like this: username+highest score
 vector<string> DataBase::getBestScores()
 {
 	vector<string> best;
@@ -217,6 +218,8 @@ This function returns the personal status
 Input: None
 Output: The personal status vector
 */
+//vector looks like this: first the game count, then the num of right ans,
+//then the num of wrong ans, and the avg time for each question
 vector<string> DataBase::getPersonalStatus(string username)
 {
 	vector<string> status;
