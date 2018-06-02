@@ -1,4 +1,3 @@
-//ofirwashere
 #include "TriviaServer.h"
 
 /**
