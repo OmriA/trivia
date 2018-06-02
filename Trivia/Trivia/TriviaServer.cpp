@@ -285,4 +285,3 @@ User * TriviaServer::getUserBySocket(SOCKET client_socket)
 	}
 }
 
-//omri was here
