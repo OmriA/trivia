@@ -172,18 +172,22 @@ vector<string> DataBase::getBestScores()
 	vector<string> best;
 	char* zErrMsg = 0;
 	string query = "select username from t_users;";
+	//gets all the users
 	_usersVector.clear();
 	int rc = sqlite3_exec(_db, query.c_str(), callbackBestScores, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
 		return best;
 	}
+
 	map<string, int> scores;
+	//gets personal statuses of the users
 	for (unsigned int i = 0; i < _usersVector.size(); i++)
 	{
 		vector<string> status = getPersonalStatus(_usersVector[i]);
 		scores.insert(pair<string, int>(_usersVector[i], stoi(status[1])));
 	}
+	//gets the top 3 hightest scores and sorts the array
 	for (int i = 0; i < 3; i++)
 	{
 		map<string, int>::iterator it = scores.begin();
@@ -217,6 +221,7 @@ vector<string> DataBase::getPersonalStatus(string username)
 {
 	vector<string> status;
 	char* zErrMsg = 0;
+	//gets number of games
 	string query = "select count(distinct game_id) from t_players_answers where username=\"" + username + "\";";
 	int rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
@@ -224,6 +229,7 @@ vector<string> DataBase::getPersonalStatus(string username)
 		return status;
 	}
 	status.push_back(Helper::getPaddedNumber(_lastInCol, 4));
+	//gets number of correct answers
 	query = "select count(*) from t_players_answers where is_correct=1 and username=\"" + username + "\";";
 	rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
@@ -231,6 +237,7 @@ vector<string> DataBase::getPersonalStatus(string username)
 		return status;
 	}
 	status.push_back(Helper::getPaddedNumber(_lastInCol, 6));
+	//gets number of wrong answers
 	query = "select count(*) from t_players_answers where is_correct=0 and username=\"" + username + "\";";
 	rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
@@ -238,6 +245,7 @@ vector<string> DataBase::getPersonalStatus(string username)
 		return status;
 	}
 	status.push_back(Helper::getPaddedNumber(_lastInCol, 6));
+	//gets avg number of time
 	query = "select answer_time from t_players_answers where username=\"" + username + "\";";
 	_lastInCol = 0;
 	_idVector.clear();
@@ -249,7 +257,6 @@ vector<string> DataBase::getPersonalStatus(string username)
 	}
 	status.push_back(Helper::getPaddedNumber(_lastInCol, 4));
 	return status;
-
 }
 
 /*
