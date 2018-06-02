@@ -120,6 +120,23 @@ User * TriviaServer::handleSignin(RecievedMessage * msg)
 	return nullptr;
 }
 
+void TriviaServer::handleGetBestScores(RecievedMessage * msg)
+{
+	string answer = "124";
+	vector<string> bestScores = _db.getBestScores();
+	for (unsigned int i = 0; i < bestScores.size(); i++)
+	{
+		answer += Helper::getPaddedNumber(bestScores[i].length(), 2);
+		answer += bestScores[i];
+	}
+}
+
+void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg)
+{
+	vector<string> personalStatus = _db.getPersonalStatus(msg->getUser()->getUsername());
+	//TODO: create a message to send to the client and send it.
+}
+
 void TriviaServer::handleRecievedMessages()
 {
 	std::unique_lock<mutex> locker(_mtxRecievedMessages);
@@ -210,6 +227,9 @@ RecievedMessage * TriviaServer::buildRecievedMessage(SOCKET client_socket, int m
 {
 	//Codes without values: 201, 205, 211, 215, 217, 222, 223, 225, 299
 	//Codes with valuse: 200, 203, 207, 209, 213, 219
+	
+	RecievedMessage* output = new RecievedMessage(client_socket, msgCode);
+	output->setUser(getUserBySocket(client_socket));
 
 	if (msgCode == SIGN_OUT_REQUEST || msgCode == AVAILABLE_ROOMS_REQUEST ||
 		msgCode == ROOM_LEAVE_REQUEST || msgCode == ROOM_CLOSE_REQUEST ||
@@ -217,7 +237,7 @@ RecievedMessage * TriviaServer::buildRecievedMessage(SOCKET client_socket, int m
 		msgCode == BEST_SCORES_REQUEST || msgCode == PERSONAL_STATUS_REQUEST ||
 		msgCode == EXIT_APPLICATION)
 	{
-		return new RecievedMessage(client_socket, msgCode);
+		return output;
 	}
 
 	vector<string> values;
@@ -267,7 +287,8 @@ RecievedMessage * TriviaServer::buildRecievedMessage(SOCKET client_socket, int m
 		break;
 	}
 
-	return new RecievedMessage(client_socket, msgCode, values);
+	output->setValues(values);
+	return output;
 }
 
 User * TriviaServer::getUserByName(string name)
@@ -278,9 +299,21 @@ User * TriviaServer::getUserByName(string name)
 User * TriviaServer::getUserBySocket(SOCKET client_socket)
 {
 	map<SOCKET, User*>::iterator user = _connectedUsers.find(client_socket);
-	if (user == map<SOCKET, User*>::end())
+	if (user == _connectedUsers.end())
 	{
-			
+		return nullptr;
 	}
+
+	return user->second;
 }
 
+Room* TriviaServer::getRoomById(int roomId)
+{
+	map<int, Room*>::iterator room = _roomsList.find(roomId);
+	if (room == _roomsList.end())
+	{
+		return nullptr;
+	}
+	
+	return room->second;
+}
