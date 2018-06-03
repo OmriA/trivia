@@ -24,7 +24,7 @@ private:
 	map<SOCKET, User*> _connectedUsers;
 	DataBase _db;
 	map<int, Room*> _roomsList;
-	static int _roomIDaux;
+	int _roomIDaux;
 	mutex _mtxRecievedMessages;
 	condition_variable _condRecievedMessages;
 	queue<RecievedMessage*> _queRecievedMessages;

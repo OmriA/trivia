@@ -125,13 +125,16 @@ User * TriviaServer::handleSignin(RecievedMessage * msg)
 {
 	if (_db.isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
 	{
-
+		return msg->getUser();
 	}
-	try
+	else if (!_db.isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
 	{
 		Helper::sendData(msg->getSock(), Helper::getPaddedNumber(SIGN_IN_RESPONSE_WRONG_DETAILS, 4));
 	}
-	catch (...) {}
+	else
+	{
+		Helper::sendData(msg->getSock(), Helper::getPaddedNumber(SIGN_IN_RESPONSE_ALREADY_CONNECTED, 4));
+	}
 	return nullptr;
 }
 

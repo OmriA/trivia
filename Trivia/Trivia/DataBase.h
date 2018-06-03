@@ -18,7 +18,6 @@ class User;
 
 class DataBase
 {
-	static string userPass[2];
 public:
 	DataBase();
 	~DataBase();
