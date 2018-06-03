@@ -114,10 +114,82 @@ User * TriviaServer::handleSignin(RecievedMessage * msg)
 	}
 	try
 	{
-		send(msg->getSock(), Helper::getPaddedNumber(SIGN_IN_RESPONSE_WRONG_DETAILS, 4).c_str, 4, 0);
+		Helper::sendData(msg->getSock(), Helper::getPaddedNumber(SIGN_IN_RESPONSE_WRONG_DETAILS, 4));
 	}
-	catch(...) {}
+	catch (...) {}
 	return nullptr;
+}
+
+bool TriviaServer::handleJoinRoom(RecievedMessage * msg)
+{
+	string answer = "110";
+	Room* room = getRoomById(std::stoi(msg->getValues[0]));
+	User* user = getUserBySocket(msg->getSock());
+	if (user == nullptr)
+	{
+		return false;
+	}
+	if (room == nullptr)
+	{
+		answer += "2";
+	}
+	else
+	{
+		if (user->joinRoom(room))
+		{
+			answer += "0";
+			answer += Helper::getPaddedNumber(room->getQuestionsNo(), 2);
+			answer += Helper::getPaddedNumber(room->getQuestionsTime(), 2);
+		}
+		else
+		{
+			answer += "1";
+		}
+	}
+
+	Helper::sendData(msg->getSock(), answer);
+	return true;
+}
+
+bool TriviaServer::handleLeaveRoom(RecievedMessage * msg)
+{
+	string answer = "112";
+	//TODO: finish handle leave room.
+}
+
+void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg)
+{
+	string answer = "108";
+	Room* room = getRoomById(std::stoi(msg->getValues()[0]));
+	if (room == nullptr)
+	{
+		answer += '0';
+	}
+	else
+	{
+		answer += room->getUsersListMessage();
+	}
+
+	Helper::sendData(msg->getSock(), answer);
+}
+
+void TriviaServer::handleGetRooms(RecievedMessage * msg)
+{
+	string answer = "106";
+	answer += Helper::getPaddedNumber(_roomsList.size(), 4);
+	if (_roomsList.size() != 0)
+	{
+		map<int, Room*>::iterator currRoom = _roomsList.begin();
+		while (currRoom != _roomsList.end())
+		{
+			answer += Helper::getPaddedNumber(currRoom->second->getID(), 4);
+			answer += Helper::getPaddedNumber(currRoom->second->getName().length, 2);
+			answer += currRoom->second->getName();
+			currRoom++;
+		}
+	}
+
+	Helper::sendData(msg->getSock(), answer);
 }
 
 void TriviaServer::handleGetBestScores(RecievedMessage * msg)
@@ -129,12 +201,24 @@ void TriviaServer::handleGetBestScores(RecievedMessage * msg)
 		answer += Helper::getPaddedNumber(bestScores[i].length(), 2);
 		answer += bestScores[i];
 	}
+	if (bestScores.size() < 3)
+	{
+		for (unsigned int i = 0; i < 3 - bestScores.size(); i++)
+		{
+			answer += "0000000";
+		}
+	}
+
+	Helper::sendData(msg->getSock(), answer);
 }
 
 void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg)
 {
+	string answer = "126";
 	vector<string> personalStatus = _db.getPersonalStatus(msg->getUser()->getUsername());
-	//TODO: create a message to send to the client and send it.
+	answer += personalStatus[0] + personalStatus[1] + personalStatus[2] + personalStatus[3];
+	
+	Helper::sendData(msg->getSock(), answer);
 }
 
 void TriviaServer::handleRecievedMessages()
@@ -227,7 +311,7 @@ RecievedMessage * TriviaServer::buildRecievedMessage(SOCKET client_socket, int m
 {
 	//Codes without values: 201, 205, 211, 215, 217, 222, 223, 225, 299
 	//Codes with valuse: 200, 203, 207, 209, 213, 219
-	
+
 	RecievedMessage* output = new RecievedMessage(client_socket, msgCode);
 	output->setUser(getUserBySocket(client_socket));
 
@@ -296,6 +380,11 @@ User * TriviaServer::getUserByName(string name)
 	return nullptr;
 }
 
+/**
+The function gets a socket and finds a user by the socket.
+Input: the socket.
+Ouptut: pointer to the user if exists, if not returns nullptr.
+**/
 User * TriviaServer::getUserBySocket(SOCKET client_socket)
 {
 	map<SOCKET, User*>::iterator user = _connectedUsers.find(client_socket);
@@ -307,6 +396,11 @@ User * TriviaServer::getUserBySocket(SOCKET client_socket)
 	return user->second;
 }
 
+/**
+The function gets a room id and returns pointer to the room.
+Input: the room id
+Output: pointer to ther room if exists, if not returns nullptr.
+**/
 Room* TriviaServer::getRoomById(int roomId)
 {
 	map<int, Room*>::iterator room = _roomsList.find(roomId);
@@ -314,6 +408,6 @@ Room* TriviaServer::getRoomById(int roomId)
 	{
 		return nullptr;
 	}
-	
+
 	return room->second;
 }

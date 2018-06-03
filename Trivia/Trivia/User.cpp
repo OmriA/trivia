@@ -118,8 +118,7 @@ bool User::joinRoom(Room* newRoom)
 		return false;
 	}
 	_currRoom = newRoom;
-	newRoom->joinRoom(this);
-	return true;
+	return newRoom->joinRoom(this);
 }
 
 /*

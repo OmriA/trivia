@@ -12,7 +12,7 @@ Room::Room(int id, User* admin, string name, int maxUsers, int questionsNo, int 
 /*
 This function makes a user join a room, if already in room return false
 Input: The user
-Output: True if joined successfully, else if already in room
+Output: True if joined successfully, false if already in room
 */
 bool Room::joinRoom(User* user)
 {
@@ -105,6 +105,16 @@ Output: The questions number
 int Room::getQuestionsNo()
 {
 	return this->_questionsNo;
+}
+
+/**
+This function returns the questions time
+Input: None.
+Ouput: the time for each question.
+**/
+int Room::getQuestionsTime()
+{
+	return _questionTime;
 }
 
 /*

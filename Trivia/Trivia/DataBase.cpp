@@ -167,7 +167,7 @@ This function gets returns the best scores
 Input: None
 Output: A vector of the best scores
 */
-//each string in vector is formatted like this: username+highest score
+//each string in vector is formatted like this: username+highest score (ex. 04Omri000012)
 vector<string> DataBase::getBestScores()
 {
 	vector<string> best;

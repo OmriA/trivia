@@ -33,6 +33,7 @@ public:
 	vector<User*> getUsers();
 	string getUsersListMessage();
 	int getQuestionsNo();
+	int getQuestionsTime();
 	int getID();
 	string getName();
 };
