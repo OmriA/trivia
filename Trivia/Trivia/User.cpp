@@ -48,6 +48,16 @@ Room* User::getRoom()
 }
 
 /*
+This function sets an input room
+Input: The input room
+Output: None
+*/
+void User::setRoom(Room* room)
+{
+	_currRoom = room;
+}
+
+/*
 This function returns the current game
 Input: None
 Output: The current game

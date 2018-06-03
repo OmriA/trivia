@@ -22,6 +22,7 @@ public:
 	string getUsername();
 	SOCKET getSocket();
 	Room* getRoom();
+	void setRoom(Room* room);
 	Game* getGame();
 	void setGame(Game* gm);
 	void clearGame();

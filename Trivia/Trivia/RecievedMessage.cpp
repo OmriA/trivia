@@ -57,9 +57,9 @@ This function returns the values vector
 Input: None
 Output: The values vector
 */
-vector<string>& RecievedMessage::getValues()
+vector<string>* RecievedMessage::getValues()
 {
-	return _values;
+	return &_values;
 }
 
 void RecievedMessage::setValues(vector<string> values)

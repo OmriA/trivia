@@ -19,7 +19,7 @@ public:
 	User* getUser();
 	void setUser(User* user);
 	int getMessageCode();
-	vector<string>& getValues();
+	vector<string>* getValues();
 	void setValues(vector<string> values);
 
 };

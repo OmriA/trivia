@@ -6,6 +6,7 @@
 #include <mutex>
 #include <queue>
 #include <thread>
+#include "Validator.h"
 
 #define SERVER_PORT 1906
 #define BUFFER_SIZE 4096
@@ -14,6 +15,7 @@ using std::mutex;
 using std::condition_variable;
 using std::queue;
 using std::thread;
+using std::stoi;
 
 class TriviaServer
 {
@@ -22,7 +24,7 @@ private:
 	map<SOCKET, User*> _connectedUsers;
 	DataBase _db;
 	map<int, Room*> _roomsList;
-
+	static int _roomIDaux;
 	mutex _mtxRecievedMessages;
 	condition_variable _condRecievedMessages;
 	queue<RecievedMessage*> _queRecievedMessages;
