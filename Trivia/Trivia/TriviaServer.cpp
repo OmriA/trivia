@@ -80,6 +80,11 @@ void TriviaServer::accept()
 	thread(&TriviaServer::clientHandler, this, client_socket).detach();
 }
 
+/**
+The function is handling with each client.
+Input: the clients socket.
+Output: none.
+**/
 void TriviaServer::clientHandler(SOCKET client_socket)
 {
 	try
@@ -96,6 +101,11 @@ void TriviaServer::clientHandler(SOCKET client_socket)
 	}
 }
 
+/**
+The function deleting user from the connected user safely.
+Input: the recieved msg.
+Output: none.
+**/
 void TriviaServer::safeDeleteUser(RecievedMessage * msg)
 {
 	_connectedUsers.erase(msg->getSock());
@@ -106,6 +116,11 @@ void TriviaServer::safeDeleteUser(RecievedMessage * msg)
 	catch (...) {}
 }
 
+/**
+The function is handling sign in request. (200)
+Input: the recieved message.
+Output: pointer to the user if he connected successfully, nullptr if not.
+**/
 User * TriviaServer::handleSignin(RecievedMessage * msg)
 {
 	if (_db.isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
@@ -120,6 +135,11 @@ User * TriviaServer::handleSignin(RecievedMessage * msg)
 	return nullptr;
 }
 
+/**
+The function is handling join room request. (209)
+Input: the recieved message.
+Output: true if joined successfully, false if falied to join.
+**/
 bool TriviaServer::handleJoinRoom(RecievedMessage * msg)
 {
 	string answer = "110";
@@ -152,6 +172,11 @@ bool TriviaServer::handleJoinRoom(RecievedMessage * msg)
 	return true;
 }
 
+/**
+The function is handling leave room request. (211)
+Input: the recieved message.
+Output: true if left room successfully, false if not.
+**/
 bool TriviaServer::handleLeaveRoom(RecievedMessage * msg)
 {
 	string answer = "112";
@@ -167,8 +192,14 @@ bool TriviaServer::handleLeaveRoom(RecievedMessage * msg)
 	}
 
 	user->leaveRoom();
+	return true;
 }
 
+/**
+The function is handling get users in room request. (207)
+Input: the recieved message.
+Output: none.
+**/
 void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg)
 {
 	string answer = "108";
@@ -185,6 +216,11 @@ void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg)
 	Helper::sendData(msg->getSock(), answer);
 }
 
+/**
+The function is handling the get rooms request. (205)
+Input: the recieved message.
+Output: none.
+**/
 void TriviaServer::handleGetRooms(RecievedMessage * msg)
 {
 	string answer = "106";
@@ -204,6 +240,11 @@ void TriviaServer::handleGetRooms(RecievedMessage * msg)
 	Helper::sendData(msg->getSock(), answer);
 }
 
+/**
+The function is handling the get best scores request. (223)
+Input: the recieved message.
+Output: none
+**/
 void TriviaServer::handleGetBestScores(RecievedMessage * msg)
 {
 	string answer = "124";
@@ -224,6 +265,11 @@ void TriviaServer::handleGetBestScores(RecievedMessage * msg)
 	Helper::sendData(msg->getSock(), answer);
 }
 
+/**
+The function is handling the get personal status request. (225)
+Input: the recieved message.
+Output: none.
+**/
 void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg)
 {
 	string answer = "126";
@@ -233,6 +279,11 @@ void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg)
 	Helper::sendData(msg->getSock(), answer);
 }
 
+/**
+The function is handling all the recieved messages from the whole users.
+Input: none.
+Output: none
+**/
 void TriviaServer::handleRecievedMessages()
 {
 	std::unique_lock<mutex> locker(_mtxRecievedMessages);
@@ -309,6 +360,11 @@ void TriviaServer::handleRecievedMessages()
 	}
 }
 
+/**
+The function adding a recieved message the the recieved messages queue.
+Input: the recieved message to add.
+Output: none
+**/
 void TriviaServer::addRecievedMessage(RecievedMessage * msg)
 {
 	// critical section start
@@ -319,6 +375,11 @@ void TriviaServer::addRecievedMessage(RecievedMessage * msg)
 	// critical section end
 }
 
+/**
+The function builds a recieved message object.
+Input: the client socket and the msg code.
+Output: pointer to the new recieved message.
+**/
 RecievedMessage * TriviaServer::buildRecievedMessage(SOCKET client_socket, int msgCode)
 {
 	//Codes without values: 201, 205, 211, 215, 217, 222, 223, 225, 299
@@ -387,9 +448,23 @@ RecievedMessage * TriviaServer::buildRecievedMessage(SOCKET client_socket, int m
 	return output;
 }
 
+/**
+The function returns pointer to the user with the name that the function gets.
+Input: the user's name.
+Output: pointer to user with this name, nullptr if there is no user with this name.
+**/
 User * TriviaServer::getUserByName(string name)
 {
-	return nullptr;
+	map<SOCKET, User*>::iterator currUser = _connectedUsers.begin();
+	while (currUser != _connectedUsers.end() && currUser->second->getUsername() != name)
+	{
+		currUser++;
+	}
+	if (currUser == _connectedUsers.end())
+	{
+		return nullptr;
+	}
+	return currUser->second;
 }
 
 /**
@@ -424,6 +499,11 @@ Room* TriviaServer::getRoomById(int roomId)
 	return room->second;
 }
 
+/**
+The function is handling the sign up request. (203)
+Input: the recieved message.
+Output: true if succeed, false if not.
+**/
 bool TriviaServer::handleSignup(RecievedMessage* msg)
 {
 	string username = (*msg->getValues())[0];
@@ -454,6 +534,11 @@ bool TriviaServer::handleSignup(RecievedMessage* msg)
 	return true;
 }
 
+/**
+The function is handling the sign out request. (201)
+Input: the recieved message.
+Output: none.
+**/
 void TriviaServer::handleSignout(RecievedMessage* msg)
 {
 	User* u;
@@ -476,6 +561,11 @@ void TriviaServer::handleSignout(RecievedMessage* msg)
 	}
 }
 
+/**
+The function is handling the leave game request.(222)
+Input: the recieved message.
+Output: none.
+**/
 void TriviaServer::handleLeaveGame(RecievedMessage* msg)
 {
 	Game* g = msg->getUser()->getGame();
@@ -488,6 +578,11 @@ void TriviaServer::handleLeaveGame(RecievedMessage* msg)
 	}
 }
 
+/**
+The function is handling the start game request. (217)
+Input: the recieved message.
+Output: none.
+**/
 void TriviaServer::handleStartGame(RecievedMessage* msg)
 {
 	Game *g;
@@ -519,6 +614,11 @@ void TriviaServer::handleStartGame(RecievedMessage* msg)
 	}
 }
 
+/**
+The function is handling the player answer message. (219)
+Input: the recieved message.
+Output: none
+**/
 void TriviaServer::handlePlayerAnswer(RecievedMessage* msg)
 {
 	Game* g = msg->getUser()->getGame();
@@ -535,6 +635,11 @@ void TriviaServer::handlePlayerAnswer(RecievedMessage* msg)
 	}
 }
 
+/**
+The function is handling the create room request. (213)
+Input: the recieved message.
+Output: true if succeed, false if not
+**/
 bool TriviaServer::handleCreateRoom(RecievedMessage* msg)
 {
 	User* curr = msg->getUser();
@@ -554,6 +659,11 @@ bool TriviaServer::handleCreateRoom(RecievedMessage* msg)
 	}
 }
 
+/**
+The function is handling the close room request. (215)
+Input: the recieved message
+Output: true if closed successfully, false if not.
+**/
 bool TriviaServer::handleCloseRoom(RecievedMessage* msg)
 {
 	User* user = msg->getUser();
