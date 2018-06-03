@@ -155,7 +155,18 @@ bool TriviaServer::handleJoinRoom(RecievedMessage * msg)
 bool TriviaServer::handleLeaveRoom(RecievedMessage * msg)
 {
 	string answer = "112";
-	//TODO: finish handle leave room.
+	User* user = getUserBySocket(msg->getSock());
+	if (user == nullptr)
+	{
+		return false;
+	}
+	Room* room = getRoomById(stoi((*(msg->getValues()))[0]));
+	if (room != user->getRoom())
+	{
+		return false;
+	}
+
+	user->leaveRoom();
 }
 
 void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg)
