@@ -328,6 +328,7 @@ int DataBase::callbackCount(void* data, int argc, char** argv, char** azColName)
 		stringstream ss(argv[i]);
 		ss >> _lastInCol;
 	}
+	*(int*)data = argc;
 	return 0;
 }
 

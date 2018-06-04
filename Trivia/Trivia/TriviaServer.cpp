@@ -7,6 +7,7 @@ Output: None.
 **/
 TriviaServer::TriviaServer()
 {
+	_db = new DataBase();
 	WSADATA wsa;
 	WSAStartup(MAKEWORD(2, 2), &wsa);
 	_socket = ::socket(AF_INET, SOCK_STREAM, 0);
@@ -14,7 +15,6 @@ TriviaServer::TriviaServer()
 	if (_socket == INVALID_SOCKET)
 		throw std::exception(__FUNCTION__ " - socket");
 
-	_db = DataBase();
 }
 
 /**
@@ -24,6 +24,7 @@ Output: None.
 **/
 TriviaServer::~TriviaServer()
 {
+	delete _db;
 	try
 	{
 		::closesocket(_socket);
@@ -89,12 +90,13 @@ Output: none.
 **/
 void TriviaServer::clientHandler(SOCKET client_socket)
 {
+	cout << "Client has connected" << endl;
 	try
 	{
 		while (true)
 		{
 			int msgCode = Helper::getMessageTypeCode(client_socket);
-			buildRecievedMessage(client_socket, msgCode);
+			addRecievedMessage(buildRecievedMessage(client_socket, msgCode));
 		}
 	}
 	catch (const std::exception&)
@@ -125,11 +127,11 @@ Output: pointer to the user if he connected successfully, nullptr if not.
 **/
 User * TriviaServer::handleSignin(RecievedMessage * msg)
 {
-	if (_db.isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
+	if (_db->isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
 	{
 		return msg->getUser();
 	}
-	else if (!_db.isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
+	else if (!_db->isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
 	{
 		Helper::sendData(msg->getSock(), Helper::getPaddedNumber(SIGN_IN_RESPONSE_WRONG_DETAILS, 4));
 	}
@@ -253,7 +255,7 @@ Output: none
 void TriviaServer::handleGetBestScores(RecievedMessage * msg)
 {
 	string answer = "124";
-	vector<string> bestScores = _db.getBestScores();
+	vector<string> bestScores = _db->getBestScores();
 	for (unsigned int i = 0; i < bestScores.size(); i++)
 	{
 		answer += Helper::getPaddedNumber(bestScores[i].length(), 2);
@@ -278,7 +280,7 @@ Output: none.
 void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg)
 {
 	string answer = "126";
-	vector<string> personalStatus = _db.getPersonalStatus(msg->getUser()->getUsername());
+	vector<string> personalStatus = _db->getPersonalStatus(msg->getUser()->getUsername());
 	answer += personalStatus[0] + personalStatus[1] + personalStatus[2] + personalStatus[3];
 	
 	Helper::sendData(msg->getSock(), answer);
@@ -313,7 +315,10 @@ void TriviaServer::handleRecievedMessages()
 				handleSignout(currMsg);
 				break;
 			case SIGN_UP_REQUEST:
-				handleSignup(currMsg);
+				if (handleSignup(currMsg))
+				{
+					_connectedUsers.insert(currMsg->getSock(), new User(currMsg->getValues()[0], currMsg->getSock()));
+				}
 				break;
 			case AVAILABLE_ROOMS_REQUEST:
 				handleGetRooms(currMsg);
@@ -524,12 +529,12 @@ bool TriviaServer::handleSignup(RecievedMessage* msg)
 		Helper::sendData(msg->getSock(), to_string(SIGN_UP_RESPONSE_USERNAME_ILLEGAL));
 		return false;
 	}
-	if (_db.isUserExists(username))
+	if (_db->isUserExists(username))
 	{
 		Helper::sendData(msg->getSock(), to_string(SIGN_UP_RESPONSE_ALREADY_EXISTS));
 		return false;
 	}
-	if (!_db.addNewUser(username, password, email))
+	if (!_db->addNewUser(username, password, email))
 	{
 		Helper::sendData(msg->getSock(), to_string(SIGN_UP_RESPONSE_OTHER));
 		return false;
@@ -594,7 +599,7 @@ void TriviaServer::handleStartGame(RecievedMessage* msg)
 	Room* r = msg->getUser()->getRoom();
 	try
 	{
-		g = new Game(msg->getUser()->getRoom()->getUsers(), msg->getUser()->getRoom()->getQuestionsNo(), _db);
+		g = new Game(msg->getUser()->getRoom()->getUsers(), msg->getUser()->getRoom()->getQuestionsNo(), *_db);
 		map<int, Room*>::iterator it = _roomsList.begin();
 		for (it; it != _roomsList.end(); it++)
 		{

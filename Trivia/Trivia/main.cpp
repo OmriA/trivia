@@ -60,6 +60,8 @@ void checkIsUserAndPassMatch(DataBase* db)
 
 int main()
 {
+	/*DataBase* db = new DataBase();
+	checkIsUserExists(db);*/
 	try
 	{
 		TriviaServer s;

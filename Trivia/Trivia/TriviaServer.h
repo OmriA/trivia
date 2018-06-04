@@ -22,7 +22,7 @@ class TriviaServer
 private:
 	SOCKET _socket;
 	map<SOCKET, User*> _connectedUsers;
-	DataBase _db;
+	DataBase* _db;
 	map<int, Room*> _roomsList;
 	int _roomIDaux;
 	mutex _mtxRecievedMessages;
