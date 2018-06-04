@@ -7,7 +7,9 @@ Output: None.
 **/
 TriviaServer::TriviaServer()
 {
-	_socket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	WSADATA wsa;
+	WSAStartup(MAKEWORD(2, 2), &wsa);
+	_socket = ::socket(AF_INET, SOCK_STREAM, 0);
 
 	if (_socket == INVALID_SOCKET)
 		throw std::exception(__FUNCTION__ " - socket");
