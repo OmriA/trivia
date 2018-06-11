@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TriviaClient
 {
-    public partial class main : Form
+    public partial class Title : Form
     {
-        public main()
+        public Title()
         {
             InitializeComponent();
         }
@@ -28,11 +28,6 @@ namespace TriviaClient
         }
 
         private void PNL_LAYER_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

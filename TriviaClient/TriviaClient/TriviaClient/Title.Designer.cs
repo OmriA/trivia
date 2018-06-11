@@ -1,6 +1,6 @@
 ﻿namespace TriviaClient
 {
-    partial class main
+    partial class Title
     {
         /// <summary>
         /// Required designer variable.
@@ -156,7 +156,6 @@
             this.TXT_Username.Size = new System.Drawing.Size(273, 32);
             this.TXT_Username.TabIndex = 10;
             this.TXT_Username.Text = "user";
-            this.TXT_Username.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // TXT_Password
             // 
