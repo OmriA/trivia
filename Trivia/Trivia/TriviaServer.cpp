@@ -102,6 +102,7 @@ void TriviaServer::clientHandler(SOCKET client_socket)
 	catch (const std::exception&)
 	{
 		::closesocket(client_socket);
+		cout << "client Disconnected" << endl;
 	}
 }
 
@@ -118,6 +119,8 @@ void TriviaServer::safeDeleteUser(RecievedMessage * msg)
 		::closesocket(msg->getSock());
 	}
 	catch (...) {}
+
+	cout << "client Disconnected" << endl;
 }
 
 /**
@@ -127,17 +130,20 @@ Output: pointer to the user if he connected successfully, nullptr if not.
 **/
 User * TriviaServer::handleSignin(RecievedMessage * msg)
 {
+	map<SOCKET, User*>::iterator it = _connectedUsers.find(msg->getSock());
+	if (it != _connectedUsers.end())
+	{
+		Helper::sendData(msg->getSock(), to_string(SIGN_IN_RESPONSE_ALREADY_CONNECTED));
+		return nullptr;
+	}
+
 	if (_db->isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
 	{
-		return msg->getUser();
-	}
-	else if (!_db->isUserAndPassMatch(((*(msg->getValues()))[0]), ((*(msg->getValues()))[1])))
-	{
-		Helper::sendData(msg->getSock(), Helper::getPaddedNumber(SIGN_IN_RESPONSE_WRONG_DETAILS, 4));
+		return new User(msg->getValues()->at(0), msg->getSock());
 	}
 	else
 	{
-		Helper::sendData(msg->getSock(), Helper::getPaddedNumber(SIGN_IN_RESPONSE_ALREADY_CONNECTED, 4));
+		Helper::sendData(msg->getSock(), Helper::getPaddedNumber(SIGN_IN_RESPONSE_WRONG_DETAILS, 4));
 	}
 	return nullptr;
 }
@@ -309,7 +315,14 @@ void TriviaServer::handleRecievedMessages()
 			switch (msgCode)
 			{
 			case SIGN_IN_REQUEST:
-				handleSignin(currMsg);
+			{
+				User* user = handleSignin(currMsg);
+				if (user != nullptr)
+				{
+					Helper::sendData(currMsg->getSock(), to_string(SIGN_IN_RESPONSE_SUCCESS));
+					_connectedUsers.insert(std::pair<SOCKET, User*>(currMsg->getSock(), new User(currMsg->getValues()->at(0), currMsg->getSock())));
+				}
+			}
 				break;
 			case SIGN_OUT_REQUEST:
 				handleSignout(currMsg);
@@ -317,7 +330,7 @@ void TriviaServer::handleRecievedMessages()
 			case SIGN_UP_REQUEST:
 				if (handleSignup(currMsg))
 				{
-					_connectedUsers.insert(currMsg->getSock(), new User(currMsg->getValues()[0], currMsg->getSock()));
+					_connectedUsers.insert(std::pair<SOCKET, User*>(currMsg->getSock(), new User(currMsg->getValues()->at(0), currMsg->getSock())));
 				}
 				break;
 			case AVAILABLE_ROOMS_REQUEST:
