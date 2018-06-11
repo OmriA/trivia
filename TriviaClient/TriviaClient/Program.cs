@@ -21,11 +21,12 @@ namespace TriviaClient
             bool flag = false, flagConnected = false;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            while (flag != true)
+            while (!flag && !flagConnected)
             {
                 try
                 {
                     client.Connect(serverEndPoint);
+                    flagConnected = true;
                 }
                 catch
                 {
@@ -34,7 +35,6 @@ namespace TriviaClient
                         flag = true;
                     }
                 }
-                
             }
             while (flagConnected == true)
             {
