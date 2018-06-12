@@ -101,8 +101,9 @@ void TriviaServer::clientHandler(SOCKET client_socket)
 	}
 	catch (const std::exception&)
 	{
+		safeDeleteUser(&RecievedMessage(client_socket, 0));
 		::closesocket(client_socket);
-		cout << "client Disconnected" << endl;
+		cout << "client Disconnected (Socket " + to_string(client_socket) + ")" << endl;
 	}
 }
 
@@ -113,14 +114,13 @@ Output: none.
 **/
 void TriviaServer::safeDeleteUser(RecievedMessage * msg)
 {
+	cout << _connectedUsers[msg->getSock()]->getUsername() + "client Disconnected" << endl;
 	_connectedUsers.erase(msg->getSock());
 	try
 	{
 		::closesocket(msg->getSock());
 	}
 	catch (...) {}
-
-	cout << "client Disconnected" << endl;
 }
 
 /**
@@ -130,8 +130,8 @@ Output: pointer to the user if he connected successfully, nullptr if not.
 **/
 User * TriviaServer::handleSignin(RecievedMessage * msg)
 {
-	map<SOCKET, User*>::iterator it = _connectedUsers.find(msg->getSock());
-	if (it != _connectedUsers.end())
+	User* user = getUserByName(msg->getValues()->at(0));
+	if (user != nullptr)
 	{
 		Helper::sendData(msg->getSock(), to_string(SIGN_IN_RESPONSE_ALREADY_CONNECTED));
 		return nullptr;
@@ -326,22 +326,21 @@ void TriviaServer::handleRecievedMessages()
 				if (user != nullptr)
 				{
 					Helper::sendData(currMsg->getSock(), to_string(SIGN_IN_RESPONSE_SUCCESS));
-					_connectedUsers.insert(std::pair<SOCKET, User*>(currMsg->getSock(), new User(currMsg->getValues()->at(0), currMsg->getSock())));
+					_connectedUsers.insert(std::pair<SOCKET, User*>(currMsg->getSock(), user));
 					cout << currMsg->getValues()->at(0) + " connected successfully" << endl;
 				}
 			}
 			break;
 			case SIGN_OUT_REQUEST:
+				cout << currMsg->getUser()->getUsername() + " disconnecting..." << endl;
 				handleSignout(currMsg);
-				cout << currMsg->getUser()->getUsername() + " disconnected successfully" << endl;
+				cout << "Disconnected successfully" << endl;
 				break;
 			case SIGN_UP_REQUEST:
-				handleSignup(currMsg);
-				cout << currMsg->getValues()->at(0) + " registered successfully" << endl;
-				/*if (handleSignup(currMsg))
+				if (handleSignup(currMsg))
 				{
-					_connectedUsers.insert(std::pair<SOCKET, User*>(currMsg->getSock(), new User(currMsg->getValues()->at(0), currMsg->getSock())));
-				}*/
+					cout << currMsg->getValues()->at(0) + " registered successfully" << endl;
+				}
 				break;
 			case AVAILABLE_ROOMS_REQUEST:
 				handleGetRooms(currMsg);
@@ -454,7 +453,8 @@ RecievedMessage * TriviaServer::buildRecievedMessage(SOCKET client_socket, int m
 		(client_socket, Helper::getIntPartFromSocket(client_socket, 2))); //email
 		break;
 
-	case USERS_IN_ROOM_REQUEST || ROOM_JOIN_REQUEST:
+	case USERS_IN_ROOM_REQUEST:
+	case ROOM_JOIN_REQUEST:
 		values.push_back(Helper::getStringPartFromSocket(client_socket, 4)); //room id
 		break;
 
@@ -576,24 +576,10 @@ Output: none.
 **/
 void TriviaServer::handleSignout(RecievedMessage* msg)
 {
-	User* u;
-	if (u = msg->getUser())
-	{
-		handleCloseRoom(msg);
-		handleLeaveRoom(msg);
-		handleLeaveGame(msg);
-		map<SOCKET, User*>::iterator it = _connectedUsers.begin();
-		while (it != _connectedUsers.end() && it->first != u->getSocket())
-		{
-			it++;
-		}
-		if (it->first == u->getSocket())
-		{
-			delete it->second;
-			_connectedUsers.erase(it);
-
-		}
-	}
+	handleCloseRoom(msg);
+	handleLeaveRoom(msg);
+	handleLeaveGame(msg);
+	_connectedUsers.erase(msg->getSock());
 }
 
 /**
