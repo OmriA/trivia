@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Program.cs;
 namespace TriviaClient
 {
     public partial class Title : Form
@@ -19,7 +19,7 @@ namespace TriviaClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void BTN_Quit_Click(object sender, EventArgs e)
@@ -30,6 +30,14 @@ namespace TriviaClient
         private void PNL_LAYER_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void BTN_SignIn_Click(object sender, EventArgs e)
+        {
+            
+            byte[] buffer = new ASCIIEncoding().GetBytes("200");
+            clientStream.Write(buffer, 0, buffer.Length);
+            clientStream.Flush();
         }
     }
 }

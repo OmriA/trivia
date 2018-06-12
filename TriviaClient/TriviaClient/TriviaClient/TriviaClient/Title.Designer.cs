@@ -115,9 +115,11 @@
             this.BTN_SignIn.TabIndex = 7;
             this.BTN_SignIn.Text = "Sign In";
             this.BTN_SignIn.UseVisualStyleBackColor = true;
+            this.BTN_SignIn.Click += new System.EventHandler(this.BTN_SignIn_Click);
             // 
             // BTN_JoinRoom
             // 
+            this.BTN_JoinRoom.Enabled = false;
             this.BTN_JoinRoom.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_JoinRoom.Location = new System.Drawing.Point(252, 341);
             this.BTN_JoinRoom.Name = "BTN_JoinRoom";
@@ -128,6 +130,7 @@
             // 
             // BTN_CreateRoom
             // 
+            this.BTN_CreateRoom.Enabled = false;
             this.BTN_CreateRoom.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_CreateRoom.Location = new System.Drawing.Point(252, 412);
             this.BTN_CreateRoom.Name = "BTN_CreateRoom";
@@ -138,6 +141,7 @@
             // 
             // BTN_MyStatus
             // 
+            this.BTN_MyStatus.Enabled = false;
             this.BTN_MyStatus.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_MyStatus.Location = new System.Drawing.Point(252, 484);
             this.BTN_MyStatus.Name = "BTN_MyStatus";
@@ -148,6 +152,7 @@
             // 
             // BTN_BestScores
             // 
+            this.BTN_BestScores.Enabled = false;
             this.BTN_BestScores.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_BestScores.Location = new System.Drawing.Point(252, 562);
             this.BTN_BestScores.Name = "BTN_BestScores";
