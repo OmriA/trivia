@@ -90,7 +90,7 @@ Output: none.
 **/
 void TriviaServer::clientHandler(SOCKET client_socket)
 {
-	cout << "Client has connected" << endl;
+	cout << "Client has connected (Socket " + to_string(client_socket) + ")" << endl;
 	try
 	{
 		while (true)
@@ -198,7 +198,7 @@ bool TriviaServer::handleLeaveRoom(RecievedMessage * msg)
 	{
 		return false;
 	}
-	Room* room = getRoomById(stoi((*(msg->getValues()))[0]));
+	Room* room = getUserBySocket(msg->getSock())->getRoom();
 	if (room != user->getRoom())
 	{
 		return false;
@@ -288,8 +288,12 @@ void TriviaServer::handleGetPersonalStatus(RecievedMessage * msg)
 	string answer = "126";
 	vector<string> personalStatus = _db->getPersonalStatus(msg->getUser()->getUsername());
 	answer += personalStatus[0] + personalStatus[1] + personalStatus[2] + personalStatus[3];
-	
+
 	Helper::sendData(msg->getSock(), answer);
+}
+
+bool TriviaServer::isNotEmpty() {
+	return _queRecievedMessages.size() != 0;
 }
 
 /**
@@ -299,15 +303,17 @@ Output: none
 **/
 void TriviaServer::handleRecievedMessages()
 {
-	std::unique_lock<mutex> locker(_mtxRecievedMessages);
 	while (true)
 	{
-		// critical section start
-		_condRecievedMessages.wait(locker);
-		RecievedMessage* currMsg = _queRecievedMessages.front();
-		_queRecievedMessages.pop();
-		_mtxRecievedMessages.unlock();
-		// critical section end
+		RecievedMessage* currMsg = nullptr;
+		{
+			std::unique_lock<mutex> locker(_mtxRecievedMessages);
+			// critical section start
+			_condRecievedMessages.wait(locker, [this] {return !_queRecievedMessages.empty(); });
+			currMsg = _queRecievedMessages.front();
+			_queRecievedMessages.pop();
+			// critical section end
+		}
 
 		int msgCode = currMsg->getMessageCode();
 		try
@@ -321,17 +327,21 @@ void TriviaServer::handleRecievedMessages()
 				{
 					Helper::sendData(currMsg->getSock(), to_string(SIGN_IN_RESPONSE_SUCCESS));
 					_connectedUsers.insert(std::pair<SOCKET, User*>(currMsg->getSock(), new User(currMsg->getValues()->at(0), currMsg->getSock())));
+					cout << currMsg->getValues()->at(0) + " connected successfully" << endl;
 				}
 			}
-				break;
+			break;
 			case SIGN_OUT_REQUEST:
 				handleSignout(currMsg);
+				cout << currMsg->getUser()->getUsername() + " disconnected successfully" << endl;
 				break;
 			case SIGN_UP_REQUEST:
-				if (handleSignup(currMsg))
+				handleSignup(currMsg);
+				cout << currMsg->getValues()->at(0) + " registered successfully" << endl;
+				/*if (handleSignup(currMsg))
 				{
 					_connectedUsers.insert(std::pair<SOCKET, User*>(currMsg->getSock(), new User(currMsg->getValues()->at(0), currMsg->getSock())));
-				}
+				}*/
 				break;
 			case AVAILABLE_ROOMS_REQUEST:
 				handleGetRooms(currMsg);
@@ -346,7 +356,10 @@ void TriviaServer::handleRecievedMessages()
 				handleLeaveRoom(currMsg);
 				break;
 			case ROOM_CREATE_REQUEST:
-				handleCreateRoom(currMsg);
+				if (handleCreateRoom(currMsg))
+				{
+					cout << "Room " << to_string(_roomIDaux - 1) + " has created by " + currMsg->getUser()->getUsername() << endl;
+				}
 				break;
 			case ROOM_CLOSE_REQUEST:
 				handleCloseRoom(currMsg);
@@ -391,11 +404,10 @@ Output: none
 void TriviaServer::addRecievedMessage(RecievedMessage * msg)
 {
 	// critical section start
-	_mtxRecievedMessages.lock();
+	std::lock_guard<mutex> lock(_mtxRecievedMessages);
 	_queRecievedMessages.push(msg);
-	_condRecievedMessages.notify_one();
-	_mtxRecievedMessages.unlock();
 	// critical section end
+	_condRecievedMessages.notify_all();
 }
 
 /**

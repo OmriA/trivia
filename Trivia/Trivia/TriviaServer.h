@@ -52,6 +52,8 @@ private:
 	void handleGetBestScores(RecievedMessage* msg);
 	void handleGetPersonalStatus(RecievedMessage* msg);
 
+	bool isNotEmpty();
+
 	void handleRecievedMessages();
 	void addRecievedMessage(RecievedMessage* msg);
 	RecievedMessage* buildRecievedMessage(SOCKET client_socket, int msgCode);

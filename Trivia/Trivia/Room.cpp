@@ -124,7 +124,7 @@ Output: The room id
 */
 int Room::getID()
 {
-	return this->_id;
+	return _id;
 }
 
 /*
