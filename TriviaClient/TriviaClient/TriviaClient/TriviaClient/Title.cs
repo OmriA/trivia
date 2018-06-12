@@ -7,13 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Program.cs;
+using System.Net.Sockets;
 namespace TriviaClient
 {
     public partial class Title : Form
     {
-        public Title()
+        private TcpClient client;
+
+        public Title(TcpClient loClient)
         {
+            this.client = loClient;
             InitializeComponent();
         }
 
