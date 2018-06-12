@@ -39,6 +39,7 @@ namespace TriviaClient
             
             if (flagConnected == true)
             {
+                NetworkStream clientStream = client.GetStream();
                 Application.Run(new Title());
             }
         }
