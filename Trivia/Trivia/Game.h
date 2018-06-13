@@ -4,9 +4,10 @@
 #include "DataBase.h"
 #include "User.h"
 #include <map>
-
+#include <sstream>
+#include <string>
 using std::map;
-
+using std::stringstream;
 class User;
 class DataBase;
 

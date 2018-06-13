@@ -612,12 +612,9 @@ void TriviaServer::handleStartGame(RecievedMessage* msg)
 	{
 		g = new Game(msg->getUser()->getRoom()->getUsers(), msg->getUser()->getRoom()->getQuestionsNo(), *_db);
 		map<int, Room*>::iterator it = _roomsList.begin();
-		for (it; it != _roomsList.end(); it++)
+		while (it != _roomsList.end() && it->second == msg->getUser()->getRoom())
 		{
-			if (it->second == msg->getUser()->getRoom())
-			{
-				break;
-			}
+			it++;
 		}
 		_roomsList.erase(it);
 		vector<User*> users = r->getUsers();

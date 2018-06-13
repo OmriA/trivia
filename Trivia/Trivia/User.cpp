@@ -156,7 +156,7 @@ int User::closeRoom()
 	{
 		return -1;
 	}
-	this->_currRoom->closeRoom();
+	this->_currRoom->closeRoom(this);
 	int room_id = this->_currRoom->getID();
 	delete _currRoom;
 	_currRoom = nullptr;

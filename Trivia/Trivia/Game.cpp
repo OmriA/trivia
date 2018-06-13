@@ -172,19 +172,20 @@ void Game::sendQuestionToAllUsers()
 	string question = _questions[_question_no]->getQuestion();
 	string* answers = _questions[_question_no]->getAnswers();
 	stringstream message;
+	string s;
 	message << to_string(QUESTION) << Helper::getPaddedNumber(question.length(), 3) << question;
 	for (i = 0; i < ANSWER_NUM; i++)
 	{
-		string s = Helper::getPaddedNumber(answers[i].length(), 3);
+		s = Helper::getPaddedNumber(answers[i].length(), 3);
 		message << s << answers[i];
 	}
-	for (i = 0; i < _players.size(); i++)
+	vector<User*>::iterator it = _players.begin();
+	for (it; it != _players.end(); it++)
 	{
 		try
 		{
-			_players[i]->send(message.str());
+			(**it).send(message.str());
 		}
-		catch(...)
-		{}
+		catch (...) {}
 	}
 }
