@@ -98,7 +98,7 @@ bool DataBase::isUserAndPassMatch(string username, string password)
 	{
 		return false;
 	}
-	string* userInfo = new string[2]; 
+	string* userInfo = new string[2];
 	string queryString = "SELECT username, password FROM t_users WHERE username='" + username + "';";
 	const char* query = queryString.c_str();
 	char* errmsg = 0;
@@ -224,41 +224,43 @@ vector<string> DataBase::getPersonalStatus(string username)
 {
 	vector<string> status;
 	char* zErrMsg = 0;
+	string countFuncOutput = "";
 	//gets number of games
 	string query = "select count(distinct game_id) from t_players_answers where username=\"" + username + "\";";
-	int rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
+	int rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
 		return status;
 	}
-	status.push_back(Helper::getPaddedNumber(_lastInCol, 4));
+	status.push_back(Helper::getPaddedNumber(stoi(countFuncOutput), 4));
 	//gets number of correct answers
 	query = "select count(*) from t_players_answers where is_correct=1 and username=\"" + username + "\";";
-	rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
+	rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
 		return status;
 	}
-	status.push_back(Helper::getPaddedNumber(_lastInCol, 6));
+	status.push_back(Helper::getPaddedNumber(stoi(countFuncOutput), 6));
 	//gets number of wrong answers
 	query = "select count(*) from t_players_answers where is_correct=0 and username=\"" + username + "\";";
-	rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
+	rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
 		return status;
 	}
-	status.push_back(Helper::getPaddedNumber(_lastInCol, 6));
+	status.push_back(Helper::getPaddedNumber(stoi(countFuncOutput), 6));
 	//gets avg number of time
-	query = "select answer_time from t_players_answers where username=\"" + username + "\";";
-	_lastInCol = 0;
+	query = "select avg(answer_time) from t_players_answers where username=\"" + username + "\";";
 	_idVector.clear();
-	rc = sqlite3_exec(_db, query.c_str(), callbackPersonalStatus, 0, &zErrMsg);
-	_lastInCol = accumulate(_idVector.begin(), _idVector.end(), 0) * 100 / _lastInCol;
+	rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
+	float time = roundf(std::stod(countFuncOutput) * 100) / 100;
+	cout << time;
+
 	if (rc != SQLITE_OK)
 	{
 		return status;
 	}
-	status.push_back(Helper::getPaddedNumber(_lastInCol, 4));
+	status.push_back(Helper::getPaddedNumber((int)(time * 100), 4));
 	return status;
 }
 
@@ -352,23 +354,23 @@ int DataBase::callbackBestScores(void* data, int argc, char** argv, char** azCol
 	return 0;
 }
 
-int DataBase::callbackPersonalStatus(void* data, int argc, char** argv, char** azColName)
-{
-	int x = 0, i = 0;
-	for (i = 0; i < argc; i++)
-	{
-		stringstream ss(argv[i]);
-		ss >> x;
-		_idVector.push_back(x);
-	}
-	_lastInCol++;
-	return 0;
-}
-
 int DataBase::callbackUserPass(void* data, int argc, char** argv, char** azColName)
 {
 	(*(string**)data)[0] = argv[0];
 	(*(string**)data)[1] = argv[1];
+	return 0;
+}
+
+int DataBase::callbackCountFunc(void * data, int argc, char ** argv, char ** azColName)
+{
+	if (argv[0] != nullptr)		//If has a value;
+	{
+		*(string*)data = (string)argv[0];
+	}
+	else
+	{
+		*(string*)data = "0";
+	}
 	return 0;
 }
 
