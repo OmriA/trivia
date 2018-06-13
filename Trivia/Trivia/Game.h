@@ -8,6 +8,7 @@
 #include <string>
 using std::map;
 using std::stringstream;
+using std::pair;
 class User;
 class DataBase;
 
