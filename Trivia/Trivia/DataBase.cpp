@@ -254,7 +254,6 @@ vector<string> DataBase::getPersonalStatus(string username)
 	_idVector.clear();
 	rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
 	float time = roundf(std::stof(countFuncOutput) * 100) / 100;
-	cout << time;
 
 	if (rc != SQLITE_OK)
 	{

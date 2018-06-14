@@ -216,7 +216,7 @@ Output: none.
 void TriviaServer::handleGetUsersInRoom(RecievedMessage * msg)
 {
 	string answer = "108";
-	Room* room = getRoomById(stoi((*(msg->getValues()))[0]));
+	Room* room = getRoomById(stoi(msg->getValues()->at(0)));
 	if (room == nullptr)
 	{
 		answer += '0';
@@ -260,22 +260,22 @@ Output: none
 **/
 void TriviaServer::handleGetBestScores(RecievedMessage * msg)
 {
-	string answer = "124";
+	stringstream answer("124");
 	vector<string> bestScores = _db->getBestScores();
 	for (unsigned int i = 0; i < bestScores.size(); i++)
 	{
-		answer += Helper::getPaddedNumber(bestScores[i].length(), 2);
-		answer += bestScores[i];
+		answer << Helper::getPaddedNumber(bestScores[i].length(), 2);
+		answer << bestScores[i];
 	}
 	if (bestScores.size() < 3)
 	{
 		for (unsigned int i = 0; i < 3 - bestScores.size(); i++)
 		{
-			answer += "0000000";
+			answer << "0000000";
 		}
 	}
 
-	Helper::sendData(msg->getSock(), answer);
+	Helper::sendData(msg->getSock(), answer.str());
 }
 
 /**
@@ -670,8 +670,8 @@ bool TriviaServer::handleCreateRoom(RecievedMessage* msg)
 		vector<string>* values = msg->getValues();
 		if (curr->createRoom(_roomIDaux, (*values)[0], stoi((*values)[1], nullptr, 0), stoi((*values)[2], nullptr, 0), stoi((*values)[3], nullptr, 0)))
 		{
-			_roomIDaux++;
 			_roomsList[_roomIDaux] = curr->getRoom();
+			_roomIDaux++;
 			return true;
 		}
 		return false;

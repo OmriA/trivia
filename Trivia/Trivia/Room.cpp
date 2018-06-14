@@ -46,7 +46,6 @@ void Room::leaveRoom(User* user)
 	for (it; it != this->_users.end(); it++)
 	{
 		(**it).send(to_string(USERS_IN_ROOM_RESPONSE) + getUsersListMessage());
-		cout << (**it).getUsername() << " " << to_string(USERS_IN_ROOM_RESPONSE) + getUsersListMessage() << endl;
 	}
 }
 
