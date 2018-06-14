@@ -7,13 +7,19 @@ Input: the vector of players, the questions number, the database
 */
 Game::Game(const vector<User*>& players, int questionsNo, DataBase &db) : _players(players), _db(db), _question_no(questionsNo - 1), _currentTurnAnswers(0)
 {
-	insertGameToDB();
-	initQuestionsFromDB();
-	vector<User*>::iterator it = _players.begin();
-	for (it; it != _players.end(); it++)
+	if (insertGameToDB())
 	{
-		(**it).setGame(this);
-		_results.insert(pair<string, int>((**it).getUsername(), 0));
+		initQuestionsFromDB();
+		vector<User*>::iterator it = _players.begin();
+		for (it; it != _players.end(); it++)
+		{
+			(**it).setGame(this);
+			_results.insert(std::pair<string, int>((**it).getUsername(), 0));
+		}
+	}
+	else
+	{
+		throw std::exception();
 	}
 }
 
@@ -148,7 +154,8 @@ Output: True if succeeded, false otherwise
 */
 bool Game::insertGameToDB()
 {
-	return _gameId = _db.insertNewGame();
+	_gameId = _db.insertNewGame();
+	return _gameId != -1;
 }
 
 /*

@@ -114,7 +114,7 @@ Output: none.
 **/
 void TriviaServer::safeDeleteUser(RecievedMessage * msg)
 {
-	cout << _connectedUsers[msg->getSock()]->getUsername() + "client Disconnected" << endl;
+	cout << _connectedUsers[msg->getSock()]->getUsername() + " disconnected" << endl;
 	_connectedUsers.erase(msg->getSock());
 	try
 	{
@@ -192,7 +192,7 @@ Output: true if left room successfully, false if not.
 **/
 bool TriviaServer::handleLeaveRoom(RecievedMessage * msg)
 {
-	string answer = "112";
+	string answer = "1120";
 	User* user = getUserBySocket(msg->getSock());
 	if (user == nullptr)
 	{
@@ -352,7 +352,10 @@ void TriviaServer::handleRecievedMessages()
 				handleJoinRoom(currMsg);
 				break;
 			case ROOM_LEAVE_REQUEST:
-				handleLeaveRoom(currMsg);
+				if (handleLeaveRoom(currMsg))
+				{
+					Helper::sendData(currMsg->getSock(), to_string(ROOM_LEAVE_SUCCESS));
+				}
 				break;
 			case ROOM_CREATE_REQUEST:
 				if (handleCreateRoom(currMsg))
@@ -622,12 +625,13 @@ void TriviaServer::handleStartGame(RecievedMessage* msg)
 		for (itU; itU != users.end(); itU++)
 		{
 			(*itU)->setRoom(nullptr);
+			(*itU)->setGame(g);
 		}
 		g->sendFirstQuestion();
 	}
 	catch (...)
 	{
-		std::cout << "\nGame fail!\n";
+		std::cout << "Game fail!\n";
 		msg->getUser()->send(to_string(GAME_FAIL));
 	}
 }
@@ -664,8 +668,9 @@ bool TriviaServer::handleCreateRoom(RecievedMessage* msg)
 	if (curr)
 	{
 		vector<string>* values = msg->getValues();
-		if (curr->createRoom(++_roomIDaux, (*values)[0], stoi((*values)[1], nullptr, 0), stoi((*values)[2], nullptr, 0), stoi((*values)[3], nullptr, 0)))
+		if (curr->createRoom(_roomIDaux, (*values)[0], stoi((*values)[1], nullptr, 0), stoi((*values)[2], nullptr, 0), stoi((*values)[3], nullptr, 0)))
 		{
+			_roomIDaux++;
 			_roomsList[_roomIDaux] = curr->getRoom();
 			return true;
 		}

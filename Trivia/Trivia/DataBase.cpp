@@ -253,7 +253,7 @@ vector<string> DataBase::getPersonalStatus(string username)
 	query = "select avg(answer_time) from t_players_answers where username=\"" + username + "\";";
 	_idVector.clear();
 	rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
-	float time = roundf(std::stod(countFuncOutput) * 100) / 100;
+	float time = roundf(std::stof(countFuncOutput) * 100) / 100;
 	cout << time;
 
 	if (rc != SQLITE_OK)
@@ -273,19 +273,22 @@ int DataBase::insertNewGame()
 {
 
 	char* zErrMsg = 0;
-	string query = "insert into t_games(status, start_time) valeus(0, \"now\");";
-	int rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
+	string countOutput = "";
+	int numOfGames = 0;
+	string query = "select count(*) from t_games;";
+	int rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countOutput, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
-		return 0;
+		return -1;
 	}
-	query = "select count(*) from t_games;";
+	numOfGames = stoi(countOutput);
+	query = "insert into t_games(game_id, status, start_time) values(" + to_string(numOfGames + 1) + ", 0, \"now\");";
 	rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
-		return 0;
+		return -1;
 	}
-	return _lastInCol;
+	return numOfGames;
 }
 
 /*
