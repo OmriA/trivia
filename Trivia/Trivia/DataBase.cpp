@@ -172,12 +172,13 @@ vector<Question*> DataBase::initQuestions(int questionNo)
 
 /*
 This function gets returns the best scores
-Input: None
+Input: the output (can't return 2 variables) that will have the num of top players.
 Output: A vector of the best scores
 */
 //each string in vector is formatted like this: username+highest score (ex. 04Omri000012)
-vector<string> DataBase::getBestScores()
+vector<string> DataBase::getBestScores(int& numOfTopPlayers)
 {
+	numOfTopPlayers = 3;
 	vector<string> best;
 	char* zErrMsg = 0;
 	string query = "select username from t_users;";
@@ -217,6 +218,7 @@ vector<string> DataBase::getBestScores()
 		}
 		else
 		{
+			numOfTopPlayers--;
 			best.push_back("");
 		}
 	}

@@ -112,6 +112,12 @@ bool Game::handleAnswerFromUser(User* user, int answerNo, int time)
 		user->send(to_string(ANSWER_CORRECTNESS) + "1");
 		return handleNextTurn();
 	}
+	if (answerNo == 5)
+	{
+		_db.addAnswerToPlayer(getID(), user->getUsername(), _questions[_question_no]->getId(), "", false, time);
+		user->send(to_string(ANSWER_CORRECTNESS) + "0");
+		return handleNextTurn();
+	}
 	_db.addAnswerToPlayer(getID(), user->getUsername(), _questions[_question_no]->getId(), _questions[_question_no]->getAnswers()[answerNo - 1], false, time);
 	user->send(to_string(ANSWER_CORRECTNESS) + "0");
 	return handleNextTurn();

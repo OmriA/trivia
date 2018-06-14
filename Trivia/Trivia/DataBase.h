@@ -25,7 +25,7 @@ public:
 	bool addNewUser(string username, string password, string email);
 	bool isUserAndPassMatch(string username, string password);
 	vector<Question*> initQuestions(int questionNo);
-	vector<string> getBestScores();
+	vector<string> getBestScores(int& numOfTopPlayers);
 	vector<string> getPersonalStatus(string username);
 	int insertNewGame();
 	bool updateGameStatus(int gameId);
