@@ -44,14 +44,14 @@ bool DataBase::isUserExists(string username)
 {
 	string queryString = "SELECT * FROM t_users WHERE username=\"" + username + "\";";
 	const char* query = queryString.c_str();
-	char* errmsg = 0;
+	char* zErrMsg = 0;
 
 	int data = 0;
-	int succeed = sqlite3_exec(_db, query, callbackCount, (void*)&data, &errmsg);
+	int succeed = sqlite3_exec(_db, query, callbackCount, (void*)&data, &zErrMsg);
 	if (succeed != SQLITE_OK)
 	{
-		cout << "Error! " << errmsg << endl;
-		sqlite3_free(errmsg);
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 	}
 
 	if (data != 0)
@@ -75,12 +75,12 @@ bool DataBase::addNewUser(string username, string password, string email)
 	}
 	string queryString = "INSERT INTO t_users (username, password, email) VALUES('" + username + "','" + password + "','" + email + "');";
 	const char* query = queryString.c_str();
-	char* errmsg = 0;
-	int succeed = sqlite3_exec(_db, query, nullptr, 0, &errmsg);
+	char* zErrMsg = 0;
+	int succeed = sqlite3_exec(_db, query, nullptr, 0, &zErrMsg);
 	if (succeed != SQLITE_OK)
 	{
-		cout << "Error! " << errmsg << endl;
-		sqlite3_free(errmsg);
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return false;
 	}
 	return true;
@@ -101,12 +101,12 @@ bool DataBase::isUserAndPassMatch(string username, string password)
 	string* userInfo = new string[2];
 	string queryString = "SELECT username, password FROM t_users WHERE username='" + username + "';";
 	const char* query = queryString.c_str();
-	char* errmsg = 0;
-	int succeed = sqlite3_exec(_db, query, callbackUserPass, &userInfo, &errmsg);
+	char* zErrMsg = 0;
+	int succeed = sqlite3_exec(_db, query, callbackUserPass, &userInfo, &zErrMsg);
 	if (succeed != SQLITE_OK)
 	{
-		cout << "Error! " << errmsg << endl;
-		sqlite3_free(errmsg);
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return false;
 	}
 	bool flag = username == userInfo[0] && password == userInfo[1];
@@ -127,6 +127,8 @@ vector<Question*> DataBase::initQuestions(int questionNo)
 	int rc = sqlite3_exec(_db, query.c_str(), callbackId, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return q;
 	}
 	for (unsigned int i = 0; i < _idVector.size(); i++)
@@ -135,6 +137,8 @@ vector<Question*> DataBase::initQuestions(int questionNo)
 		int rc = sqlite3_exec(_db, query.c_str(), callbackQuestions, 0, &zErrMsg);
 		if (rc != SQLITE_OK)
 		{
+			cout << "Error! " << zErrMsg << endl;
+			sqlite3_free(zErrMsg);
 			return q;
 		}
 		string question = _questions;
@@ -142,6 +146,8 @@ vector<Question*> DataBase::initQuestions(int questionNo)
 		rc = sqlite3_exec(_db, query.c_str(), callbackQuestions, 0, &zErrMsg);
 		if (rc != SQLITE_OK)
 		{
+			cout << "Error! " << zErrMsg << endl;
+			sqlite3_free(zErrMsg);
 			return q;
 		}
 		string correctAns = _questions;
@@ -152,6 +158,8 @@ vector<Question*> DataBase::initQuestions(int questionNo)
 			int rc = sqlite3_exec(_db, query.c_str(), callbackQuestions, 0, &zErrMsg);
 			if (rc != SQLITE_OK)
 			{
+				cout << "Error! " << zErrMsg << endl;
+				sqlite3_free(zErrMsg);
 				return q;
 			}
 			answers.push_back(_questions);
@@ -178,6 +186,8 @@ vector<string> DataBase::getBestScores()
 	int rc = sqlite3_exec(_db, query.c_str(), callbackBestScores, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return best;
 	}
 
@@ -230,6 +240,8 @@ vector<string> DataBase::getPersonalStatus(string username)
 	int rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return status;
 	}
 	status.push_back(Helper::getPaddedNumber(stoi(countFuncOutput), 4));
@@ -238,6 +250,8 @@ vector<string> DataBase::getPersonalStatus(string username)
 	rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return status;
 	}
 	status.push_back(Helper::getPaddedNumber(stoi(countFuncOutput), 6));
@@ -246,6 +260,8 @@ vector<string> DataBase::getPersonalStatus(string username)
 	rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countFuncOutput, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return status;
 	}
 	status.push_back(Helper::getPaddedNumber(stoi(countFuncOutput), 6));
@@ -257,6 +273,8 @@ vector<string> DataBase::getPersonalStatus(string username)
 
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return status;
 	}
 	status.push_back(Helper::getPaddedNumber((int)(time * 100), 4));
@@ -278,6 +296,8 @@ int DataBase::insertNewGame()
 	int rc = sqlite3_exec(_db, query.c_str(), callbackCountFunc, &countOutput, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return -1;
 	}
 	numOfGames = stoi(countOutput);
@@ -285,6 +305,8 @@ int DataBase::insertNewGame()
 	rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return -1;
 	}
 	return numOfGames;
@@ -302,6 +324,8 @@ bool DataBase::updateGameStatus(int gameId)
 	int rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return false;
 	}
 	return true;
@@ -319,9 +343,32 @@ bool DataBase::addAnswerToPlayer(int gameId, string username, int questionId, st
 	int rc = sqlite3_exec(_db, query.c_str(), callbackCount, 0, &zErrMsg);
 	if (rc != SQLITE_OK)
 	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
 		return false;
 	}
 	return true;
+}
+
+/**
+(omri)
+The function returns the number of the questions in the database.
+Input: None.
+Output: The number of questions in the database or -1 if failed anywhere.
+**/
+int DataBase::getNumOfQuestions()
+{
+	string countOuput = "";
+	string query = "select count(*) from t_questions;";
+	char* zErrMsg = 0;
+	int rc = sqlite3_exec(_db, query.c_str() , callbackCountFunc, &countOuput, &zErrMsg);
+	if (rc != SQLITE_OK)
+	{
+		cout << "Error! " << zErrMsg << endl;
+		sqlite3_free(zErrMsg);
+		return -1;
+	}
+	return stoi(countOuput);
 }
 
 int DataBase::callbackCount(void* data, int argc, char** argv, char** azColName)

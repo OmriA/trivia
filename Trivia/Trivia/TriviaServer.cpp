@@ -665,7 +665,7 @@ Output: true if succeed, false if not
 bool TriviaServer::handleCreateRoom(RecievedMessage* msg)
 {
 	User* curr = msg->getUser();
-	if (curr)
+	if (curr && std::stoi(msg->getValues()->at(2)) <= _db->getNumOfQuestions())
 	{
 		vector<string>* values = msg->getValues();
 		if (curr->createRoom(_roomIDaux, (*values)[0], stoi((*values)[1], nullptr, 0), stoi((*values)[2], nullptr, 0), stoi((*values)[3], nullptr, 0)))
@@ -678,6 +678,7 @@ bool TriviaServer::handleCreateRoom(RecievedMessage* msg)
 	}
 	else
 	{
+		Helper::sendData(msg->getSock(), to_string(ROOM_CREATE_RESPONSE_TOO_MANY_QUESTIONS));
 		return false;
 	}
 }

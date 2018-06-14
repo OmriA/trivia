@@ -56,11 +56,16 @@ Output: if room is user is admin, closes room and returns id, else -1
 */
 int Room::closeRoom(User* user)
 {
+	if (user != _admin)
+	{
+		return -1;
+	}
 	vector<User*>::iterator it = _users.begin();
 	for (it; it != _users.end(); it++)
 	{
 		(**it).send(to_string(ROOM_CLOSE_RESPONSE));
 	}
+	cout << "Room " + to_string(_id) + " has closed by " + user->getUsername() << endl;
 	return _id;
 }
 

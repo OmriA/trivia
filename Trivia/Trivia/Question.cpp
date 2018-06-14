@@ -1,10 +1,11 @@
 #include "Question.h"
-#include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
+#include <algorithm>    // std::random_shuffle
+#include <vector>
+
 #define ONE 1
 #define TWO 2
 #define THREE 3
-#define FOUR 4
 
 /*
 This function is the c'tor
@@ -15,24 +16,17 @@ Question::Question(int id, string question, string correctAnswer, string answer2
 	this->_id = id;
 	this->_question = question;
 
+	_answers[0] = correctAnswer;
+	_answers[1] = answer2;
+	_answers[2] = answer3;
+	_answers[3] = answer4;
+
+	std::random_shuffle(&_answers[0], &_answers[3]);
+
 	int i = 0;
-	string answersArr[] = { correctAnswer, answer2, answer3, answer4 };
-	bool alreadyInit[] = { false, false, false, false };
-	while (i < 4)
-	{
-		srand((unsigned int)time(NULL));
-		int currAnsIndex = rand() % FOUR;
-		if (!alreadyInit[currAnsIndex])
-		{
-			if (i == 0)
-			{
-				_correctAnswerIndex = currAnsIndex;
-			}
-			alreadyInit[currAnsIndex] = true;
-			_answers[currAnsIndex] = answersArr[i];
-			i++;
-		}
-	}
+	while (_answers[i] != correctAnswer)
+		i++;
+	_correctAnswerIndex = i;
 }
 
 /*This function returns the question

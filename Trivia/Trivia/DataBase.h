@@ -30,6 +30,7 @@ public:
 	int insertNewGame();
 	bool updateGameStatus(int gameId);
 	bool addAnswerToPlayer(int gameId, string username, int questionId, string answer, bool isCorrect, int answerTime);
+	int getNumOfQuestions();
 
 private:
 	static int callbackCount(void* data, int argc, char** argv, char**azColName);
