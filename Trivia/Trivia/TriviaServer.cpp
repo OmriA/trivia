@@ -260,22 +260,22 @@ Output: none
 **/
 void TriviaServer::handleGetBestScores(RecievedMessage * msg)
 {
-	stringstream answer("124");
+	string answer = "124";
 	vector<string> bestScores = _db->getBestScores();
 	for (unsigned int i = 0; i < bestScores.size(); i++)
 	{
-		answer << Helper::getPaddedNumber(bestScores[i].length(), 2);
-		answer << bestScores[i];
+		//answer += Helper::getPaddedNumber(bestScores[i].length(), 2);
+		answer += bestScores[i];
 	}
 	if (bestScores.size() < 3)
 	{
 		for (unsigned int i = 0; i < 3 - bestScores.size(); i++)
 		{
-			answer << "0000000";
+			answer += "0000000";
 		}
 	}
 
-	Helper::sendData(msg->getSock(), answer.str());
+	Helper::sendData(msg->getSock(), answer);
 }
 
 /**

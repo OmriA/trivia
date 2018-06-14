@@ -14,13 +14,13 @@ Question::Question(int id, string question, string correctAnswer, string answer2
 {
 	this->_id = id;
 	this->_question = question;
-	srand((unsigned int)time(NULL));
 
 	int i = 0;
 	string answersArr[] = { correctAnswer, answer2, answer3, answer4 };
 	bool alreadyInit[] = { false, false, false, false };
 	while (i < 4)
 	{
+		srand((unsigned int)time(NULL));
 		int currAnsIndex = rand() % FOUR;
 		if (!alreadyInit[currAnsIndex])
 		{

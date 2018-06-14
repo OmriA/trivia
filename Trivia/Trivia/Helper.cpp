@@ -3,6 +3,7 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 
 
 // recieves the type code of the message from socket (first byte)
@@ -30,6 +31,8 @@ void Helper::sendData(SOCKET sc, std::string message)
 	{
 		throw std::exception("Error while sending message to client");
 	}
+
+	std::cout << "'" + message + "' was sent to socket " + std::to_string(sc) << std::endl;
 }
 
 int Helper::getIntPartFromSocket(SOCKET sc, int bytesNum)
