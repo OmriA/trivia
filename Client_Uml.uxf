@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>210</x>
+      <y>40</y>
+      <w>210</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>*Client*
+--
+-Sock: TcpClient
+-RecievedMessages: List&lt;string&gt;
+--
++Client(TcpClient sock)
++~Client()
++HandleMessage(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>450</x>
+      <y>40</y>
+      <w>370</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>-*TitleForm*
+--
+
+--
++Title()
+-BTN_SignIn_Click(object sender, EventArgs e): void
+-BTN_Signup_Click(object sender, EventArgs e): void
+-BTN_JoinRoom_Click(object sender, EventArgs e): void
+-BTN_CreateRoom_Click(object sender, EventArgs e): void
+-BTN_MyStatus_Click(object sender, EventArgs e): void
+-BTN_BestScores_Click(object sender, EventArgs e): void
+-BTN_Quit_Click(object sender, EventArgs e): void
+-BTN_SignOut_Click(object sender, EventArgs e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

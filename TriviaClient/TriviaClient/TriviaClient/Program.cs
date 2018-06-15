@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Net;
 using System.IO;
+
 namespace TriviaClient
 {
     static class Program
