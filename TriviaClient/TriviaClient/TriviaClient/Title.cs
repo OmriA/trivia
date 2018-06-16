@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace TriviaClient
 {
     public partial class Title : Form
     {
-        public Title()
+        private Client client;
+        public Title(Client c)
         {
+            client = c;
             InitializeComponent();
         }
 
@@ -30,6 +33,11 @@ namespace TriviaClient
         private void PNL_LAYER_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void BTN_SignIn_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

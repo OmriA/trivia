@@ -45,7 +45,7 @@
             // 
             // BTN_Quit
             // 
-            this.BTN_Quit.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_Quit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_Quit.Location = new System.Drawing.Point(368, 635);
             this.BTN_Quit.Name = "BTN_Quit";
             this.BTN_Quit.Size = new System.Drawing.Size(137, 43);
@@ -89,36 +89,37 @@
             // LBL_Password
             // 
             this.LBL_Password.AutoSize = true;
-            this.LBL_Password.Font = new System.Drawing.Font("Pretendo", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LBL_Password.Location = new System.Drawing.Point(14, 65);
             this.LBL_Password.Name = "LBL_Password";
-            this.LBL_Password.Size = new System.Drawing.Size(137, 25);
+            this.LBL_Password.Size = new System.Drawing.Size(108, 26);
             this.LBL_Password.TabIndex = 9;
             this.LBL_Password.Text = "Password";
             // 
             // LBL_Username
             // 
             this.LBL_Username.AutoSize = true;
-            this.LBL_Username.Font = new System.Drawing.Font("Pretendo", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_Username.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LBL_Username.Location = new System.Drawing.Point(14, 21);
             this.LBL_Username.Name = "LBL_Username";
-            this.LBL_Username.Size = new System.Drawing.Size(137, 25);
+            this.LBL_Username.Size = new System.Drawing.Size(113, 26);
             this.LBL_Username.TabIndex = 8;
             this.LBL_Username.Text = "Username";
             // 
             // BTN_SignIn
             // 
-            this.BTN_SignIn.Font = new System.Drawing.Font("Pretendo", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_SignIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_SignIn.Location = new System.Drawing.Point(436, 21);
             this.BTN_SignIn.Name = "BTN_SignIn";
             this.BTN_SignIn.Size = new System.Drawing.Size(149, 69);
             this.BTN_SignIn.TabIndex = 7;
             this.BTN_SignIn.Text = "Sign In";
             this.BTN_SignIn.UseVisualStyleBackColor = true;
+            this.BTN_SignIn.Click += new System.EventHandler(this.BTN_SignIn_Click);
             // 
             // BTN_JoinRoom
             // 
-            this.BTN_JoinRoom.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_JoinRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_JoinRoom.Location = new System.Drawing.Point(252, 341);
             this.BTN_JoinRoom.Name = "BTN_JoinRoom";
             this.BTN_JoinRoom.Size = new System.Drawing.Size(367, 43);
@@ -128,7 +129,7 @@
             // 
             // BTN_CreateRoom
             // 
-            this.BTN_CreateRoom.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_CreateRoom.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_CreateRoom.Location = new System.Drawing.Point(252, 412);
             this.BTN_CreateRoom.Name = "BTN_CreateRoom";
             this.BTN_CreateRoom.Size = new System.Drawing.Size(367, 43);
@@ -138,7 +139,7 @@
             // 
             // BTN_MyStatus
             // 
-            this.BTN_MyStatus.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_MyStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_MyStatus.Location = new System.Drawing.Point(252, 484);
             this.BTN_MyStatus.Name = "BTN_MyStatus";
             this.BTN_MyStatus.Size = new System.Drawing.Size(367, 43);
@@ -148,7 +149,7 @@
             // 
             // BTN_BestScores
             // 
-            this.BTN_BestScores.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_BestScores.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_BestScores.Location = new System.Drawing.Point(252, 562);
             this.BTN_BestScores.Name = "BTN_BestScores";
             this.BTN_BestScores.Size = new System.Drawing.Size(367, 43);
@@ -158,7 +159,7 @@
             // 
             // BTN_Signup
             // 
-            this.BTN_Signup.Font = new System.Drawing.Font("Pretendo", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_Signup.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_Signup.Location = new System.Drawing.Point(252, 270);
             this.BTN_Signup.Name = "BTN_Signup";
             this.BTN_Signup.Size = new System.Drawing.Size(367, 43);

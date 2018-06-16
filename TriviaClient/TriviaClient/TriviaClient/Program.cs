@@ -17,8 +17,8 @@ namespace TriviaClient
         [STAThread]
         static void Main()
         {
-            TcpClient client = new TcpClient();
-            IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8820);
+            TcpClient c = new TcpClient();
+            IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1906);
             bool flag = false, flagConnected = false;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -26,7 +26,7 @@ namespace TriviaClient
             {
                 try
                 {
-                    client.Connect(serverEndPoint);
+                    c.Connect(serverEndPoint);
                     flagConnected = true;
                 }
                 catch
@@ -40,7 +40,8 @@ namespace TriviaClient
             
             if (flagConnected == true)
             {
-                Application.Run(new Title());
+                Client client = new Client(c);
+                Application.Run(new Title(client));
             }
         }
     }

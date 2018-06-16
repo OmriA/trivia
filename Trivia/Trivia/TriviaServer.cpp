@@ -114,7 +114,8 @@ Output: none.
 **/
 void TriviaServer::safeDeleteUser(RecievedMessage * msg)
 {
-	cout << _connectedUsers[msg->getSock()]->getUsername() + " disconnected" << endl;
+	if (_connectedUsers.count(msg->getSock()))
+		cout << _connectedUsers[msg->getSock()]->getUsername() + " disconnected" << endl;
 	_connectedUsers.erase(msg->getSock());
 	try
 	{

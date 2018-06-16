@@ -7,7 +7,7 @@
       <x>210</x>
       <y>40</y>
       <w>210</w>
-      <h>250</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes>*Client*
 --
@@ -16,7 +16,8 @@
 --
 +Client(TcpClient sock)
 +~Client()
-+HandleMessage(): void</panel_attributes>
++HandleMessage(): void
++SendMessage(string msg): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
