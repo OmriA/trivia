@@ -264,14 +264,14 @@ void TriviaServer::handleGetBestScores(RecievedMessage * msg)
 	string answer = "124";
 	int numOfTopPlayers = 0;
 	vector<string> bestScores = _db->getBestScores(numOfTopPlayers);
-	for (unsigned int i = 0; i < numOfTopPlayers; i++)
+	for (int i = 0; i < numOfTopPlayers; i++)
 	{
 		//answer += Helper::getPaddedNumber(bestScores[i].length(), 2);
 		answer += bestScores[i];
 	}
 	if (numOfTopPlayers < 3)
 	{
-		for (unsigned int i = 0; i < 3 - numOfTopPlayers; i++)
+		for (int i = 0; i < 3 - numOfTopPlayers; i++)
 		{
 			answer += "0000000";
 		}
