@@ -4,8 +4,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>170</x>
-      <y>40</y>
+      <x>0</x>
+      <y>0</y>
       <w>210</w>
       <h>200</h>
     </coordinates>
@@ -24,8 +24,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
-      <y>40</y>
+      <x>220</x>
+      <y>0</y>
       <w>370</w>
       <h>240</h>
     </coordinates>
@@ -47,8 +47,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
-      <y>300</y>
+      <x>220</x>
+      <y>250</y>
       <w>330</w>
       <h>140</h>
     </coordinates>
@@ -64,8 +64,8 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
-      <y>450</y>
+      <x>220</x>
+      <y>400</y>
       <w>360</w>
       <h>140</h>
     </coordinates>
@@ -77,6 +77,89 @@
 -BTN_Back_Click(object sender, EventArgs e): void
 -BTN_Refresh_Click(object sender, EventArgs e): void
 -BTN_Join_Click(object sender, EventArgs e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>0</y>
+      <w>340</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>*CreateRoomForm*
+--
+-client: Client
+--
++CreateRoomForm(Client c)
+-BTN_Back_Click(object sender, EventArgs e): void
+-BTN_Send_Click(object sender, EventArgs e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>120</y>
+      <w>370</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>*WaitForGameForm*
+--
+-client: Client
+--
++WaitForGameForm(Client c)
+-BTN_CloseRoom_Click(object sender, EventArgs e): void
+-BTN_StartGame_Click(object sender, EventArgs e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>250</y>
+      <w>340</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>*MyStatusForm*
+--
+-client: Client
+--
++MyStatusForm(Client c)
+-BTN_Back_Click(object sender, EventArgs e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>350</y>
+      <w>340</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>*BestScoresForm*
+--
+-client: Client
+--
++BestScoresForm(Client c)
+-BTN_Back_Click(object sender, EventArgs e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>460</y>
+      <w>340</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>*GameForm*
+--
+-client: Client
+--
++GameForm(Client c)
+-BTN_Exit_Click(object sender, EventArgs e): void
+</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
