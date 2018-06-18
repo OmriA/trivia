@@ -11,7 +11,7 @@ namespace TriviaClient
     public class Client
     {
         private TcpClient Sock;
-        private List<string> RecievedMessages;
+        private Queue<string> RecievedMessages;
 
         public Client(TcpClient sock) => Sock = sock;
 
