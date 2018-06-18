@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>210</x>
+      <x>170</x>
       <y>40</y>
       <w>210</w>
       <h>200</h>
@@ -12,27 +12,28 @@
     <panel_attributes>*Client*
 --
 -Sock: TcpClient
--RecievedMessages: List&lt;string&gt;
+-RecievedMessages: Queue&lt;string&gt;
 --
 +Client(TcpClient sock)
 +~Client()
 +HandleMessage(): void
-+SendMessage(string msg): void</panel_attributes>
++SendMessage(string msg): void
++ListenServer(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>450</x>
+      <x>410</x>
       <y>40</y>
       <w>370</w>
       <h>240</h>
     </coordinates>
-    <panel_attributes>-*TitleForm*
+    <panel_attributes>*TitleForm*
 --
-
+-client: Client
 --
-+Title()
++Title(Client c)
 -BTN_SignIn_Click(object sender, EventArgs e): void
 -BTN_Signup_Click(object sender, EventArgs e): void
 -BTN_JoinRoom_Click(object sender, EventArgs e): void
@@ -41,6 +42,41 @@
 -BTN_BestScores_Click(object sender, EventArgs e): void
 -BTN_Quit_Click(object sender, EventArgs e): void
 -BTN_SignOut_Click(object sender, EventArgs e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>300</y>
+      <w>330</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>*SignUpForm*
+--
+-client: Client
+--
++SignUpForm(Client c)
+-BTN_Back_Click(object sender, EventArgs e): void
+-BTN_Ok_Click(object sender, EventArgs e): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>410</x>
+      <y>450</y>
+      <w>360</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>*JoinRoomForm*
+--
+-client: Client
+--
++JoinRoomForm(Client c)
+-BTN_Back_Click(object sender, EventArgs e): void
+-BTN_Refresh_Click(object sender, EventArgs e): void
+-BTN_Join_Click(object sender, EventArgs e): void</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
