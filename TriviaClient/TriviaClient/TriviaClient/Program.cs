@@ -9,7 +9,6 @@ using System.IO;
 
 namespace TriviaClient
 {
-    //OmriWasHere
     static class Program
     {
         /// <summary>
