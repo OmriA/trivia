@@ -37,7 +37,10 @@ namespace TriviaClient
 
         private void BTN_SignIn_Click(object sender, EventArgs e)
         {
-            
+            string username = TXT_Username.Text;
+            string password = TXT_Password.Text;
+            string message = Protocol.SIGN_IN_REQUEST.ToString() + Protocol.GetPaddedNumber(username.Length,2) + username + Protocol.GetPaddedNumber(password.Length, 2) + password;
+            client.SendMessage(message);
         }
     }
 }
