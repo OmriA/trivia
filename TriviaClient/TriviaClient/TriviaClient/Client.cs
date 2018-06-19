@@ -15,11 +15,8 @@ namespace TriviaClient
 
         public Client(TcpClient sock) => Sock = sock;
 
-        public void HandleMessages()
-        {
-
-        }
-
         public void SendMessage(string msg) => Sock.GetStream().Write(Encoding.ASCII.GetBytes(msg), 0, msg.Length + 1);
+
+        public string GetMessage() => 
     }
 }

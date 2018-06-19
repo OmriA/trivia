@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace TriviaClient
 {
-    public partial class Title : Form
+    public partial class Title : Form, FormInterface
     {
         private Client client;
         public Title(Client c)
@@ -41,6 +41,11 @@ namespace TriviaClient
             string password = TXT_Password.Text;
             string message = Protocol.SIGN_IN_REQUEST.ToString() + Protocol.GetPaddedNumber(username.Length,2) + username + Protocol.GetPaddedNumber(password.Length, 2) + password;
             client.SendMessage(message);
+        }
+
+        void FormInterface.RecieveMessage()
+        {
+            var client.
         }
     }
 }
