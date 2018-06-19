@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace TriviaClient
 {
-    public partial class Title : Form, FormInterface
+    public partial class Title : Form
     {
         private Client client;
         public Title(Client c)
@@ -37,15 +37,26 @@ namespace TriviaClient
 
         private void BTN_SignIn_Click(object sender, EventArgs e)
         {
-            string username = TXT_Username.Text;
-            string password = TXT_Password.Text;
-            string message = Protocol.SIGN_IN_REQUEST.ToString() + Protocol.GetPaddedNumber(username.Length,2) + username + Protocol.GetPaddedNumber(password.Length, 2) + password;
+            var username = TXT_Username.Text;
+            var password = TXT_Password.Text;
+            var message = Protocol.SIGN_IN_REQUEST.ToString() + Protocol.GetPaddedNumber(username.Length,2) + username + Protocol.GetPaddedNumber(password.Length, 2) + password;
             client.SendMessage(message);
-        }
 
-        void FormInterface.RecieveMessage()
-        {
-            var client.
+            var msg = client.GetMessage();
+            switch (msg)
+            {
+                case Protocol.SIGN_IN_RESPONSE_SUCCESS:
+                    break;
+                case Protocol.SIGN_IN_RESPONSE_WRONG_DETAILS:
+                    MessageBox.Show("Wrong details!");
+                    break;
+                case Protocol.SIGN_IN_RESPONSE_ALREADY_CONNECTED:
+                    MessageBox.Show("User already connected!");
+                    break;
+                default:
+                    MessageBox.Show($"Unknown message recieved from server.\nMessage:'{msg}'.");
+                    break;
+            }
         }
     }
 }
