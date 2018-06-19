@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace TriviaClient
 {
-    public partial class Title : Form
+    public partial class Title : Form, FormInterface
     {
         private Client client;
         public Title(Client c)
@@ -38,6 +38,11 @@ namespace TriviaClient
         private void BTN_SignIn_Click(object sender, EventArgs e)
         {
             
+        }
+
+        void FormInterface.RecieveMessage()
+        {
+            var client.
         }
     }
 }
