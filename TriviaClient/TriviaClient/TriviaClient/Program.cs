@@ -40,7 +40,7 @@ namespace TriviaClient
 
             if (flagConnected == true)
             {
-                Client client = new Client(c);
+                var client = new Client(c);
                 Application.Run(new Title(client));
             }
         }

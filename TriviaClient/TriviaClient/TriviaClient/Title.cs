@@ -110,5 +110,13 @@ namespace TriviaClient
             
             MessageBox.Show($"You played {numberOfGames} games\n{numOfRightAns} of your answers were right\n{numOfWrongAns} of your answers were wrong\nAverage time for each answer: {avgTimeForAns}", $"{username}'s Personal Status:", MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
+
+        private void BTN_Signup_Click(object sender, EventArgs e)
+        {
+            var signUp = new SignUpForm(client);
+            this.Hide();
+            signUp.ShowDialog();
+            this.Show();
+        }
     }
 }
