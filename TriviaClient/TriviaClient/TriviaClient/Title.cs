@@ -43,20 +43,72 @@ namespace TriviaClient
             client.SendMessage(message);
 
             var msg = client.GetMessage();
-            switch (msg)
+            msg = msg.Substring(0, 4);
+            if (msg == Protocol.SIGN_IN_RESPONSE_SUCCESS)
             {
-                case Protocol.SIGN_IN_RESPONSE_SUCCESS:
-                    break;
-                case Protocol.SIGN_IN_RESPONSE_WRONG_DETAILS:
-                    MessageBox.Show("Wrong details!");
-                    break;
-                case Protocol.SIGN_IN_RESPONSE_ALREADY_CONNECTED:
-                    MessageBox.Show("User already connected!");
-                    break;
-                default:
-                    MessageBox.Show($"Unknown message recieved from server.\nMessage:'{msg}'.");
-                    break;
+                TXT_Username.Visible = false;
+                TXT_Password.Visible = false;
+                BTN_SignIn.Visible = false;
+                BTN_Signup.Visible = false;
+                BTN_SignOut.Visible = true;
+                BTN_JoinRoom.Visible = true;
+                BTN_CreateRoom.Visible = true;
+                BTN_MyStatus.Visible = true;
+                BTN_BestScores.Visible = true;
+                LBL_Welcome.Text = $"Welcome {username}";
+                LBL_Welcome.Visible = true;
             }
+            else if (msg == Protocol.SIGN_IN_RESPONSE_WRONG_DETAILS)
+            {
+                MessageBox.Show("Wrong details!");
+            }
+            else if (msg == Protocol.SIGN_IN_RESPONSE_ALREADY_CONNECTED)
+            {
+                MessageBox.Show("User already connected!");
+            }
+            else
+            {
+                MessageBox.Show($"Unknown message recieved from server.\nMessage:{msg}.");
+            }
+        }
+
+        private void BTN_SignOut_Click(object sender, EventArgs e)
+        {
+            client.SendMessage(Protocol.SIGN_OUT_REQUEST.ToString());
+            TXT_Username.Visible = true;
+            TXT_Password.Visible = true;
+            BTN_SignIn.Visible = true;
+            BTN_Signup.Visible = true;
+            BTN_SignOut.Visible = false;
+            BTN_JoinRoom.Visible = false;
+            BTN_CreateRoom.Visible = false;
+            BTN_MyStatus.Visible = false;
+            BTN_BestScores.Visible = false;
+            LBL_Welcome.Visible = false;
+            TXT_Username.Text = "Username";
+            TXT_Password.Text = "Password";
+        }
+
+        private void BTN_BestScores_Click(object sender, EventArgs e)
+        {
+            var username = TXT_Username.Text;
+            client.SendMessage(Protocol.BEST_SCORES_REQUEST);
+            var msg = client.GetMessage();
+            
+            
+        }
+
+        private void BTN_MyStatus_Click(object sender, EventArgs e)
+        {
+            var username = TXT_Username.Text;
+            client.SendMessage(Protocol.PERSONAL_STATUS_REQUEST);
+            var msg = client.GetMessage();
+            var numberOfGames = Convert.ToInt32(msg.Substring(3, 4));
+            var numOfRightAns = Convert.ToInt32(msg.Substring(7, 6));
+            var numOfWrongAns = Convert.ToInt32(msg.Substring(13, 6));
+            var avgTimeForAns = Convert.ToDouble(msg.Substring(19, 4)) / 100.0;
+            
+            MessageBox.Show($"You played {numberOfGames} games\n{numOfRightAns} of your answers were right\n{numOfWrongAns} of your answers were wrong\nAverage time for each answer: {avgTimeForAns}", $"{username}'s Personal Status:", MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
     }
 }
