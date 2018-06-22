@@ -37,6 +37,14 @@ namespace TriviaClient
 
         private void BTN_SignIn_Click(object sender, EventArgs e)
         {
+            if (TXT_Username.Text == "")
+            {
+                TXT_Username.Text = " ";
+            }
+            if (TXT_Password.Text == "")
+            {
+                TXT_Password.Text = " ";
+            }
             var username = TXT_Username.Text;
             var password = TXT_Password.Text;
             var message = Protocol.SIGN_IN_REQUEST.ToString() + Protocol.GetPaddedNumber(username.Length,2) + username + Protocol.GetPaddedNumber(password.Length, 2) + password;
@@ -94,8 +102,17 @@ namespace TriviaClient
             var username = TXT_Username.Text;
             client.SendMessage(Protocol.BEST_SCORES_REQUEST);
             var msg = client.GetMessage();
-            
-            
+
+            var firstNum = Convert.ToInt32(msg.Substring(3, 2));
+            var firstUser = msg.Substring(5, firstNum);
+            var firstScore = Convert.ToInt32(msg.Substring(5 + firstNum, 6));
+            var secNum = Convert.ToInt32(msg.Substring(5 + firstNum + 6, 2));
+            var secUser = msg.Substring(5 + firstNum + 6 + 2, secNum);
+            var secScore = Convert.ToInt32(msg.Substring(5 + firstNum + 12, 6));
+            var thirdNum = Convert.ToInt32(msg.Substring(5 + firstNum + 18, 2));
+            var thirdUser = msg.Substring(5 + firstNum + 18 + 2, thirdNum);
+            var thirdScore = Convert.ToInt32(msg.Substring(5 + firstNum + 24, 6));
+            MessageBox.Show($"1. {firstUser} - {firstScore} \n2. {secUser} - {secScore}\n3. {thirdUser} - {thirdScore}", "Best Scores:", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void BTN_MyStatus_Click(object sender, EventArgs e)

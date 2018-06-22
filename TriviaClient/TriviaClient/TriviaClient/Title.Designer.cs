@@ -30,16 +30,16 @@
         {
             this.BTN_Quit = new System.Windows.Forms.Button();
             this.PNL_LAYER = new System.Windows.Forms.Panel();
+            this.LBL_Welcome = new System.Windows.Forms.Label();
+            this.BTN_SignOut = new System.Windows.Forms.Button();
             this.TXT_Password = new System.Windows.Forms.TextBox();
+            this.BTN_Signup = new System.Windows.Forms.Button();
             this.TXT_Username = new System.Windows.Forms.TextBox();
             this.BTN_SignIn = new System.Windows.Forms.Button();
             this.BTN_JoinRoom = new System.Windows.Forms.Button();
             this.BTN_CreateRoom = new System.Windows.Forms.Button();
             this.BTN_MyStatus = new System.Windows.Forms.Button();
             this.BTN_BestScores = new System.Windows.Forms.Button();
-            this.BTN_Signup = new System.Windows.Forms.Button();
-            this.BTN_SignOut = new System.Windows.Forms.Button();
-            this.LBL_Welcome = new System.Windows.Forms.Label();
             this.PNL_LAYER.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,6 +69,31 @@
             this.PNL_LAYER.TabIndex = 6;
             this.PNL_LAYER.Paint += new System.Windows.Forms.PaintEventHandler(this.PNL_LAYER_Paint);
             // 
+            // LBL_Welcome
+            // 
+            this.LBL_Welcome.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_Welcome.Location = new System.Drawing.Point(23, 53);
+            this.LBL_Welcome.Name = "LBL_Welcome";
+            this.LBL_Welcome.Size = new System.Drawing.Size(461, 49);
+            this.LBL_Welcome.TabIndex = 13;
+            this.LBL_Welcome.Text = "TEXT GOES HERE";
+            this.LBL_Welcome.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LBL_Welcome.Visible = false;
+            // 
+            // BTN_SignOut
+            // 
+            this.BTN_SignOut.BackColor = System.Drawing.SystemColors.WindowText;
+            this.BTN_SignOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_SignOut.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BTN_SignOut.Location = new System.Drawing.Point(146, 122);
+            this.BTN_SignOut.Name = "BTN_SignOut";
+            this.BTN_SignOut.Size = new System.Drawing.Size(210, 69);
+            this.BTN_SignOut.TabIndex = 12;
+            this.BTN_SignOut.Text = "Sign Out";
+            this.BTN_SignOut.UseVisualStyleBackColor = false;
+            this.BTN_SignOut.Visible = false;
+            this.BTN_SignOut.Click += new System.EventHandler(this.BTN_SignOut_Click);
+            // 
             // TXT_Password
             // 
             this.TXT_Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -78,6 +103,18 @@
             this.TXT_Password.TabIndex = 11;
             this.TXT_Password.Text = "Password";
             this.TXT_Password.UseSystemPasswordChar = true;
+            // 
+            // BTN_Signup
+            // 
+            this.BTN_Signup.BackColor = System.Drawing.SystemColors.WindowText;
+            this.BTN_Signup.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTN_Signup.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.BTN_Signup.Location = new System.Drawing.Point(262, 122);
+            this.BTN_Signup.Name = "BTN_Signup";
+            this.BTN_Signup.Size = new System.Drawing.Size(210, 69);
+            this.BTN_Signup.TabIndex = 5;
+            this.BTN_Signup.Text = "Sign Up";
+            this.BTN_Signup.UseVisualStyleBackColor = false;
             // 
             // TXT_Username
             // 
@@ -146,43 +183,6 @@
             this.BTN_BestScores.UseVisualStyleBackColor = true;
             this.BTN_BestScores.Visible = false;
             this.BTN_BestScores.Click += new System.EventHandler(this.BTN_BestScores_Click);
-            // 
-            // BTN_Signup
-            // 
-            this.BTN_Signup.BackColor = System.Drawing.SystemColors.WindowText;
-            this.BTN_Signup.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_Signup.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BTN_Signup.Location = new System.Drawing.Point(262, 122);
-            this.BTN_Signup.Name = "BTN_Signup";
-            this.BTN_Signup.Size = new System.Drawing.Size(210, 69);
-            this.BTN_Signup.TabIndex = 5;
-            this.BTN_Signup.Text = "Sign Up";
-            this.BTN_Signup.UseVisualStyleBackColor = false;
-            // 
-            // BTN_SignOut
-            // 
-            this.BTN_SignOut.BackColor = System.Drawing.SystemColors.WindowText;
-            this.BTN_SignOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTN_SignOut.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.BTN_SignOut.Location = new System.Drawing.Point(146, 122);
-            this.BTN_SignOut.Name = "BTN_SignOut";
-            this.BTN_SignOut.Size = new System.Drawing.Size(210, 69);
-            this.BTN_SignOut.TabIndex = 12;
-            this.BTN_SignOut.Text = "Sign Out";
-            this.BTN_SignOut.UseVisualStyleBackColor = false;
-            this.BTN_SignOut.Visible = false;
-            this.BTN_SignOut.Click += new System.EventHandler(this.BTN_SignOut_Click);
-            // 
-            // LBL_Welcome
-            // 
-            this.LBL_Welcome.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_Welcome.Location = new System.Drawing.Point(23, 53);
-            this.LBL_Welcome.Name = "LBL_Welcome";
-            this.LBL_Welcome.Size = new System.Drawing.Size(461, 49);
-            this.LBL_Welcome.TabIndex = 13;
-            this.LBL_Welcome.Text = "TEXT GOES HERE";
-            this.LBL_Welcome.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.LBL_Welcome.Visible = false;
             // 
             // Title
             // 
