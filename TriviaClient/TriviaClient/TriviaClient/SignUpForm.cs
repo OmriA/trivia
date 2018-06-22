@@ -40,7 +40,8 @@ namespace TriviaClient
         private void TXT_Password_Enter(object sender, EventArgs e)
         {
             if (TXT_Password.Text == "Enter password here")
-            {
+            { 
+                TXT_Password.UseSystemPasswordChar = true;
                 TXT_Password.Text = "";
                 TXT_Password.ForeColor = System.Drawing.Color.Black;
             }
@@ -50,6 +51,7 @@ namespace TriviaClient
         {
             if (TXT_Password.Text == "")
             {
+                TXT_Password.UseSystemPasswordChar = false;
                 TXT_Password.Text = "Enter password here";
                 TXT_Password.ForeColor = System.Drawing.Color.Gray;
             }
@@ -83,15 +85,44 @@ namespace TriviaClient
             var username = TXT_Username.Text;
             var password = TXT_Password.Text;
             var email = TXT_Email.Text;
-            //message = 203##username##pass##email (where ## is two digits that contains the length of the string after it.
-            var message = Protocol.SIGN_UP_REQUEST + Protocol.GetPaddedNumber(username.Length, 2) + username + Protocol.GetPaddedNumber(password.Length, 2) + password + Protocol.GetPaddedNumber(email.Length, 2) + email;
-            client.SendMessage(message);
 
+            if (username == "Enter username here")
+            {
+                MessageBox.Show("Please enter username.");
+                return;
+            }
+            if (password == "Enter password here")
+            {
+                MessageBox.Show("Please enter password.");
+                return;
+            }
+            if (email == "Enter email here")
+            {
+                MessageBox.Show("Please enter email.");
+                return;
+            }
+
+            var message = Protocol.SIGN_UP_REQUEST + Protocol.GetPaddedNumber(username.Length, 2) + username + Protocol.GetPaddedNumber(password.Length, 2) + password + Protocol.GetPaddedNumber(email.Length, 2) + email;
+            //message = 203##username##pass##email (where ## is two digits that contains the length of the string after it.
+            client.SendMessage(message);
             var msg = client.GetMessage();
             switch (msg)
             {
-                case
+                case Protocol.SIGN_UP_RESPONSE_ALREADY_EXISTS:
+                    MessageBox.Show("Username already exists.");
+                    break;
+                case Protocol.SIGN_UP_RESPONSE_OTHER:
+                    MessageBox.Show("Unknown error.");
+                    break;
+                case Protocol.SIGN_UP_RESPONSE_PASS_ILLEGAL:
+                    MessageBox.Show("Password is illegal.");
+                    break;
+                case Protocol.SIGN_UP_RESPONSE_SUCCESS:
+                    this.Close();
+                    break;
                 default:
+                    MessageBox.Show($@"Unknown message recieved.
+Message: {msg}");
                     break;
             }
         }

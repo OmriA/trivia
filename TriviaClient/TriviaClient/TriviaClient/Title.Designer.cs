@@ -115,6 +115,7 @@
             this.BTN_Signup.TabIndex = 5;
             this.BTN_Signup.Text = "Sign Up";
             this.BTN_Signup.UseVisualStyleBackColor = false;
+            this.BTN_Signup.Click += new System.EventHandler(this.BTN_Signup_Click);
             // 
             // TXT_Username
             // 
