@@ -12,9 +12,88 @@ namespace TriviaClient
 {
     public partial class SignUpForm : Form
     {
-        public SignUpForm()
+        private Client client;
+        public SignUpForm(Client c)
         {
+            client = c;
             InitializeComponent();
+        }
+
+        private void TXT_Username_Leave(object sender, EventArgs e)
+        {
+            if (TXT_Username.Text == "")
+            {
+                TXT_Username.Text = "Enter username here";
+                TXT_Username.ForeColor = System.Drawing.Color.Gray;
+            }
+        }
+
+        private void TXT_Username_Enter(object sender, EventArgs e)
+        {
+            if (TXT_Username.Text == "Enter username here")
+            {
+                TXT_Username.Text = "";
+                TXT_Username.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        private void TXT_Password_Enter(object sender, EventArgs e)
+        {
+            if (TXT_Password.Text == "Enter password here")
+            {
+                TXT_Password.Text = "";
+                TXT_Password.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        private void TXT_Password_Leave(object sender, EventArgs e)
+        {
+            if (TXT_Password.Text == "")
+            {
+                TXT_Password.Text = "Enter password here";
+                TXT_Password.ForeColor = System.Drawing.Color.Gray;
+            }
+        }
+
+        private void TXT_Email_Enter(object sender, EventArgs e)
+        {
+            if (TXT_Email.Text == "Enter email here")
+            {
+                TXT_Email.Text = "";
+                TXT_Email.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        private void TXT_Email_Leave(object sender, EventArgs e)
+        {
+            if (TXT_Email.Text == "")
+            {
+                TXT_Email.Text = "Enter email here";
+                TXT_Email.ForeColor = System.Drawing.Color.Gray;
+            }
+        }
+
+        private void BTN_Back_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BTN_Signup_Click(object sender, EventArgs e)
+        {
+            var username = TXT_Username.Text;
+            var password = TXT_Password.Text;
+            var email = TXT_Email.Text;
+            //message = 203##username##pass##email (where ## is two digits that contains the length of the string after it.
+            var message = Protocol.SIGN_UP_REQUEST + Protocol.GetPaddedNumber(username.Length, 2) + username + Protocol.GetPaddedNumber(password.Length, 2) + password + Protocol.GetPaddedNumber(email.Length, 2) + email;
+            client.SendMessage(message);
+
+            var msg = client.GetMessage();
+            switch (msg)
+            {
+                case
+                default:
+                    break;
+            }
         }
     }
 }

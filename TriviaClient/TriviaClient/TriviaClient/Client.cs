@@ -18,9 +18,9 @@ namespace TriviaClient
 
         public string GetMessage()
         {
-            byte[] buffer = new byte[2048];
-            Sock.GetStream().Read(buffer, 0, buffer.Length);
-            return Encoding.Default.GetString(buffer);
+            var buffer = new byte[2048];
+            var msgLen = Sock.GetStream().Read(buffer, 0, buffer.Length);
+            return Encoding.Default.GetString(buffer, 0, msgLen);
         }
     }
 }
