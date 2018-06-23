@@ -74,7 +74,7 @@
             this.LBL_Welcome.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LBL_Welcome.Location = new System.Drawing.Point(23, 53);
             this.LBL_Welcome.Name = "LBL_Welcome";
-            this.LBL_Welcome.Size = new System.Drawing.Size(461, 49);
+            this.LBL_Welcome.Size = new System.Drawing.Size(461, 80);
             this.LBL_Welcome.TabIndex = 13;
             this.LBL_Welcome.Text = "TEXT GOES HERE";
             this.LBL_Welcome.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -97,12 +97,14 @@
             // TXT_Password
             // 
             this.TXT_Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TXT_Password.ForeColor = System.Drawing.SystemColors.GrayText;
             this.TXT_Password.Location = new System.Drawing.Point(33, 70);
             this.TXT_Password.Name = "TXT_Password";
             this.TXT_Password.Size = new System.Drawing.Size(439, 32);
             this.TXT_Password.TabIndex = 11;
-            this.TXT_Password.Text = "Password";
-            this.TXT_Password.UseSystemPasswordChar = true;
+            this.TXT_Password.Text = "Enter password here";
+            this.TXT_Password.Enter += new System.EventHandler(this.TXT_Password_Enter);
+            this.TXT_Password.Leave += new System.EventHandler(this.TXT_Password_Leave);
             // 
             // BTN_Signup
             // 
@@ -120,11 +122,14 @@
             // TXT_Username
             // 
             this.TXT_Username.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TXT_Username.ForeColor = System.Drawing.SystemColors.GrayText;
             this.TXT_Username.Location = new System.Drawing.Point(33, 18);
             this.TXT_Username.Name = "TXT_Username";
             this.TXT_Username.Size = new System.Drawing.Size(439, 32);
             this.TXT_Username.TabIndex = 10;
-            this.TXT_Username.Text = "Username";
+            this.TXT_Username.Text = "Enter username here";
+            this.TXT_Username.Enter += new System.EventHandler(this.TXT_Username_Enter);
+            this.TXT_Username.Leave += new System.EventHandler(this.TXT_Username_Leave);
             // 
             // BTN_SignIn
             // 
