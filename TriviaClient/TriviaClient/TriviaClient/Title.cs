@@ -183,43 +183,5 @@ namespace TriviaClient
             signUp.ShowDialog();
             this.Show();
         }
-
-        private void TXT_Username_Enter(object sender, EventArgs e)
-        {
-            if (TXT_Username.Text == "Enter username here")
-            {
-                TXT_Username.Text = "";
-                TXT_Username.ForeColor = System.Drawing.Color.Black;
-            }
-        }
-
-        private void TXT_Username_Leave(object sender, EventArgs e)
-        {
-            if (TXT_Username.Text == "")
-            {
-                TXT_Username.Text = "Enter username here";
-                TXT_Username.ForeColor = System.Drawing.Color.Gray;
-            }
-        }
-
-        private void TXT_Password_Enter(object sender, EventArgs e)
-        {
-            if (TXT_Password.Text == "Enter password here")
-            {
-                TXT_Password.UseSystemPasswordChar = true;
-                TXT_Password.Text = "";
-                TXT_Password.ForeColor = System.Drawing.Color.Black;
-            }
-        }
-
-        private void TXT_Password_Leave(object sender, EventArgs e)
-        {
-            if (TXT_Password.Text == "")
-            {
-                TXT_Password.UseSystemPasswordChar = false;
-                TXT_Password.Text = "Enter password here";
-                TXT_Password.ForeColor = System.Drawing.Color.Gray;
-            }
-        }
     }
 }
