@@ -203,7 +203,7 @@
             this.Controls.Add(this.BTN_BestScores);
             this.Controls.Add(this.BTN_Quit);
             this.Name = "Title";
-            this.Text = "Form1";
+            this.Text = "Title";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.PNL_LAYER.ResumeLayout(false);
             this.PNL_LAYER.PerformLayout();
