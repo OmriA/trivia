@@ -184,6 +184,13 @@ namespace TriviaClient
             this.Show();
         }
 
+        private void BTN_JoinRoom_Click(object sender, EventArgs e)
+        {
+            var joinRoom = new JoinRoomForm(client);
+            this.Hide();
+            joinRoom.ShowDialog();
+        }
+
         private void BTN_CreateRoom_Click(object sender, EventArgs e)
         {
             var createRoom = new CreateRoomForm(client);
@@ -191,5 +198,6 @@ namespace TriviaClient
             createRoom.ShowDialog();
             this.Show();
         }
+
     }
 }
