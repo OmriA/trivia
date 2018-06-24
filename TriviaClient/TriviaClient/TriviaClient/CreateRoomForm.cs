@@ -65,10 +65,10 @@ namespace TriviaClient
             switch (msg)
             {
                 case Protocol.ROOM_CREATE_RESPONSE_SUCCESS:
-                    //this.Hide();
-                    //var waitForGame = new WaitForGameForm(client);
-                    //waitForGame.ShowDialog();
-                    //this.Close();
+                    this.Hide();
+                    var waitForGame = new WaitForGameForm(client, true, roomName, numOfPlayers, numOfQuestions, timeToQuestion);
+                    waitForGame.ShowDialog();
+                    this.Close();
                     break;
                 case Protocol.ROOM_CREATE_RESPONSE_TOO_MANY_QUESTIONS:
                     MessageBox.Show("Not enough questions in the database.");

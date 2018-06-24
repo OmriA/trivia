@@ -18,9 +18,18 @@ namespace TriviaClient
         {
             client = c;
             InitializeComponent();
+            LBL_MaxPlayers.Text += maxNumPlayers.ToString();
+            LBL_QuestionsNum.Text += numOfQst.ToString();
+            LBL_QuestionTime.Text += timeToQst.ToString();
             if (!admin) 
             {
-                //LBL_MaxPlayers.Visible = false;
+                LBL_MaxPlayers.Visible = false;
+                BTN_CloseRoom.Visible = false;
+                BTN_StartGame.Visible = false;
+            }
+            else
+            {
+                BTN_LeaveRoom.Visible = false;
             }
         }
     }
