@@ -73,6 +73,12 @@
     <Compile Include="Title.Designer.cs">
       <DependentUpon>Title.cs</DependentUpon>
     </Compile>
+    <Compile Include="WaitForGameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitForGameForm.Designer.cs">
+      <DependentUpon>WaitForGameForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CreateRoomForm.resx">
       <DependentUpon>CreateRoomForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Title.resx">
       <DependentUpon>Title.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForGameForm.resx">
+      <DependentUpon>WaitForGameForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
