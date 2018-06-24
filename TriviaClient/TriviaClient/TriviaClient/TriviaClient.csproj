@@ -67,6 +67,9 @@
     <Compile Include="Title.Designer.cs">
       <DependentUpon>Title.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="JoinRoomForm.resx">
+      <DependentUpon>JoinRoomForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
