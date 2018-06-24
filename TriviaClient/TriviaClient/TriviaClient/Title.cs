@@ -183,5 +183,13 @@ namespace TriviaClient
             signUp.ShowDialog();
             this.Show();
         }
+
+        private void BTN_CreateRoom_Click(object sender, EventArgs e)
+        {
+            var createRoom = new CreateRoomForm(client);
+            this.Hide();
+            createRoom.ShowDialog();
+            this.Show();
+        }
     }
 }

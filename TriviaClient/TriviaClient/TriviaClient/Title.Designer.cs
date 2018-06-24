@@ -165,6 +165,7 @@
             this.BTN_CreateRoom.Text = "Create Room";
             this.BTN_CreateRoom.UseVisualStyleBackColor = true;
             this.BTN_CreateRoom.Visible = false;
+            this.BTN_CreateRoom.Click += new System.EventHandler(this.BTN_CreateRoom_Click);
             // 
             // BTN_MyStatus
             // 
