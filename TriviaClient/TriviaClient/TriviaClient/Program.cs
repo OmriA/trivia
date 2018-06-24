@@ -31,7 +31,7 @@ namespace TriviaClient
                 }
                 catch
                 {
-                    if (!(MessageBox.Show("You do not have a server running\n\nOk - try again.\nCancel - close client.", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Yes))
+                    if (!(MessageBox.Show("You do not have a server running\n\nOk - try again.\nCancel - close client.", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK))
                     {
                         flag = true;
                     }
