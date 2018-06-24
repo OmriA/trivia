@@ -46,19 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
-<<<<<<< HEAD
-    <Compile Include="CreateRoomForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CreateRoomForm.Designer.cs">
-      <DependentUpon>CreateRoomForm.cs</DependentUpon>
-=======
     <Compile Include="JoinRoomForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="JoinRoomForm.Designer.cs">
       <DependentUpon>JoinRoomForm.cs</DependentUpon>
->>>>>>> 4b20472215c9352f35fb641bee3b032262711180
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,9 +67,6 @@
     <Compile Include="Title.Designer.cs">
       <DependentUpon>Title.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CreateRoomForm.resx">
-      <DependentUpon>CreateRoomForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
