@@ -291,3 +291,4 @@ __pycache__/
 *.vcxproj.filters
 *.ipch
 *.docx
+*.csproj
