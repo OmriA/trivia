@@ -28,12 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.BTN_Back = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // BTN_Back
+            // 
+            this.BTN_Back.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BTN_Back.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.BTN_Back.Location = new System.Drawing.Point(783, 12);
+            this.BTN_Back.Name = "BTN_Back";
+            this.BTN_Back.Size = new System.Drawing.Size(86, 33);
+            this.BTN_Back.TabIndex = 2;
+            this.BTN_Back.Text = "Back";
+            this.BTN_Back.UseVisualStyleBackColor = true;
+            // 
+            // JoinRoomForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ClientSize = new System.Drawing.Size(881, 414);
+            this.Controls.Add(this.BTN_Back);
+            this.Name = "JoinRoomForm";
             this.Text = "JoinRoomForm";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button BTN_Back;
     }
 }
