@@ -154,6 +154,7 @@
             this.BTN_JoinRoom.Text = "Join Room";
             this.BTN_JoinRoom.UseVisualStyleBackColor = true;
             this.BTN_JoinRoom.Visible = false;
+            this.BTN_JoinRoom.Click += new System.EventHandler(this.BTN_JoinRoom_Click);
             // 
             // BTN_CreateRoom
             // 
