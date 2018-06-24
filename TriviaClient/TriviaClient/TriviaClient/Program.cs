@@ -41,7 +41,7 @@ namespace TriviaClient
             if (flagConnected == true)
             {
                 var client = new Client(c);
-                Application.Run(new WaitForGameForm(client, true, "test", 3, 4, 5));
+                Application.Run(new Title(client));
             }
         }
     }
