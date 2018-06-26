@@ -186,7 +186,8 @@ namespace TriviaClient
 
         private void BTN_JoinRoom_Click(object sender, EventArgs e)
         {
-            var joinRoom = new JoinRoomForm(client);
+            var username = TXT_Username.Text;
+            var joinRoom = new JoinRoomForm(client, username);
             this.Hide();
             joinRoom.ShowDialog();
             this.Show();
@@ -194,7 +195,8 @@ namespace TriviaClient
 
         private void BTN_CreateRoom_Click(object sender, EventArgs e)
         {
-            var createRoom = new CreateRoomForm(client);
+            var username = TXT_Username.Text;
+            var createRoom = new CreateRoomForm(client, username);
             this.Hide();
             createRoom.ShowDialog();
             this.Show();

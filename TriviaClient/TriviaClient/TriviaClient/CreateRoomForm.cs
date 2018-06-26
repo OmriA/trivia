@@ -13,9 +13,10 @@ namespace TriviaClient
     public partial class CreateRoomForm : Form
     {
         private Client client;
-
-        public CreateRoomForm(Client c)
+        private string uname;
+        public CreateRoomForm(Client c, string username)
         {
+            uname = username;
             client = c;
             InitializeComponent();
         }
@@ -66,7 +67,7 @@ namespace TriviaClient
             {
                 case Protocol.ROOM_CREATE_RESPONSE_SUCCESS:
                     this.Hide();
-                    var waitForGame = new WaitForGameForm(client, true, roomName, numOfPlayers, numOfQuestions, timeToQuestion);
+                    var waitForGame = new WaitForGameForm(client, true, roomName, numOfPlayers, numOfQuestions, timeToQuestion, uname);
                     waitForGame.ShowDialog();
                     this.Close();
                     break;
