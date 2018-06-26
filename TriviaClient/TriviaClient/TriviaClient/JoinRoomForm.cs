@@ -13,8 +13,10 @@ namespace TriviaClient
     public partial class JoinRoomForm : Form
     {
         private Client client;
-        public JoinRoomForm(Client c)
+        private string uname;
+        public JoinRoomForm(Client c, string username)
         {
+            uname = username;
             client = c;
             InitializeComponent();
             CMB_Rooms.Items.Clear();
@@ -144,7 +146,7 @@ namespace TriviaClient
                 var questionNumber = Convert.ToInt32(msg.Substring(0, 2));
                 msg = msg.Substring(2);
                 var questionTime = Convert.ToInt32(msg.Substring(0, 2));
-                var waitForGame = new WaitForGameForm(client, false, CMB_Rooms.Text, LST_Players.ItemHeight, questionNumber, questionTime);
+                var waitForGame = new WaitForGameForm(client, false, CMB_Rooms.Text, LST_Players.ItemHeight, questionNumber, questionTime, uname);
                 this.Hide();
                 waitForGame.ShowDialog();
                 this.Show();
