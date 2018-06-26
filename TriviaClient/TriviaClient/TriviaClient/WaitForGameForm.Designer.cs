@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.PNL_LAYER = new System.Windows.Forms.Panel();
+            this.LST_Users = new System.Windows.Forms.ListBox();
+            this.LBL_Participants = new System.Windows.Forms.Label();
+            this.LBL_QuestionTime = new System.Windows.Forms.Label();
+            this.LBL_QuestionsNum = new System.Windows.Forms.Label();
             this.LBL_MaxPlayers = new System.Windows.Forms.Label();
             this.LBL_ConnectedTo = new System.Windows.Forms.Label();
-            this.LBL_QuestionsNum = new System.Windows.Forms.Label();
-            this.LBL_QuestionTime = new System.Windows.Forms.Label();
-            this.LBL_Participants = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.BTN_CloseRoom = new System.Windows.Forms.Button();
             this.BTN_StartGame = new System.Windows.Forms.Button();
             this.BTN_LeaveRoom = new System.Windows.Forms.Button();
@@ -44,7 +44,7 @@
             // PNL_LAYER
             // 
             this.PNL_LAYER.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.PNL_LAYER.Controls.Add(this.listBox1);
+            this.PNL_LAYER.Controls.Add(this.LST_Users);
             this.PNL_LAYER.Controls.Add(this.LBL_Participants);
             this.PNL_LAYER.Controls.Add(this.LBL_QuestionTime);
             this.PNL_LAYER.Controls.Add(this.LBL_QuestionsNum);
@@ -54,6 +54,49 @@
             this.PNL_LAYER.Name = "PNL_LAYER";
             this.PNL_LAYER.Size = new System.Drawing.Size(857, 265);
             this.PNL_LAYER.TabIndex = 7;
+            // 
+            // LST_Users
+            // 
+            this.LST_Users.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.LST_Users.FormattingEnabled = true;
+            this.LST_Users.ItemHeight = 20;
+            this.LST_Users.Location = new System.Drawing.Point(267, 149);
+            this.LST_Users.Name = "LST_Users";
+            this.LST_Users.Size = new System.Drawing.Size(316, 104);
+            this.LST_Users.TabIndex = 5;
+            // 
+            // LBL_Participants
+            // 
+            this.LBL_Participants.AutoSize = true;
+            this.LBL_Participants.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.LBL_Participants.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.LBL_Participants.Location = new System.Drawing.Point(305, 120);
+            this.LBL_Participants.Name = "LBL_Participants";
+            this.LBL_Participants.Size = new System.Drawing.Size(243, 25);
+            this.LBL_Participants.TabIndex = 4;
+            this.LBL_Participants.Text = "Current participants are:";
+            // 
+            // LBL_QuestionTime
+            // 
+            this.LBL_QuestionTime.AutoSize = true;
+            this.LBL_QuestionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.LBL_QuestionTime.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.LBL_QuestionTime.Location = new System.Drawing.Point(584, 58);
+            this.LBL_QuestionTime.Name = "LBL_QuestionTime";
+            this.LBL_QuestionTime.Size = new System.Drawing.Size(160, 24);
+            this.LBL_QuestionTime.TabIndex = 3;
+            this.LBL_QuestionTime.Text = "time per question:";
+            // 
+            // LBL_QuestionsNum
+            // 
+            this.LBL_QuestionsNum.AutoSize = true;
+            this.LBL_QuestionsNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.LBL_QuestionsNum.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.LBL_QuestionsNum.Location = new System.Drawing.Point(306, 58);
+            this.LBL_QuestionsNum.Name = "LBL_QuestionsNum";
+            this.LBL_QuestionsNum.Size = new System.Drawing.Size(187, 24);
+            this.LBL_QuestionsNum.TabIndex = 2;
+            this.LBL_QuestionsNum.Text = "number of questions:";
             // 
             // LBL_MaxPlayers
             // 
@@ -71,54 +114,11 @@
             this.LBL_ConnectedTo.AutoSize = true;
             this.LBL_ConnectedTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.LBL_ConnectedTo.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.LBL_ConnectedTo.Location = new System.Drawing.Point(305, 23);
+            this.LBL_ConnectedTo.Location = new System.Drawing.Point(251, 13);
             this.LBL_ConnectedTo.Name = "LBL_ConnectedTo";
             this.LBL_ConnectedTo.Size = new System.Drawing.Size(278, 25);
             this.LBL_ConnectedTo.TabIndex = 0;
             this.LBL_ConnectedTo.Text = "You are connected to room ";
-            // 
-            // LBL_QuestionsNum
-            // 
-            this.LBL_QuestionsNum.AutoSize = true;
-            this.LBL_QuestionsNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.LBL_QuestionsNum.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.LBL_QuestionsNum.Location = new System.Drawing.Point(306, 58);
-            this.LBL_QuestionsNum.Name = "LBL_QuestionsNum";
-            this.LBL_QuestionsNum.Size = new System.Drawing.Size(187, 24);
-            this.LBL_QuestionsNum.TabIndex = 2;
-            this.LBL_QuestionsNum.Text = "number of questions:";
-            // 
-            // LBL_QuestionTime
-            // 
-            this.LBL_QuestionTime.AutoSize = true;
-            this.LBL_QuestionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.LBL_QuestionTime.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.LBL_QuestionTime.Location = new System.Drawing.Point(584, 58);
-            this.LBL_QuestionTime.Name = "LBL_QuestionTime";
-            this.LBL_QuestionTime.Size = new System.Drawing.Size(160, 24);
-            this.LBL_QuestionTime.TabIndex = 3;
-            this.LBL_QuestionTime.Text = "time per question:";
-            // 
-            // LBL_Participants
-            // 
-            this.LBL_Participants.AutoSize = true;
-            this.LBL_Participants.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.LBL_Participants.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.LBL_Participants.Location = new System.Drawing.Point(305, 120);
-            this.LBL_Participants.Name = "LBL_Participants";
-            this.LBL_Participants.Size = new System.Drawing.Size(243, 25);
-            this.LBL_Participants.TabIndex = 4;
-            this.LBL_Participants.Text = "Current participants are:";
-            // 
-            // listBox1
-            // 
-            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Location = new System.Drawing.Point(267, 149);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(316, 104);
-            this.listBox1.TabIndex = 5;
             // 
             // BTN_CloseRoom
             // 
@@ -179,7 +179,7 @@
         private System.Windows.Forms.Panel PNL_LAYER;
         private System.Windows.Forms.Label LBL_ConnectedTo;
         private System.Windows.Forms.Label LBL_MaxPlayers;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox LST_Users;
         private System.Windows.Forms.Label LBL_Participants;
         private System.Windows.Forms.Label LBL_QuestionTime;
         private System.Windows.Forms.Label LBL_QuestionsNum;
