@@ -73,7 +73,7 @@ namespace TriviaClient
                 else
                 {
                     listen = false;
-                    if (msgCode == Protocol.GAME_START)
+                    if (msgCode == Protocol.QUESTION)
                     {
                         var gameForm = new GameForm(client, userName, roomName, qstNum, qstTime);
                         gameForm.ShowDialog();
@@ -85,13 +85,45 @@ namespace TriviaClient
 
         private void BTN_CloseRoom_Click(object sender, EventArgs e)
         {
+            client.SendMessage(Protocol.ROOM_CLOSE_REQUEST);
 
+            var msg = client.GetMessage();
+            if (msg != Protocol.ROOM_CLOSE_RESPONSE)
+            {
+                MessageBox.Show("Room doesn't close successfully.");
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void BTN_LeaveRoom_Click(object sender, EventArgs e)
         {
             client.SendMessage(Protocol.ROOM_LEAVE_REQUEST);
 
+            var msg = client.GetMessage();
+            if (msg != Protocol.ROOM_LEAVE_REQUEST)
+            {
+                MessageBox.Show("You didn't left the room successfully.");
+            }
+            else
+            {
+                this.Close();
+            }
+        }
+
+        private void BTN_StartGame_Click(object sender, EventArgs e)
+        {
+            client.SendMessage(Protocol.GAME_START);
+
+            var msg = client.GetMessage();
+            if (msg.Substring(0,3) == Protocol.QUESTION)
+            {
+                var gameForm = new GameForm(client, msg, roomName, qstNum, qstTime);
+                gameForm.ShowDialog();
+                this.Close();
+            }
         }
     }
 }
