@@ -14,15 +14,13 @@ namespace TriviaClient
     {
         private Timer t;
         private Client client;
-        private string uname;
         private string rName;
         private int numOfQuest;
         private int questionTime;
         private int counter;
-        public GameForm(Client c, string username, string roomName, int queNum, int queTime)
+        public GameForm(Client c, string msg, string roomName, int queNum, int queTime)
         {
             int i = 0, corAns = 0, wrongAns = 0;
-            uname = username;
             rName = roomName;
             questionTime = queTime;
             counter = questionTime;
@@ -32,7 +30,6 @@ namespace TriviaClient
             LBL_RoomName.Text = rName;
             LBL_QuestionOut.Text = "Question " + (i + 1) + "/" + queNum;
             LBL_Time.Text = counter.ToString();
-            var msg = client.GetMessage();
             if (msg == Protocol.GAME_FAIL)
             {
                 MessageBox.Show("ERROR!");
