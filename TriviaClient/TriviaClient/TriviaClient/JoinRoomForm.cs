@@ -14,6 +14,8 @@ namespace TriviaClient
     {
         private Client client;
         private string uname;
+        private string roomId;
+
         public JoinRoomForm(Client c, string username)
         {
             uname = username;
@@ -31,19 +33,12 @@ namespace TriviaClient
             var roomStr = msg.Substring(7);
             while (roomStr.Length != 0)
             {
-                var roomId = Convert.ToInt32(roomStr.Substring(0,4));
+                roomId = (roomStr.Substring(0, 4));
                 roomStr = roomStr.Substring(4);
                 var roomNameLength = Convert.ToInt32(roomStr.Substring(0, 2));
                 var roomName = roomStr.Substring(2, roomNameLength);
                 roomStr = roomStr.Substring(2 + roomNameLength);
-                if (roomId == 0)
-                {
-                    CMB_Rooms.Items.Add(Protocol.GetPaddedNumber(roomId, 3) + "." + roomName);
-                }
-                else
-                {
-                    CMB_Rooms.Items.Add(Protocol.GetPaddedNumber(roomId, 4) + "." + roomName);
-                }
+                CMB_Rooms.Items.Add(roomName);
             }
         }
 
@@ -74,28 +69,21 @@ namespace TriviaClient
             var roomStr = msg.Substring(7);
             while (roomStr.Length != 0)
             {
-                var roomId = Convert.ToInt32(roomStr.Substring(0, 4));
+                roomId = roomStr.Substring(0, 4);
                 roomStr = roomStr.Substring(4);
                 var roomNameLength = Convert.ToInt32(roomStr.Substring(0, 2));
                 var roomName = roomStr.Substring(2, roomNameLength);
                 roomStr = roomStr.Substring(2 + roomNameLength);
-                if (roomId == 0)
-                {
-                    CMB_Rooms.Items.Add(Protocol.GetPaddedNumber(roomId, 3) + "." + roomName);
-                }
-                else
-                {
-                    CMB_Rooms.Items.Add(Protocol.GetPaddedNumber(roomId, 4) + "." + roomName);
-                }
+                CMB_Rooms.Items.Add(roomName);
             }
         }
 
         private void CMB_Rooms_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(CMB_Rooms.ItemHeight != 0)
+            if (CMB_Rooms.ItemHeight != 0)
             {
                 var room = CMB_Rooms.Text;
-                var roomId = room.Substring(0, 4);
+                roomId = room.Substring(0, 4);
                 client.SendMessage(Protocol.USERS_IN_ROOM_REQUEST + roomId);
                 var msg = client.GetMessage();
                 if (msg == "1080")
@@ -127,7 +115,7 @@ namespace TriviaClient
         private void BTN_Join_Click(object sender, EventArgs e)
         {
             var room = CMB_Rooms.Text;
-            var roomId = room.Substring(0, 4);
+            roomId = room.Substring(0, 4);
             client.SendMessage(Protocol.ROOM_JOIN_REQUEST + roomId);
             var msg = client.GetMessage();
             if (msg == "1101")

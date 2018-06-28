@@ -119,8 +119,12 @@ void TriviaServer::safeDeleteUser(RecievedMessage * msg)
 		cout << _connectedUsers[msg->getSock()]->getUsername() + " disconnected" << endl;
 		if (getUserBySocket(msg->getSock())->getRoom() != nullptr)
 		{
-			getUserBySocket(msg->getSock())->closeRoom();
-			getUserBySocket(msg->getSock())->leaveRoom();
+			try
+			{
+				getUserBySocket(msg->getSock())->closeRoom();
+				getUserBySocket(msg->getSock())->leaveRoom();
+			}
+			catch (...) {}
 		}
 		if (getUserBySocket(msg->getSock())->getGame() != nullptr)
 		{
