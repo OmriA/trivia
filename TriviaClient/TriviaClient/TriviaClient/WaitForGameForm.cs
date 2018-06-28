@@ -59,7 +59,7 @@ namespace TriviaClient
                 msg = msg.Substring(3);
                 if (msgCode == Protocol.USERS_IN_ROOM_RESPONSE)
                 {
-                    BeginInvoke((MethodInvoker)(() => LST_Users.Items.Clear()));
+                    Invoke((MethodInvoker)(() => LST_Users.Items.Clear()));
                     var numOfUsers = Convert.ToInt32(msg.Substring(0, 1));
                     msg = msg.Substring(1);
                     for (int i = 0; i < numOfUsers; i++)
@@ -72,11 +72,16 @@ namespace TriviaClient
                 }
                 else
                 {
+                    MessageBox.Show("debug");
                     listen = false;
                     if (msgCode == Protocol.QUESTION)
                     {
                         var gameForm = new GameForm(client, userName, roomName, qstNum, qstTime);
                         gameForm.ShowDialog();
+                    }
+                    else if (msgCode == Protocol.ROOM_CLOSE_RESPONSE)
+                    {
+                        listen = false;
                     }
                     Invoke((MethodInvoker)(() => this.Close()));
                 }
@@ -86,16 +91,6 @@ namespace TriviaClient
         private void BTN_CloseRoom_Click(object sender, EventArgs e)
         {
             client.SendMessage(Protocol.ROOM_CLOSE_REQUEST);
-
-            var msg = client.GetMessage();
-            if (msg != Protocol.ROOM_CLOSE_RESPONSE)
-            {
-                MessageBox.Show("Room doesn't close successfully.");
-            }
-            else
-            {
-                this.Close();
-            }
         }
 
         private void BTN_LeaveRoom_Click(object sender, EventArgs e)
@@ -118,7 +113,7 @@ namespace TriviaClient
             client.SendMessage(Protocol.GAME_START);
 
             var msg = client.GetMessage();
-            if (msg.Substring(0,3) == Protocol.QUESTION)
+            if (msg.Substring(0, 3) == Protocol.QUESTION)
             {
                 var gameForm = new GameForm(client, msg, roomName, qstNum, qstTime);
                 gameForm.ShowDialog();

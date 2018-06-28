@@ -145,7 +145,7 @@ namespace TriviaClient
                     var waitForGame = new WaitForGameForm(client, false, roomName, LST_Players.ItemHeight, questionNumber, questionTime, uname);
                     this.Hide();
                     waitForGame.ShowDialog();
-                    this.Show();
+                    this.Close();
                 }
             }
         }
