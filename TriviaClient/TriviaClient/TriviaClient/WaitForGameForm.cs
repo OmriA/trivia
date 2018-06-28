@@ -22,6 +22,7 @@ namespace TriviaClient
 
         public WaitForGameForm(Client c, bool admin, string roomName, int maxNumPlayers, int numOfQst, int timeToQst, string uname)
         {
+            this.ControlBox = false;
             client = c;
             userName = uname;
             this.roomName = roomName;
@@ -80,6 +81,17 @@ namespace TriviaClient
                     Invoke((MethodInvoker)(() => this.Close()));
                 }
             }
+        }
+
+        private void BTN_CloseRoom_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_LeaveRoom_Click(object sender, EventArgs e)
+        {
+            client.SendMessage(Protocol.ROOM_LEAVE_REQUEST);
+
         }
     }
 }

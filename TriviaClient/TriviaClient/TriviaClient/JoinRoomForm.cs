@@ -38,7 +38,7 @@ namespace TriviaClient
                 var roomNameLength = Convert.ToInt32(roomStr.Substring(0, 2));
                 var roomName = roomStr.Substring(2, roomNameLength);
                 roomStr = roomStr.Substring(2 + roomNameLength);
-                CMB_Rooms.Items.Add(roomName);
+                CMB_Rooms.Items.Add(roomId + "." + roomName);
             }
         }
 
@@ -74,7 +74,7 @@ namespace TriviaClient
                 var roomNameLength = Convert.ToInt32(roomStr.Substring(0, 2));
                 var roomName = roomStr.Substring(2, roomNameLength);
                 roomStr = roomStr.Substring(2 + roomNameLength);
-                CMB_Rooms.Items.Add(roomName);
+                CMB_Rooms.Items.Add(roomId + "." + roomName);
             }
         }
 
@@ -82,6 +82,7 @@ namespace TriviaClient
         {
             if (CMB_Rooms.ItemHeight != 0)
             {
+                LST_Players.Items.Clear();
                 var room = CMB_Rooms.Text;
                 roomId = room.Substring(0, 4);
                 client.SendMessage(Protocol.USERS_IN_ROOM_REQUEST + roomId);
@@ -114,30 +115,38 @@ namespace TriviaClient
 
         private void BTN_Join_Click(object sender, EventArgs e)
         {
-            var room = CMB_Rooms.Text;
-            roomId = room.Substring(0, 4);
-            client.SendMessage(Protocol.ROOM_JOIN_REQUEST + roomId);
-            var msg = client.GetMessage();
-            if (msg == "1101")
+            if (CMB_Rooms.Text == "")
             {
-                LBL_FlavorText.Text = "Room is full";
-                return;
-            }
-            else if (msg == "1102")
-            {
-                LBL_FlavorText.Text = "Room doesn't exist or other reason";
-                return;
+                MessageBox.Show("You haven't selected a room.");
             }
             else
             {
-                msg = msg.Substring(4);
-                var questionNumber = Convert.ToInt32(msg.Substring(0, 2));
-                msg = msg.Substring(2);
-                var questionTime = Convert.ToInt32(msg.Substring(0, 2));
-                var waitForGame = new WaitForGameForm(client, false, CMB_Rooms.Text, LST_Players.ItemHeight, questionNumber, questionTime, uname);
-                this.Hide();
-                waitForGame.ShowDialog();
-                this.Show();
+                var room = CMB_Rooms.Text;
+                roomId = room.Substring(0, 4);
+                var roomName = CMB_Rooms.Text.Substring(5);
+                client.SendMessage(Protocol.ROOM_JOIN_REQUEST + roomId);
+                var msg = client.GetMessage();
+                if (msg == "1101")
+                {
+                    LBL_FlavorText.Text = "Room is full";
+                    return;
+                }
+                else if (msg == "1102")
+                {
+                    LBL_FlavorText.Text = "Room doesn't exist or other reason";
+                    return;
+                }
+                else
+                {
+                    msg = msg.Substring(4);
+                    var questionNumber = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    var questionTime = Convert.ToInt32(msg.Substring(0, 2));
+                    var waitForGame = new WaitForGameForm(client, false, roomName, LST_Players.ItemHeight, questionNumber, questionTime, uname);
+                    this.Hide();
+                    waitForGame.ShowDialog();
+                    this.Show();
+                }
             }
         }
     }

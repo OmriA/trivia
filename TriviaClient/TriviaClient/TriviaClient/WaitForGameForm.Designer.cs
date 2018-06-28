@@ -131,6 +131,7 @@
             this.BTN_CloseRoom.TabIndex = 8;
             this.BTN_CloseRoom.Text = "Close Room";
             this.BTN_CloseRoom.UseVisualStyleBackColor = false;
+            this.BTN_CloseRoom.Click += new System.EventHandler(this.BTN_CloseRoom_Click);
             // 
             // BTN_StartGame
             // 
@@ -155,6 +156,7 @@
             this.BTN_LeaveRoom.TabIndex = 10;
             this.BTN_LeaveRoom.Text = "Leave Room";
             this.BTN_LeaveRoom.UseVisualStyleBackColor = false;
+            this.BTN_LeaveRoom.Click += new System.EventHandler(this.BTN_LeaveRoom_Click);
             // 
             // WaitForGameForm
             // 

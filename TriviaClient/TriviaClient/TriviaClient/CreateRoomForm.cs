@@ -57,30 +57,35 @@ namespace TriviaClient
                 MessageBox.Show("Please enter number in time to question.");
                 return;
             }
-
-            //message = "213##roomName playersNumber questionsNumber questionTimeInSec".
-            var message = Protocol.ROOM_CREATE_REQUEST + Protocol.GetPaddedNumber(roomName.Length, 2) + roomName + Protocol.GetPaddedNumber(numOfPlayers, 1) + Protocol.GetPaddedNumber(numOfQuestions, 2) + Protocol.GetPaddedNumber(timeToQuestion, 2);
-            client.SendMessage(message);
-
-            var msg = client.GetMessage();
-            switch (msg)
+            if (numOfPlayers >=1 && numOfPlayers <=9)
             {
-                case Protocol.ROOM_CREATE_RESPONSE_SUCCESS:
-                    this.Hide();
-                    var waitForGame = new WaitForGameForm(client, true, roomName, numOfPlayers, numOfQuestions, timeToQuestion, uname);
-                    waitForGame.ShowDialog();
-                    this.Close();
-                    break;
-                case Protocol.ROOM_CREATE_RESPONSE_TOO_MANY_QUESTIONS:
-                    MessageBox.Show("Not enough questions in the database.");
-                    break;
-                case Protocol.ROOM_CREATE_RESPONSE_FAIL:
-                    MessageBox.Show("Create room failed.");
-                    break;
-                default:
-                    MessageBox.Show($@"Unknown message recieved.
+                //message = "213##roomName playersNumber questionsNumber questionTimeInSec".
+                var message = Protocol.ROOM_CREATE_REQUEST + Protocol.GetPaddedNumber(roomName.Length, 2) + roomName + Protocol.GetPaddedNumber(numOfPlayers, 1) + Protocol.GetPaddedNumber(numOfQuestions, 2) + Protocol.GetPaddedNumber(timeToQuestion, 2);
+                client.SendMessage(message);
+                var msg = client.GetMessage();
+                switch (msg)
+                {
+                    case Protocol.ROOM_CREATE_RESPONSE_SUCCESS:
+                        this.Hide();
+                        var waitForGame = new WaitForGameForm(client, true, roomName, numOfPlayers, numOfQuestions, timeToQuestion, uname);
+                        waitForGame.ShowDialog();
+                        this.Close();
+                        break;
+                    case Protocol.ROOM_CREATE_RESPONSE_TOO_MANY_QUESTIONS:
+                        MessageBox.Show("Not enough questions in the database.");
+                        break;
+                    case Protocol.ROOM_CREATE_RESPONSE_FAIL:
+                        MessageBox.Show("Create room failed.");
+                        break;
+                    default:
+                        MessageBox.Show($@"Unknown message recieved.
 Message: {msg}");
-                    break;
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Num of players must be between 1 and 9.");
             }
         }
 

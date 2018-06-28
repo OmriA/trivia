@@ -121,8 +121,8 @@ void TriviaServer::safeDeleteUser(RecievedMessage * msg)
 		{
 			try
 			{
-				getUserBySocket(msg->getSock())->closeRoom();
 				getUserBySocket(msg->getSock())->leaveRoom();
+				getUserBySocket(msg->getSock())->closeRoom();
 			}
 			catch (...) {}
 		}
