@@ -144,6 +144,7 @@
             this.BTN_StartGame.TabIndex = 9;
             this.BTN_StartGame.Text = "Start Game";
             this.BTN_StartGame.UseVisualStyleBackColor = false;
+            this.BTN_StartGame.Click += new System.EventHandler(this.BTN_StartGame_Click);
             // 
             // BTN_LeaveRoom
             // 
