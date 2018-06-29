@@ -79,7 +79,7 @@ namespace TriviaClient
                     if (msgCode == Protocol.QUESTION)
                     {
                         var gameForm = new GameForm(client, msg, roomName, qstNum, qstTime);
-                        this.Hide();
+                        Invoke((MethodInvoker)(() => this.Hide()));
                         gameForm.ShowDialog();
                     }
                     Invoke((MethodInvoker)(() => this.Close()));
@@ -100,14 +100,6 @@ namespace TriviaClient
         private void BTN_StartGame_Click(object sender, EventArgs e)
         {
             client.SendMessage(Protocol.GAME_START);
-
-            var msg = client.GetMessage();
-            if (msg.Substring(0, 3) == Protocol.QUESTION)
-            {
-                var gameForm = new GameForm(client, msg, roomName, qstNum, qstTime);
-                gameForm.ShowDialog();
-                this.Close();
-            }
         }
     }
 }
