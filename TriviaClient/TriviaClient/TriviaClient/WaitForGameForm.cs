@@ -59,6 +59,8 @@ namespace TriviaClient
                 msg = msg.Substring(3);
                 if (msgCode == Protocol.USERS_IN_ROOM_RESPONSE)
                 {
+                    if (!IsHandleCreated)
+                        CreateControl();
                     Invoke((MethodInvoker)(() => LST_Users.Items.Clear()));
                     var numOfUsers = Convert.ToInt32(msg.Substring(0, 1));
                     msg = msg.Substring(1);
@@ -72,16 +74,12 @@ namespace TriviaClient
                 }
                 else
                 {
-                    MessageBox.Show("debug");
+                    MessageBox.Show(msgCode);
                     listen = false;
                     if (msgCode == Protocol.QUESTION)
                     {
                         var gameForm = new GameForm(client, userName, roomName, qstNum, qstTime);
                         gameForm.ShowDialog();
-                    }
-                    else if (msgCode == Protocol.ROOM_CLOSE_RESPONSE)
-                    {
-                        listen = false;
                     }
                     Invoke((MethodInvoker)(() => this.Close()));
                 }
