@@ -20,6 +20,7 @@ namespace TriviaClient
         private int counter;
         public GameForm(Client c, string msg, string roomName, int queNum, int queTime)
         {
+            this.ControlBox = false;
             int i = 0, corAns = 0, wrongAns = 0;
             rName = roomName;
             questionTime = queTime;
@@ -30,13 +31,13 @@ namespace TriviaClient
             LBL_RoomName.Text = rName;
             LBL_QuestionOut.Text = "Question " + (i + 1) + "/" + queNum;
             LBL_Time.Text = counter.ToString();
-            if (msg == Protocol.GAME_FAIL)
+            if (msg == "0")
             {
                 MessageBox.Show("ERROR!");
                 client.SendMessage(Protocol.GAME_LEAVE);
                 this.Hide();
             }
-            else if (Convert.ToInt32(msg.Substring(3,3)) == 0)
+            else if (Convert.ToInt32(msg.Substring(0,3)) == 0)
             {
                 MessageBox.Show("ERROR!");
                 client.SendMessage(Protocol.GAME_LEAVE);
@@ -49,7 +50,6 @@ namespace TriviaClient
                 {
                     counter = questionTime;
                     LBL_QuestionOut.Text = "Question " + (i + 1) + "/" + queNum;
-                    msg = msg.Substring(3);
                     int queLen = 0, oneLen = 0, twoLen = 0, threeLen = 0, fourLen = 0;
                     queLen = Convert.ToInt32(msg.Substring(0, 3));
                     msg = msg.Substring(3);
@@ -85,7 +85,7 @@ namespace TriviaClient
         private void BTN_Leave_Click(object sender, EventArgs e)
         {
             client.SendMessage(Protocol.GAME_LEAVE);
-            this.Hide();
+            this.Close();
         }
     }
 }
