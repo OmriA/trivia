@@ -51,6 +51,7 @@ namespace TriviaClient
 
         private void listenToServer()
         {
+            Thread.Sleep(new TimeSpan(0, 0, 0, 0, 500));
             string msgCode;
             while (listen)
             {
@@ -73,12 +74,12 @@ namespace TriviaClient
                     }
                 }
                 else
-                {
-                    MessageBox.Show(msgCode);
+                {   
                     listen = false;
                     if (msgCode == Protocol.QUESTION)
                     {
-                        var gameForm = new GameForm(client, userName, roomName, qstNum, qstTime);
+                        var gameForm = new GameForm(client, msg, roomName, qstNum, qstTime);
+                        this.Hide();
                         gameForm.ShowDialog();
                     }
                     Invoke((MethodInvoker)(() => this.Close()));
@@ -94,16 +95,6 @@ namespace TriviaClient
         private void BTN_LeaveRoom_Click(object sender, EventArgs e)
         {
             client.SendMessage(Protocol.ROOM_LEAVE_REQUEST);
-
-            var msg = client.GetMessage();
-            if (msg != Protocol.ROOM_LEAVE_REQUEST)
-            {
-                MessageBox.Show("You didn't left the room successfully.");
-            }
-            else
-            {
-                this.Close();
-            }
         }
 
         private void BTN_StartGame_Click(object sender, EventArgs e)
