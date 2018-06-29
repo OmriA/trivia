@@ -57,7 +57,7 @@ namespace TriviaClient
                 MessageBox.Show("Please enter number in time to question.");
                 return;
             }
-            if (numOfPlayers >=1 && numOfPlayers <=9)
+            if (numOfPlayers >= 1 && numOfPlayers <= 9)
             {
                 //message = "213##roomName playersNumber questionsNumber questionTimeInSec".
                 var message = Protocol.ROOM_CREATE_REQUEST + Protocol.GetPaddedNumber(roomName.Length, 2) + roomName + Protocol.GetPaddedNumber(numOfPlayers, 1) + Protocol.GetPaddedNumber(numOfQuestions, 2) + Protocol.GetPaddedNumber(timeToQuestion, 2);
@@ -69,6 +69,11 @@ namespace TriviaClient
                         this.Hide();
                         var waitForGame = new WaitForGameForm(client, true, roomName, numOfPlayers, numOfQuestions, timeToQuestion, uname);
                         waitForGame.ShowDialog();
+                        if (waitForGame.gameStart)
+                        {
+                            var gameForm = new GameForm(client, waitForGame.msg, roomName, waitForGame.qstNum, waitForGame.qstTime);
+                            gameForm.ShowDialog();
+                        }
                         this.Close();
                         break;
                     case Protocol.ROOM_CREATE_RESPONSE_TOO_MANY_QUESTIONS:

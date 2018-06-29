@@ -17,11 +17,14 @@ namespace TriviaClient
         private bool listen = true;
         private string userName;
         private string roomName;
-        private int qstNum;
-        private int qstTime;
+        public int qstNum { get; set; }
+        public int qstTime { get; set; }
+        public bool gameStart { get; set; } = false;
+        public string msg { get; set; }
 
         public WaitForGameForm(Client c, bool admin, string roomName, int maxNumPlayers, int numOfQst, int timeToQst, string uname)
         {
+            this.Visible = false;
             this.ControlBox = false;
             client = c;
             userName = uname;
@@ -55,7 +58,7 @@ namespace TriviaClient
             string msgCode;
             while (listen)
             {
-                var msg = client.GetMessage();
+                msg = client.GetMessage();
                 msgCode = msg.Substring(0, 3);
                 msg = msg.Substring(3);
                 if (msgCode == Protocol.USERS_IN_ROOM_RESPONSE)
@@ -74,15 +77,13 @@ namespace TriviaClient
                     }
                 }
                 else
-                {   
-                    listen = false;
+                {
                     if (msgCode == Protocol.QUESTION)
                     {
-                        var gameForm = new GameForm(client, msg, roomName, qstNum, qstTime);
-                        Invoke((MethodInvoker)(() => this.Hide()));
-                        gameForm.ShowDialog();
+                        gameStart = true;
                     }
                     Invoke((MethodInvoker)(() => this.Close()));
+                    return;
                 }
             }
         }
