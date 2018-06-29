@@ -25,6 +25,7 @@ int Helper::getMessageTypeCode(SOCKET sc)
 // this is private function
 void Helper::sendData(SOCKET sc, std::string message) 
 {
+	//encode
 	const char* data = message.c_str();
 	
 	if (send(sc, data, message.size(), 0) == INVALID_SOCKET)
