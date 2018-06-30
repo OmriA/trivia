@@ -58,6 +58,11 @@ void checkIsUserAndPassMatch(DataBase* db)
 	}
 }
 
+void loadEnc()
+{
+
+}
+
 int main()
 {
 	/*DataBase* db = new DataBase();
