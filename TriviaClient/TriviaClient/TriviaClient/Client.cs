@@ -18,7 +18,9 @@ namespace TriviaClient
         {
             Sock = sock;
             string line = "";
-            System.IO.StreamReader f = new System.IO.StreamReader(@"C:\Users\magshimim\Documents\GitHub\trivia\encDic.txt");
+            string directory = System.IO.Directory.GetParent(Environment.CurrentDirectory).ToString();
+            directory = Path.Combine(directory, @"..\..\..\..\encDic.txt");
+            System.IO.StreamReader f = new System.IO.StreamReader(directory);
             byte[] b = new byte[1024];
             UTF8Encoding temp = new UTF8Encoding(true);
 
@@ -41,7 +43,7 @@ namespace TriviaClient
                 value = dict[msg[i]];
                 sb.Append(value);
             }
-            Sock.GetStream().Write(Encoding.ASCII.GetBytes(sb.ToString()), 0, sb.ToString().Length);
+            Sock.GetStream().Write(Encoding.ASCII.GetBytes(sb.ToString()), 0, sb.Length);
         }
 
         public string GetMessage()
