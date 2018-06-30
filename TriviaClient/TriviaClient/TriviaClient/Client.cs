@@ -38,7 +38,14 @@ namespace TriviaClient
             StringBuilder sb = new StringBuilder(msg.Length);
             for (i = 0; i < msg.Length; i++)
             {
-                value = dict[msg[i]];
+                if (dict.Keys.Equals(msg[i]))
+                {
+                    value = dict[msg[i]];
+                }
+                else
+                {
+                    value = msg[i];
+                }
                 sb.Append(value);
             }
             Sock.GetStream().Write(Encoding.ASCII.GetBytes(sb.ToString()), 0, sb.ToString().Length);
@@ -50,18 +57,25 @@ namespace TriviaClient
             var buffer = new byte[4096];
             var msgLen = Sock.GetStream().Read(buffer, 0, buffer.Length);
             string msg = Encoding.Default.GetString(buffer, 0, msgLen);
+            char result = '0';
             //decode
             StringBuilder sb = new StringBuilder(msgLen);
             for (int i = 0; i < msg.Length; i++)
             {
                 foreach (KeyValuePair<char, char> entry in dict)
                 {
-                    if (entry.Value == msg[i])
+                    if (entry.Value.ToString().Equals(msg[i].ToString()))
                     {
                         key = entry.Key;
+                        result = key;
+                        break;
                     }
-                    sb.Append(key);
+                    else
+                    {
+                        result = msg[i];
+                    }
                 }
+                sb.Append(result.ToString());
             }
             return sb.ToString();
         }
