@@ -142,9 +142,14 @@ namespace TriviaClient
                     var questionNumber = Convert.ToInt32(msg.Substring(0, 2));
                     msg = msg.Substring(2);
                     var questionTime = Convert.ToInt32(msg.Substring(0, 2));
-                    var waitForGame = new WaitForGameForm(client, false, roomName, LST_Players.ItemHeight, questionNumber, questionTime, uname);
                     this.Hide();
+                    var waitForGame = new WaitForGameForm(client, false, roomName, 0, questionNumber, questionTime, uname);
                     waitForGame.ShowDialog();
+                    if (waitForGame.gameStart)
+                    {
+                        var gameForm = new GameForm(client, waitForGame.msg, roomName, waitForGame.qstNum, waitForGame.qstTime);
+                        gameForm.ShowDialog();
+                    }
                     this.Close();
                 }
             }

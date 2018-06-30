@@ -44,7 +44,7 @@ namespace TriviaClient
                 client.SendMessage(Protocol.GAME_LEAVE);
                 this.Hide();
             }
-            else if (Convert.ToInt32(msg.Substring(0,3)) == 0)
+            else if (Convert.ToInt32(msg.Substring(0, 3)) == 0)
             {
                 MessageBox.Show("ERROR!");
                 client.SendMessage(Protocol.GAME_LEAVE);
@@ -97,11 +97,11 @@ namespace TriviaClient
                     msg = msg.Substring(4);
                     while (msg.Length != 0)
                     {
-                        userLen = Convert.ToInt32(msg.Substring(0,2));
+                        userLen = Convert.ToInt32(msg.Substring(0, 2));
                         msg = msg.Substring(2);
                         user = msg.Substring(0, userLen);
                         msg = msg.Substring(userLen);
-                        score = Convert.ToInt32(msg.Substring(0,2));
+                        score = Convert.ToInt32(msg.Substring(0, 2));
                         msg = msg.Substring(2);
                         finalMsg += user + ": " + score.ToString() + "\n";
                     }
@@ -161,20 +161,21 @@ namespace TriviaClient
         {
             client.SendMessage(Protocol.ANSWER + "1" + Protocol.GetPaddedNumber(questionTime - counter, 1));
             t.Stop();
-            BTN_AnsOne.Enabled = false;
             BTN_AnsTwo.Enabled = false;
             BTN_AnsThree.Enabled = false;
             BTN_AnsFour.Enabled = false;
             var msg = client.GetMessage();
-            if (msg.Substring(3,1) == "1")
+            if (msg.Substring(3, 1) == "1")
             {
                 BTN_AnsOne.BackColor = Color.LightGreen;
+                BTN_AnsOne.Enabled = false;
                 corNum++;
                 LBL_CorrectAnsNum.Text = corNum.ToString();
             }
             else
             {
                 BTN_AnsOne.BackColor = Color.Red;
+                BTN_AnsOne.Enabled = false;
             }
             msg = client.GetMessage();
             if (currQue != numOfQuest)
@@ -211,19 +212,20 @@ namespace TriviaClient
             client.SendMessage(Protocol.ANSWER + "2" + Protocol.GetPaddedNumber(questionTime - counter, 1));
             t.Stop();
             BTN_AnsOne.Enabled = false;
-            BTN_AnsTwo.Enabled = false;
             BTN_AnsThree.Enabled = false;
             BTN_AnsFour.Enabled = false;
             var msg = client.GetMessage();
             if (msg.Substring(3, 1) == "1")
             {
                 BTN_AnsTwo.BackColor = Color.LightGreen;
+                BTN_AnsTwo.Enabled = false;
                 corNum++;
                 LBL_CorrectAnsNum.Text = corNum.ToString();
             }
             else
             {
                 BTN_AnsTwo.BackColor = Color.Red;
+                BTN_AnsTwo.Enabled = false;
             }
             msg = client.GetMessage();
             if (currQue != numOfQuest)
@@ -261,18 +263,19 @@ namespace TriviaClient
             t.Stop();
             BTN_AnsOne.Enabled = false;
             BTN_AnsTwo.Enabled = false;
-            BTN_AnsThree.Enabled = false;
             BTN_AnsFour.Enabled = false;
             var msg = client.GetMessage();
             if (msg.Substring(3, 1) == "1")
             {
                 BTN_AnsThree.BackColor = Color.LightGreen;
+                BTN_AnsThree.Enabled = false;
                 corNum++;
                 LBL_CorrectAnsNum.Text = corNum.ToString();
             }
             else
             {
                 BTN_AnsThree.BackColor = Color.Red;
+                BTN_AnsThree.Enabled = false;
             }
             msg = client.GetMessage();
             if (currQue != numOfQuest)
@@ -311,17 +314,18 @@ namespace TriviaClient
             BTN_AnsOne.Enabled = false;
             BTN_AnsTwo.Enabled = false;
             BTN_AnsThree.Enabled = false;
-            BTN_AnsFour.Enabled = false;
             var msg = client.GetMessage();
             if (msg.Substring(3, 1) == "1")
             {
                 BTN_AnsFour.BackColor = Color.LightGreen;
+                BTN_AnsFour.Enabled = false;
                 corNum++;
                 LBL_CorrectAnsNum.Text = corNum.ToString();
             }
             else
             {
                 BTN_AnsFour.BackColor = Color.Red;
+                BTN_AnsFour.Enabled = false;
             }
             msg = client.GetMessage();
             if (currQue != numOfQuest)

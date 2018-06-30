@@ -156,10 +156,18 @@ int User::closeRoom()
 	{
 		return -1;
 	}
-	this->_currRoom->closeRoom(this);
-	int room_id = this->_currRoom->getID();
-	delete _currRoom;
-	_currRoom = nullptr;
+
+	vector<User*> usersInRoom = _currRoom->getUsers();
+	int room_id = this->_currRoom->closeRoom(this);
+	if (room_id != -1)
+	{
+		for (unsigned int i = 0; i < usersInRoom.size(); i++)
+		{
+			usersInRoom[i]->setRoom(nullptr);
+		}
+		delete _currRoom;
+		_currRoom = nullptr;
+	}
 	return room_id;
 }
 
