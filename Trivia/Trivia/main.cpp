@@ -3,8 +3,12 @@
 #include"DataBase.h"
 #include"TriviaServer.h"
 #include<exception>
+#include <fstream>
 
 using std::exception;
+using std::fstream;
+
+
 int questiontest()
 {
 	Question first = Question(1, "r u ready?", "yes", "no", "maybe", "aye aye captain");
@@ -58,11 +62,6 @@ void checkIsUserAndPassMatch(DataBase* db)
 	}
 }
 
-void loadEnc()
-{
-
-}
-
 int main()
 {
 	/*DataBase* db = new DataBase();
@@ -70,6 +69,8 @@ int main()
 	try
 	{
 		TriviaServer s;
+		Helper h = Helper();
+		h.loadEnc();
 		s.server();
 	}
 	catch (exception e)

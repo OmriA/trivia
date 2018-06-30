@@ -4,7 +4,9 @@
 #include <iomanip>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
+map<char, char> Helper::encMap = map<char, char>();
 
 // recieves the type code of the message from socket (first byte)
 // and returns the code. if no message found in the socket returns 0 (which means the client disconnected)
@@ -23,11 +25,16 @@ int Helper::getMessageTypeCode(SOCKET sc)
 
 // send data to socket
 // this is private function
-void Helper::sendData(SOCKET sc, std::string message) 
+void Helper::sendData(SOCKET sc, std::string message)
 {
-	//encode
+	//encrypt
+	for (unsigned int i = 0; i < message.length(); i++)
+	{
+		message[i] = Helper::encMap[message[i]];
+	}
+
 	const char* data = message.c_str();
-	
+
 	if (send(sc, data, message.size(), 0) == INVALID_SOCKET)
 	{
 		throw std::exception("Error while sending message to client");
@@ -38,14 +45,14 @@ void Helper::sendData(SOCKET sc, std::string message)
 
 int Helper::getIntPartFromSocket(SOCKET sc, int bytesNum)
 {
-	char* s= getPartFromSocket(sc, bytesNum, 0);
+	char* s = getPartFromSocket(sc, bytesNum, 0);
 	return atoi(s);
 }
 
 std::string Helper::getStringPartFromSocket(SOCKET sc, int bytesNum)
 {
 	char* s = getPartFromSocket(sc, bytesNum, 0);
-    std::string res(s);
+	std::string res(s);
 	return res;
 }
 
@@ -73,15 +80,41 @@ char* Helper::getPartFromSocket(SOCKET sc, int bytesNum, int flags)
 		throw std::exception(s.c_str());
 	}
 
+	for (int i = 0; i < bytesNum; i++)
+	{
+		map<char, char>::iterator it = Helper::encMap.begin();
+		bool found = false;
+		while (it != Helper::encMap.end() && !found)
+		{
+			if (it->second == data[i])
+			{
+				it->first;
+				found = true;
+			}
+			it++;
+		}
+	}
 	data[bytesNum] = 0;
 	return data;
 }
 
-
 std::string Helper::getPaddedNumber(int num, int digits)
 {
-	std::ostringstream ostr; 
-	ostr <<  std::setw(digits) << std::setfill('0') << num;
+	std::ostringstream ostr;
+	ostr << std::setw(digits) << std::setfill('0') << num;
 	return ostr.str();
 
+}
+
+void Helper::loadEnc()
+{
+	std::string line;
+	std::fstream dic("../../encDic.txt");
+	if (dic.is_open())
+	{
+		while (getline(dic, line))
+		{
+			encMap.insert(std::pair<char, char>(line[0], line[2]));
+		}
+	}
 }

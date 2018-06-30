@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 #include <WinSock2.h>
+#include <map>
+
+using std::map;
 
 #pragma comment (lib, "Ws2_32.lib")
 
@@ -10,14 +13,14 @@ class Helper
 {
 public:
 
-	 
-	 
-	 static int getMessageTypeCode(SOCKET sc);
-	 static char* getPartFromSocket(SOCKET sc, int bytesNum, int flags);
-	 static int getIntPartFromSocket(SOCKET sc, int bytesNum);
-	 static std::string getStringPartFromSocket(SOCKET sc, int bytesNum);
-	 static void sendData(SOCKET sc, std::string message);
-	 static std::string getPaddedNumber(int num, int digits);
+	static map<char, char> encMap;
+	static int getMessageTypeCode(SOCKET sc);
+	static char* getPartFromSocket(SOCKET sc, int bytesNum, int flags);
+	static int getIntPartFromSocket(SOCKET sc, int bytesNum);
+	static std::string getStringPartFromSocket(SOCKET sc, int bytesNum);
+	static void sendData(SOCKET sc, std::string message);
+	static std::string getPaddedNumber(int num, int digits);
+	static void loadEnc();
 
 private:
 	static char* getPartFromSocket(SOCKET sc, int bytesNum);
