@@ -84,10 +84,10 @@
             // LBL_Time
             // 
             this.LBL_Time.AutoSize = true;
-            this.LBL_Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_Time.Location = new System.Drawing.Point(559, 63);
+            this.LBL_Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_Time.Location = new System.Drawing.Point(558, 71);
             this.LBL_Time.Name = "LBL_Time";
-            this.LBL_Time.Size = new System.Drawing.Size(37, 55);
+            this.LBL_Time.Size = new System.Drawing.Size(28, 42);
             this.LBL_Time.TabIndex = 8;
             this.LBL_Time.Text = "t";
             // 
@@ -110,6 +110,7 @@
             this.BTN_AnsTwo.TabIndex = 8;
             this.BTN_AnsTwo.Text = "Ans2 goes here";
             this.BTN_AnsTwo.UseVisualStyleBackColor = true;
+            this.BTN_AnsTwo.Click += new System.EventHandler(this.BTN_AnsTwo_Click);
             // 
             // BTN_AnsThree
             // 
@@ -120,6 +121,7 @@
             this.BTN_AnsThree.TabIndex = 7;
             this.BTN_AnsThree.Text = "Ans3 goes here";
             this.BTN_AnsThree.UseVisualStyleBackColor = true;
+            this.BTN_AnsThree.Click += new System.EventHandler(this.BTN_AnsThree_Click);
             // 
             // BTN_AnsFour
             // 
@@ -130,6 +132,7 @@
             this.BTN_AnsFour.TabIndex = 6;
             this.BTN_AnsFour.Text = "Ans4 goes here";
             this.BTN_AnsFour.UseVisualStyleBackColor = true;
+            this.BTN_AnsFour.Click += new System.EventHandler(this.BTN_AnsFour_Click);
             // 
             // BTN_AnsOne
             // 
@@ -140,6 +143,7 @@
             this.BTN_AnsOne.TabIndex = 5;
             this.BTN_AnsOne.Text = "Ans1 goes here";
             this.BTN_AnsOne.UseVisualStyleBackColor = true;
+            this.BTN_AnsOne.Click += new System.EventHandler(this.BTN_AnsOne_Click);
             // 
             // LBL_RoomName
             // 

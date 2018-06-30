@@ -22,7 +22,7 @@ namespace TriviaClient
 
         public string GetMessage()
         {
-            var buffer = new byte[2048];
+            var buffer = new byte[4096];
             var msgLen = Sock.GetStream().Read(buffer, 0, buffer.Length);
             //decode
             return Encoding.Default.GetString(buffer, 0, msgLen);

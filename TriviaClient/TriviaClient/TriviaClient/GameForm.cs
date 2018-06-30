@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 
-
 namespace TriviaClient
 {
     public partial class GameForm : Form
@@ -21,6 +20,7 @@ namespace TriviaClient
         private int questionTime;
         private int counter;
         private int currQue = 1;
+        private int corNum = 0;
         public GameForm(Client c, string msg, string roomName, int queNum, int queTime)
         {
             this.ControlBox = false;
@@ -53,13 +53,15 @@ namespace TriviaClient
             else
             {
                 initForm(msg);
+
             }
         }
 
         private void BTN_Leave_Click(object sender, EventArgs e)
         {
             client.SendMessage(Protocol.GAME_LEAVE);
-            this.Close();
+            t.Stop();
+            this.Hide();
         }
 
         private void t_Tick(object sender, EventArgs e)
@@ -84,6 +86,27 @@ namespace TriviaClient
                     Thread.Sleep(new TimeSpan(0, 0, 0, 1));
                     currQue++;
                     initForm(msg.Substring(3));
+                }
+                else
+                {
+                    LBL_Time.Visible = false;
+                    currQue++;
+                    int usersnum = Convert.ToInt32(msg.Substring(3, 1));
+                    string finalMsg = "Scores:\n", user = "";
+                    int userLen = 0, score = 0;
+                    msg = msg.Substring(4);
+                    while (msg.Length != 0)
+                    {
+                        userLen = Convert.ToInt32(msg.Substring(0,2));
+                        msg = msg.Substring(2);
+                        user = msg.Substring(0, userLen);
+                        msg = msg.Substring(userLen);
+                        score = Convert.ToInt32(msg.Substring(0,2));
+                        msg = msg.Substring(2);
+                        finalMsg += user + ": " + score.ToString() + "\n";
+                    }
+                    MessageBox.Show(finalMsg);
+                    this.Close();
                 }
             }
             LBL_Time.Text = counter.ToString();
@@ -132,12 +155,204 @@ namespace TriviaClient
                 BTN_AnsFour.BackColor = SystemColors.ButtonFace;
                 BTN_AnsFour.Enabled = true;
             }
+        }
+
+        private void BTN_AnsOne_Click(object sender, EventArgs e)
+        {
+            client.SendMessage(Protocol.ANSWER + "1" + Protocol.GetPaddedNumber(questionTime - counter, 1));
+            t.Stop();
+            BTN_AnsOne.Enabled = false;
+            BTN_AnsTwo.Enabled = false;
+            BTN_AnsThree.Enabled = false;
+            BTN_AnsFour.Enabled = false;
+            var msg = client.GetMessage();
+            if (msg.Substring(3,1) == "1")
+            {
+                BTN_AnsOne.BackColor = Color.LightGreen;
+                corNum++;
+                LBL_CorrectAnsNum.Text = corNum.ToString();
+            }
             else
             {
-                counter = 0;
-                msg = client.GetMessage();
-                msg = client.GetMessage();
+                BTN_AnsOne.BackColor = Color.Red;
             }
+            msg = client.GetMessage();
+            if (currQue != numOfQuest)
+            {
+                Thread.Sleep(new TimeSpan(0, 0, 0, 1));
+                currQue++;
+                initForm(msg.Substring(3));
+            }
+            else
+            {
+                LBL_Time.Visible = false;
+                currQue++;
+                int usersnum = Convert.ToInt32(msg.Substring(3, 1));
+                string finalMsg = "Scores:\n", user = "";
+                int userLen = 0, score = 0;
+                msg = msg.Substring(4);
+                while (msg.Length != 0)
+                {
+                    userLen = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    user = msg.Substring(0, userLen);
+                    msg = msg.Substring(userLen);
+                    score = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    finalMsg += user + ": " + score.ToString() + "\n";
+                }
+                MessageBox.Show(finalMsg);
+                this.Close();
+            }
+            LBL_Time.Text = counter.ToString();
+        }
+        private void BTN_AnsTwo_Click(object sender, EventArgs e)
+        {
+            client.SendMessage(Protocol.ANSWER + "2" + Protocol.GetPaddedNumber(questionTime - counter, 1));
+            t.Stop();
+            BTN_AnsOne.Enabled = false;
+            BTN_AnsTwo.Enabled = false;
+            BTN_AnsThree.Enabled = false;
+            BTN_AnsFour.Enabled = false;
+            var msg = client.GetMessage();
+            if (msg.Substring(3, 1) == "1")
+            {
+                BTN_AnsTwo.BackColor = Color.LightGreen;
+                corNum++;
+                LBL_CorrectAnsNum.Text = corNum.ToString();
+            }
+            else
+            {
+                BTN_AnsTwo.BackColor = Color.Red;
+            }
+            msg = client.GetMessage();
+            if (currQue != numOfQuest)
+            {
+                Thread.Sleep(new TimeSpan(0, 0, 0, 1));
+                currQue++;
+                initForm(msg.Substring(3));
+            }
+            else
+            {
+                LBL_Time.Visible = false;
+                currQue++;
+                int usersnum = Convert.ToInt32(msg.Substring(3, 1));
+                string finalMsg = "Scores:\n", user = "";
+                int userLen = 0, score = 0;
+                msg = msg.Substring(4);
+                while (msg.Length != 0)
+                {
+                    userLen = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    user = msg.Substring(0, userLen);
+                    msg = msg.Substring(userLen);
+                    score = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    finalMsg += user + ": " + score.ToString() + "\n";
+                }
+                MessageBox.Show(finalMsg);
+                this.Close();
+            }
+            LBL_Time.Text = counter.ToString();
+        }
+        private void BTN_AnsThree_Click(object sender, EventArgs e)
+        {
+            client.SendMessage(Protocol.ANSWER + "3" + Protocol.GetPaddedNumber(questionTime - counter, 1));
+            t.Stop();
+            BTN_AnsOne.Enabled = false;
+            BTN_AnsTwo.Enabled = false;
+            BTN_AnsThree.Enabled = false;
+            BTN_AnsFour.Enabled = false;
+            var msg = client.GetMessage();
+            if (msg.Substring(3, 1) == "1")
+            {
+                BTN_AnsThree.BackColor = Color.LightGreen;
+                corNum++;
+                LBL_CorrectAnsNum.Text = corNum.ToString();
+            }
+            else
+            {
+                BTN_AnsThree.BackColor = Color.Red;
+            }
+            msg = client.GetMessage();
+            if (currQue != numOfQuest)
+            {
+                Thread.Sleep(new TimeSpan(0, 0, 0, 1));
+                currQue++;
+                initForm(msg.Substring(3));
+            }
+            else
+            {
+                LBL_Time.Visible = false;
+                currQue++;
+                int usersnum = Convert.ToInt32(msg.Substring(3, 1));
+                string finalMsg = "Scores:\n", user = "";
+                int userLen = 0, score = 0;
+                msg = msg.Substring(4);
+                while (msg.Length != 0)
+                {
+                    userLen = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    user = msg.Substring(0, userLen);
+                    msg = msg.Substring(userLen);
+                    score = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    finalMsg += user + ": " + score.ToString() + "\n";
+                }
+                MessageBox.Show(finalMsg);
+                this.Close();
+            }
+            LBL_Time.Text = counter.ToString();
+        }
+        private void BTN_AnsFour_Click(object sender, EventArgs e)
+        {
+            client.SendMessage(Protocol.ANSWER + "4" + Protocol.GetPaddedNumber(questionTime - counter, 1));
+            t.Stop();
+            BTN_AnsOne.Enabled = false;
+            BTN_AnsTwo.Enabled = false;
+            BTN_AnsThree.Enabled = false;
+            BTN_AnsFour.Enabled = false;
+            var msg = client.GetMessage();
+            if (msg.Substring(3, 1) == "1")
+            {
+                BTN_AnsFour.BackColor = Color.LightGreen;
+                corNum++;
+                LBL_CorrectAnsNum.Text = corNum.ToString();
+            }
+            else
+            {
+                BTN_AnsFour.BackColor = Color.Red;
+            }
+            msg = client.GetMessage();
+            if (currQue != numOfQuest)
+            {
+                Thread.Sleep(new TimeSpan(0, 0, 0, 1));
+                currQue++;
+                initForm(msg.Substring(3));
+            }
+            else
+            {
+                LBL_Time.Visible = false;
+                currQue++;
+                int usersnum = Convert.ToInt32(msg.Substring(3, 1));
+                string finalMsg = "Scores:\n", user = "";
+                int userLen = 0, score = 0;
+                msg = msg.Substring(4);
+                while (msg.Length != 0)
+                {
+                    userLen = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    user = msg.Substring(0, userLen);
+                    msg = msg.Substring(userLen);
+                    score = Convert.ToInt32(msg.Substring(0, 2));
+                    msg = msg.Substring(2);
+                    finalMsg += user + ": " + score.ToString() + "\n";
+                }
+                MessageBox.Show(finalMsg);
+                this.Close();
+            }
+            LBL_Time.Text = counter.ToString();
         }
     }
 }
+
