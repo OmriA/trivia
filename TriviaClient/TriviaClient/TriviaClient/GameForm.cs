@@ -92,7 +92,7 @@ namespace TriviaClient
                     LBL_Time.Visible = false;
                     currQue++;
                     int usersnum = Convert.ToInt32(msg.Substring(3, 1));
-                    string finalMsg = "Scores:\n", user = "";
+                    string finalMsg = "", user = "";
                     int userLen = 0, score = 0;
                     msg = msg.Substring(4);
                     while (msg.Length != 0)
@@ -105,7 +105,7 @@ namespace TriviaClient
                         msg = msg.Substring(2);
                         finalMsg += user + ": " + score.ToString() + "\n";
                     }
-                    MessageBox.Show(finalMsg);
+                    MessageBox.Show(finalMsg, "Final Score", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
             }
@@ -189,7 +189,7 @@ namespace TriviaClient
                 LBL_Time.Visible = false;
                 currQue++;
                 int usersnum = Convert.ToInt32(msg.Substring(3, 1));
-                string finalMsg = "Scores:\n", user = "";
+                string finalMsg = "", user = "";
                 int userLen = 0, score = 0;
                 msg = msg.Substring(4);
                 while (msg.Length != 0)
@@ -202,7 +202,7 @@ namespace TriviaClient
                     msg = msg.Substring(2);
                     finalMsg += user + ": " + score.ToString() + "\n";
                 }
-                MessageBox.Show(finalMsg);
+                MessageBox.Show(finalMsg, "Final Score", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             LBL_Time.Text = counter.ToString();
@@ -239,7 +239,7 @@ namespace TriviaClient
                 LBL_Time.Visible = false;
                 currQue++;
                 int usersnum = Convert.ToInt32(msg.Substring(3, 1));
-                string finalMsg = "Scores:\n", user = "";
+                string finalMsg = "", user = "";
                 int userLen = 0, score = 0;
                 msg = msg.Substring(4);
                 while (msg.Length != 0)
@@ -252,7 +252,7 @@ namespace TriviaClient
                     msg = msg.Substring(2);
                     finalMsg += user + ": " + score.ToString() + "\n";
                 }
-                MessageBox.Show(finalMsg);
+                MessageBox.Show(finalMsg, "Final Score", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             LBL_Time.Text = counter.ToString();
@@ -289,7 +289,7 @@ namespace TriviaClient
                 LBL_Time.Visible = false;
                 currQue++;
                 int usersnum = Convert.ToInt32(msg.Substring(3, 1));
-                string finalMsg = "Scores:\n", user = "";
+                string finalMsg = "", user = "";
                 int userLen = 0, score = 0;
                 msg = msg.Substring(4);
                 while (msg.Length != 0)
@@ -302,7 +302,7 @@ namespace TriviaClient
                     msg = msg.Substring(2);
                     finalMsg += user + ": " + score.ToString() + "\n";
                 }
-                MessageBox.Show(finalMsg);
+                MessageBox.Show(finalMsg, "Final Score", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             LBL_Time.Text = counter.ToString();
@@ -339,7 +339,7 @@ namespace TriviaClient
                 LBL_Time.Visible = false;
                 currQue++;
                 int usersnum = Convert.ToInt32(msg.Substring(3, 1));
-                string finalMsg = "Scores:\n", user = "";
+                string finalMsg = "", user = "";
                 int userLen = 0, score = 0;
                 msg = msg.Substring(4);
                 while (msg.Length != 0)
@@ -352,11 +352,12 @@ namespace TriviaClient
                     msg = msg.Substring(2);
                     finalMsg += user + ": " + score.ToString() + "\n";
                 }
-                MessageBox.Show(finalMsg);
+                MessageBox.Show(finalMsg, "Final Score", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             LBL_Time.Text = counter.ToString();
         }
+
     }
 }
 

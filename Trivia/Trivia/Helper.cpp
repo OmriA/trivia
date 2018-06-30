@@ -27,20 +27,26 @@ int Helper::getMessageTypeCode(SOCKET sc)
 // this is private function
 void Helper::sendData(SOCKET sc, std::string message)
 {
+	std::string msg = message;
 	//encrypt
 	for (unsigned int i = 0; i < message.length(); i++)
 	{
-		message[i] = Helper::encMap[message[i]];
+		std::map<char, char>::iterator it;
+		it = Helper::encMap.find(msg[i]);
+		if (it != Helper::encMap.end())
+		{
+			msg[i] = it->second;
+		}
 	}
 
-	const char* data = message.c_str();
+	const char* data = msg.c_str();
 
-	if (send(sc, data, message.size(), 0) == INVALID_SOCKET)
+	if (send(sc, data, msg.size(), 0) == INVALID_SOCKET)
 	{
 		throw std::exception("Error while sending message to client");
 	}
 
-	std::cout << "'" + message + "' was sent to socket " + std::to_string(sc) << std::endl;
+	std::cout << "'" + msg + "' was sent to socket " + std::to_string(sc) << std::endl;
 }
 
 int Helper::getIntPartFromSocket(SOCKET sc, int bytesNum)
