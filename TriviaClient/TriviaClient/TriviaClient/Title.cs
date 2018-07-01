@@ -16,6 +16,7 @@ namespace TriviaClient
         private Client client;
         public Title(Client c)
         {
+            this.ControlBox = false;
             client = c;
             InitializeComponent();
         }

@@ -18,6 +18,7 @@ namespace TriviaClient
 
         public JoinRoomForm(Client c, string username)
         {
+            this.ControlBox = false;
             uname = username;
             client = c;
             InitializeComponent();

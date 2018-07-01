@@ -24,7 +24,6 @@ namespace TriviaClient
 
         public WaitForGameForm(Client c, bool admin, string roomName, int maxNumPlayers, int numOfQst, int timeToQst, string uname)
         {
-            this.Visible = false;
             this.ControlBox = false;
             client = c;
             userName = uname;

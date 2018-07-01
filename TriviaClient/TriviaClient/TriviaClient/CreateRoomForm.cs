@@ -16,6 +16,7 @@ namespace TriviaClient
         private string uname;
         public CreateRoomForm(Client c, string username)
         {
+            this.ControlBox = false;
             uname = username;
             client = c;
             InitializeComponent();
@@ -45,16 +46,31 @@ namespace TriviaClient
                 MessageBox.Show("Please enter number in number of players.");
                 return;
             }
+            if (numOfPlayers < 1 || numOfPlayers > 9)
+            {
+                MessageBox.Show("Please enter number between 1 to 9 in number of players.");
+                return;
+            }
             int numOfQuestions;
             if (TXT_NumOfQuestions.Text == "" || !Int32.TryParse(TXT_NumOfQuestions.Text, out numOfQuestions))
             {
                 MessageBox.Show("Please enter number in number of questions.");
                 return;
             }
+            if (numOfQuestions < 1 || numOfQuestions > 99)
+            {
+                MessageBox.Show("Please enter number between 1 to 99 in number of questions.");
+                return;
+            }
             int timeToQuestion;
             if (TXT_TimeToQuestion.Text == "" || !Int32.TryParse(TXT_TimeToQuestion.Text, out timeToQuestion))
             {
                 MessageBox.Show("Please enter number in time to question.");
+                return;
+            }
+            if (timeToQuestion < 1 || timeToQuestion > 99)
+            {
+                MessageBox.Show("Please enter number between 1 to 99 in time to question.");
                 return;
             }
             if (numOfPlayers >= 1 && numOfPlayers <= 9)
