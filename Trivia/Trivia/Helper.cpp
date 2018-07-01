@@ -37,7 +37,7 @@ void Helper::sendData(SOCKET sc, std::string message)
 		{
 			msg[i] = it->second;
 		}
-	}
+	} 
 
 	const char* data = msg.c_str();
 
