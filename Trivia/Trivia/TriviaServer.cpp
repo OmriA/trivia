@@ -288,7 +288,7 @@ void TriviaServer::handleGetBestScores(RecievedMessage * msg)
 	{
 		for (int i = 0; i < 3 - numOfTopPlayers; i++)
 		{
-			answer += "0000000";
+			answer += "00000000";
 		}
 	}
 

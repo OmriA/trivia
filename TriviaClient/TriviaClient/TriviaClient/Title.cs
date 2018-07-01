@@ -151,16 +151,26 @@ namespace TriviaClient
             var username = TXT_Username.Text;
             client.SendMessage(Protocol.BEST_SCORES_REQUEST);
             var msg = client.GetMessage();
+            msg = msg.Substring(3);
 
-            var firstNum = Convert.ToInt32(msg.Substring(3, 2));
-            var firstUser = msg.Substring(5, firstNum);
-            var firstScore = Convert.ToInt32(msg.Substring(5 + firstNum, 6));
-            var secNum = Convert.ToInt32(msg.Substring(5 + firstNum + 6, 2));
-            var secUser = msg.Substring(5 + firstNum + 6 + 2, secNum);
-            var secScore = Convert.ToInt32(msg.Substring(5 + firstNum + 12, 6));
-            var thirdNum = Convert.ToInt32(msg.Substring(5 + firstNum + 18, 2));
-            var thirdUser = msg.Substring(5 + firstNum + 18 + 2, thirdNum);
-            var thirdScore = Convert.ToInt32(msg.Substring(5 + firstNum + 24, 6));
+            var firstNum = Convert.ToInt32(msg.Substring(0, 2));
+            msg = msg.Substring(2);
+            var firstUser = msg.Substring(0, firstNum);
+            msg = msg.Substring(firstNum);
+            var firstScore = Convert.ToInt32(msg.Substring(0, 6));
+            msg = msg.Substring(6);
+            var secNum = Convert.ToInt32(msg.Substring(0, 2));
+            msg = msg.Substring(2);
+            var secUser = msg.Substring(0, secNum);
+            msg = msg.Substring(secNum);
+            var secScore = Convert.ToInt32(msg.Substring(0, 6));
+            msg = msg.Substring(6);
+            var thirdNum = Convert.ToInt32(msg.Substring(0, 2));
+            msg = msg.Substring(2);
+            var thirdUser = msg.Substring(0, thirdNum);
+            msg = msg.Substring(thirdNum);
+            var thirdScore = Convert.ToInt32(msg.Substring(0, 6));
+            msg = msg.Substring(6);
             MessageBox.Show($"1. {firstUser} - {firstScore} \n2. {secUser} - {secScore}\n3. {thirdUser} - {thirdScore}", "Best Scores:", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
